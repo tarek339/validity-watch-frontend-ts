@@ -28,7 +28,7 @@ function NavBar() {
       {!user && (
         <Button
           onClick={() => {
-            navigate("/signin");
+            navigate("/sign-in");
           }}
         >
           Sign in

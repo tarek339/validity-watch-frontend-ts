@@ -20,14 +20,14 @@ function VerifyAccount() {
       navigate("/");
     }
     if (!user) {
-      navigate("/signin");
+      navigate("/sign-in");
     }
     axios
       .post("/company/verify-account", { token: search.get("token") })
       .then((res) => {
         console.log(res.data);
         dispatch(addUser(res.data));
-        navigate("/");
+        navigate("/sign-in");
       })
       .catch((err) => {
         console.log(err);
