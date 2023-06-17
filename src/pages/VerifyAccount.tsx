@@ -27,7 +27,7 @@ function VerifyAccount() {
       .then((res) => {
         console.log(res.data);
         dispatch(addUser(res.data));
-        navigate("/sign-in");
+        navigate("/");
       })
       .catch((err) => {
         console.log(err);
