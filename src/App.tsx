@@ -1,19 +1,31 @@
-import "./App.sass";
+import "./sass/index.sass";
 import Dashboard from "./pages/Dashboard";
-import SignUp from "./pages/SignUp";
 import SignInCompany from "./pages/SignInCompany";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { addUser } from "./redux/slices/userSlice";
-import { Grid, Typography } from "@mui/material";
+import {
+  CircularProgress,
+  Grid,
+  ThemeProvider,
+  createTheme,
+} from "@mui/material";
 import { RootState } from "./redux/store";
 import VerifyAccount from "./pages/VerifyAccount";
-import Intro from "./pages/Intro";
 import NavBar from "./components/NavBar";
 import { Route, Routes } from "react-router-dom";
 import NotFound from "./components/NotFound";
-import SignUpMessage from "./pages/SignUpMessage";
+import DrawerMenu from "./components/DrawerMenu";
+import { AnimatePresence } from "framer-motion";
+import SignUpCompany from "./pages/SignUpCompany";
+import UserProfile from "./pages/UserProfile";
+
+const theme = createTheme({
+  typography: {
+    fontFamily: "Inter, sans-serif",
+  },
+});
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -28,6 +40,7 @@ function App() {
       .get("/company/profile")
       .then((res) => {
         dispatch(addUser(res.data));
+        console.log(res.data);
         setLoading(false);
       })
       .catch(() => {
@@ -38,32 +51,45 @@ function App() {
 
   if (!user && loading) {
     return (
-      <Grid container justifyContent="center">
-        <Typography variant="h5">Loading state</Typography>
+      <Grid
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        justifyContent="center"
+        sx={{ minHeight: "100vh" }}
+      >
+        <CircularProgress />
       </Grid>
     );
   }
 
   return (
     <div className="App">
-      <NavBar />
-      {(user && emailVerified) || !user ? (
-        <Routes>
-          <Route path="/" element={<Intro />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/sign-in" element={<SignInCompany />} />
-          <Route path="/sign-up" element={<SignUp />} />
-          <Route path="*" element={<NotFound />} />
-          <Route path="/verify-email" element={<VerifyAccount />} />
-          <Route path="/sign-up-msg" element={<SignUpMessage />} />
-        </Routes>
-      ) : (
-        <Routes>
-          <Route path="/verify-email" element={<VerifyAccount />} />
-          <Route path="/sign-up-msg" element={<SignUpMessage />} />
-        </Routes>
-      )}
-      {user && !emailVerified ? <SignUpMessage /> : null}
+      <ThemeProvider theme={theme}>
+        <NavBar />
+        <Grid sx={{ width: "350px" }} container justifyContent="flex-start">
+          {user && emailVerified ? <DrawerMenu /> : null}
+        </Grid>
+        <div style={{ marginLeft: "300px" }}>
+          <AnimatePresence mode="wait">
+            {(user && emailVerified) || !user ? (
+              <Routes>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/user-profile" element={<UserProfile />} />
+                <Route path="/sign-in" element={<SignInCompany />} />
+                <Route path="/sign-up" element={<SignUpCompany />} />
+                <Route path="*" element={<NotFound />} />
+                <Route path="/verify-email" element={<VerifyAccount />} />
+              </Routes>
+            ) : (
+              <Routes>
+                <Route path="/verify-email" element={<VerifyAccount />} />
+              </Routes>
+            )}
+          </AnimatePresence>
+        </div>
+      </ThemeProvider>
     </div>
   );
 }

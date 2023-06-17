@@ -1,18 +1,13 @@
-import { Button, Grid, TextField, Typography } from "@mui/material";
-import HttpsOutlinedIcon from "@mui/icons-material/HttpsOutlined";
+import { Button, Grid, Typography, Link } from "@mui/material";
 import GridContainer from "../components/GridContainer";
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { addUser } from "../redux/slices/userSlice";
 import { useDispatch } from "react-redux";
-
-const iconStyle = {
-  color: "#fff",
-  backgroundColor: "#9c27b0",
-  borderRadius: "50%",
-  padding: "5px",
-};
+import { motion } from "framer-motion";
+import Textfield from "../components/Textfield";
+import LockOpenRoundedIcon from "@mui/icons-material/LockOpenRounded";
 
 function SignUpCompany() {
   const [email, setEmail] = useState("tarekjassine@gmail.com");
@@ -41,58 +36,69 @@ function SignUpCompany() {
 
   return (
     <div className="sign-up">
-      <GridContainer>
-        <HttpsOutlinedIcon style={iconStyle} fontSize="medium" />
-      </GridContainer>
-      <GridContainer>
-        <Typography variant="h4">Sign In</Typography>
-        <Typography variant="h4">or</Typography>
-        <Button>
-          {" "}
-          <Typography variant="h5" onClick={() => navigate("/sign-up")}>
-            Sign Up
-          </Typography>
-        </Button>
-      </GridContainer>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.3 }}
+      >
+        <div className="sign-form">
+          <form onSubmit={handleSubmit}>
+            <GridContainer
+              backgroundColor="#00a152"
+              icon={<LockOpenRoundedIcon />}
+              content="Sign in"
+            />
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Textfield
+                  label="E-Mail"
+                  name="email"
+                  value={email}
+                  onChange={(e: {
+                    target: { value: SetStateAction<string> };
+                  }) => setEmail(e.target.value)}
+                  error={message ? true : false}
+                  helperText={<div className="error">{message}</div>}
+                  type={undefined}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Textfield
+                  label="Password"
+                  name="password"
+                  value={password}
+                  onChange={(e: {
+                    target: { value: SetStateAction<string> };
+                  }) => setPassword(e.target.value)}
+                  error={message ? true : false}
+                  helperText={<div className="error">{message}</div>}
+                  type="password"
+                />
+              </Grid>
 
-      <div className="sign-form">
-        <form onSubmit={handleSubmit}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                variant="outlined"
-                size="small"
-                label="First name"
-                className="TextField-without-border-radius"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                error={message ? true : false}
-                helperText={message}
-              />
+              <Grid item xs={12}>
+                <Button fullWidth variant="contained" type="submit">
+                  Sign in
+                </Button>
+              </Grid>
             </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                variant="outlined"
-                size="small"
-                label="First name"
-                className="TextField-without-border-radius"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                error={message ? true : false}
-                helperText={message}
-              />
-            </Grid>
-
-            <Grid item xs={12}>
-              <Button variant="contained" type="submit">
-                Sign in
-              </Button>
-            </Grid>
-          </Grid>
-        </form>
-      </div>
+            <Typography sx={{ marginTop: "10px" }}>
+              Not an Account?{" "}
+              <Link
+                sx={{
+                  cursor: "pointer",
+                  textDecoration: "underline",
+                }}
+                underline="none"
+                onClick={() => navigate("/sign-up")}
+              >
+                Sign up
+              </Link>
+            </Typography>
+          </form>
+        </div>
+      </motion.div>
     </div>
   );
 }
