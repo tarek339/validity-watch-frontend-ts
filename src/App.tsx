@@ -20,6 +20,8 @@ import DrawerMenu from "./components/DrawerMenu";
 import { AnimatePresence } from "framer-motion";
 import SignUpCompany from "./pages/SignUpCompany";
 import UserProfile from "./pages/UserProfile";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 const theme = createTheme({
   typography: {
@@ -81,10 +83,14 @@ function App() {
                 <Route path="/sign-up" element={<SignUpCompany />} />
                 <Route path="*" element={<NotFound />} />
                 <Route path="/verify-email" element={<VerifyAccount />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/change-password" element={<ResetPassword />} />
               </Routes>
             ) : (
               <Routes>
                 <Route path="/verify-email" element={<VerifyAccount />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/change-password" element={<ResetPassword />} />
               </Routes>
             )}
           </AnimatePresence>
