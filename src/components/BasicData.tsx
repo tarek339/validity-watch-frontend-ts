@@ -3,12 +3,12 @@ import * as Yup from "yup";
 import { Button, Grid, ThemeProvider, createTheme } from "@mui/material";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import GridContainer from "../components/GridContainer";
+import GridContainer from "./GridContainer";
 import { removeSnackbar, setSnackbar } from "../redux/slices/snackbarSlice";
 import { RootState } from "../redux/store";
 import { motion } from "framer-motion";
-import Textfield from "../components/Textfield";
-import SnackBar from "../components/SnackBar";
+import Textfield from "./Textfield";
+import SnackBar from "./SnackBar";
 import Filter1RoundedIcon from "@mui/icons-material/Filter1Rounded";
 
 const theme = createTheme({
@@ -61,7 +61,7 @@ const validationSchema = Yup.object({
   communityLicence: Yup.string().required("required"),
 });
 
-const CompanyBasicData = () => {
+const BasicData = () => {
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user.user);
   const snackbar = useSelector((state: RootState) => state.snackbar);
@@ -127,189 +127,184 @@ const CompanyBasicData = () => {
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6} md={4} lg={4}>
                   <Textfield
+                    autoFocus={false}
                     label="First Name"
                     name="firstName"
                     value={formik.values.firstName}
                     onChange={formik.handleChange}
-                    helperText={
-                      formik.touched.firstName ? (
-                        <div className="error">{formik.errors.firstName}</div>
-                      ) : null
-                    }
+                    helperText={undefined}
                     error={
                       Boolean(formik.errors.firstName) &&
                       Boolean(formik.touched.firstName)
                     }
                     type={undefined}
                   />
+                  {formik.touched.firstName ? (
+                    <div className="error">{formik.errors.firstName}</div>
+                  ) : null}
                 </Grid>
                 <Grid item xs={12} sm={6} md={4} lg={4}>
                   <Textfield
+                    autoFocus={false}
                     label="Last Name"
                     name="lastName"
                     value={formik.values.lastName}
                     onChange={formik.handleChange}
-                    helperText={
-                      formik.touched.lastName ? (
-                        <div className="error">{formik.errors.lastName}</div>
-                      ) : null
-                    }
+                    helperText={undefined}
                     error={
                       Boolean(formik.errors.lastName) &&
                       Boolean(formik.touched.lastName)
                     }
                     type={undefined}
                   />
+                  {formik.touched.lastName ? (
+                    <div className="error">{formik.errors.lastName}</div>
+                  ) : null}
                 </Grid>
                 <Grid item xs={12} sm={6} md={4} lg={4}>
                   <Textfield
+                    autoFocus={false}
                     label="Phone number"
                     name="phoneNumber"
                     value={formik.values.phoneNumber}
                     onChange={formik.handleChange}
-                    helperText={
-                      formik.touched.phoneNumber ? (
-                        <div className="error">{formik.errors.phoneNumber}</div>
-                      ) : null
-                    }
+                    helperText={undefined}
                     error={
                       Boolean(formik.errors.phoneNumber) &&
                       Boolean(formik.touched.phoneNumber)
                     }
                     type={undefined}
                   />
+                  {formik.touched.phoneNumber ? (
+                    <div className="error">{formik.errors.phoneNumber}</div>
+                  ) : null}
                 </Grid>
                 <Grid item xs={12} sm={6} md={4} lg={4}>
                   <Textfield
+                    autoFocus={false}
                     label="Company name"
                     name="companyName"
                     value={formik.values.companyName}
                     onChange={formik.handleChange}
-                    helperText={
-                      formik.touched.companyName ? (
-                        <div className="error">
-                          {" "}
-                          {formik.errors.companyName}{" "}
-                        </div>
-                      ) : null
-                    }
+                    helperText={undefined}
                     error={
                       Boolean(formik.errors.companyName) &&
                       Boolean(formik.touched.companyName)
                     }
                     type={undefined}
                   />
+                  {formik.touched.companyName ? (
+                    <div className="error">{formik.errors.companyName}</div>
+                  ) : null}
                 </Grid>
                 <Grid item xs={12} sm={6} md={4} lg={4}>
                   <Textfield
+                    autoFocus={false}
                     label="CEO"
                     name="ceo"
                     value={formik.values.ceo}
                     onChange={formik.handleChange}
-                    helperText={
-                      formik.touched.ceo ? (
-                        <div className="error">{formik.errors.ceo}</div>
-                      ) : null
-                    }
+                    helperText={undefined}
                     error={
                       Boolean(formik.errors.ceo) && Boolean(formik.touched.ceo)
                     }
                     type={undefined}
                   />
+                  {formik.touched.ceo ? (
+                    <div className="error">{formik.errors.ceo}</div>
+                  ) : null}
                 </Grid>
                 <Grid item xs={12} sm={6} md={4} lg={4}>
                   <Textfield
+                    autoFocus={false}
                     label="Community Licence"
                     name="communityLicence"
                     value={formik.values.communityLicence}
                     onChange={formik.handleChange}
-                    helperText={
-                      formik.touched.communityLicence ? (
-                        <div className="error">
-                          {formik.errors.communityLicence}
-                        </div>
-                      ) : null
-                    }
+                    helperText={undefined}
                     error={
                       Boolean(formik.errors.communityLicence) &&
                       Boolean(formik.touched.communityLicence)
                     }
                     type={undefined}
                   />
+                  {formik.touched.communityLicence ? (
+                    <div className="error">
+                      {formik.errors.communityLicence}
+                    </div>
+                  ) : null}
                 </Grid>
                 <Grid item xs={12} sm={8} md={4} lg={4}>
                   <Textfield
+                    autoFocus={false}
                     label="Street"
                     name="street"
                     value={formik.values.street}
                     onChange={formik.handleChange}
-                    helperText={
-                      formik.touched.street ? (
-                        <div className="error">{formik.errors.street}</div>
-                      ) : null
-                    }
+                    helperText={undefined}
                     error={
                       Boolean(formik.errors.street) &&
                       Boolean(formik.touched.street)
                     }
                     type={undefined}
                   />
+                  {formik.touched.street ? (
+                    <div className="error">{formik.errors.street}</div>
+                  ) : null}
                 </Grid>
                 <Grid item xs={12} sm={4} md={2} lg={2}>
                   <Textfield
+                    autoFocus={false}
                     label="House Number"
                     name="houseNumber"
                     value={formik.values.houseNumber}
                     onChange={formik.handleChange}
-                    helperText={
-                      formik.touched.houseNumber ? (
-                        <div className="error">
-                          {formik.errors.houseNumber}{" "}
-                        </div>
-                      ) : null
-                    }
+                    helperText={undefined}
                     error={
                       Boolean(formik.errors.houseNumber) &&
                       Boolean(formik.touched.houseNumber)
                     }
                     type={undefined}
                   />
+                  {formik.touched.houseNumber ? (
+                    <div className="error">{formik.errors.houseNumber} </div>
+                  ) : null}
                 </Grid>
                 <Grid item xs={12} sm={6} md={3} lg={3}>
                   <Textfield
+                    autoFocus={false}
                     label="ZIP code"
                     name="zipCode"
                     value={formik.values.zipCode}
                     onChange={formik.handleChange}
-                    helperText={
-                      formik.touched.zipCode ? (
-                        <div className="error">{formik.errors.zipCode} </div>
-                      ) : null
-                    }
+                    helperText={undefined}
                     error={
                       Boolean(formik.errors.zipCode) &&
                       Boolean(formik.touched.zipCode)
                     }
                     type={undefined}
                   />
+                  {formik.touched.zipCode ? (
+                    <div className="error">{formik.errors.zipCode} </div>
+                  ) : null}
                 </Grid>
                 <Grid item xs={12} sm={6} md={3} lg={3}>
                   <Textfield
+                    autoFocus={false}
                     label="City"
                     name="city"
                     value={formik.values.city}
                     onChange={formik.handleChange}
-                    helperText={
-                      formik.touched.city ? (
-                        <div className="error">{formik.errors.city} </div>
-                      ) : null
-                    }
+                    helperText={undefined}
                     error={
                       Boolean(formik.errors.city) &&
                       Boolean(formik.touched.city)
                     }
                     type={undefined}
                   />
+                  {formik.touched.city ? (
+                    <div className="error">{formik.errors.city} </div>
+                  ) : null}
                 </Grid>
 
                 <Grid item xs={12}>
@@ -325,4 +320,4 @@ const CompanyBasicData = () => {
     </div>
   );
 };
-export default CompanyBasicData;
+export default BasicData;

@@ -1,4 +1,4 @@
-import { Grid, IconButton } from "@mui/material";
+import { AppBar, Grid, IconButton, Toolbar } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { removeUser } from "../redux/slices/userSlice";
@@ -19,42 +19,51 @@ function NavBar() {
   const dispatch = useDispatch();
   return (
     <div>
-      <Grid container justifyContent="flex-end">
-        {user && (
-          <IconButton style={iconStyle}>
-            <MessageSharpIcon />{" "}
-          </IconButton>
-        )}
+      <AppBar
+        position="fixed"
+        elevation={0}
+        sx={{ backgroundColor: "transparent" }}
+      >
+        <Toolbar>
+          <Grid container justifyContent="flex-end">
+            {user && (
+              <IconButton style={iconStyle}>
+                <MessageSharpIcon />{" "}
+              </IconButton>
+            )}
 
-        {user && (
-          <IconButton style={iconStyle}>
-            <FeedbackSharpIcon />
-          </IconButton>
-        )}
+            {user && (
+              <IconButton style={iconStyle}>
+                <FeedbackSharpIcon />
+              </IconButton>
+            )}
 
-        {user && (
-          <IconButton
-            onClick={() => {
-              localStorage.removeItem("token");
-              dispatch(removeUser());
-            }}
-            style={iconStyle}
-          >
-            <LogoutSharpIcon />
-          </IconButton>
-        )}
+            {user && (
+              <IconButton
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  dispatch(removeUser());
+                  window.location.reload();
+                }}
+                style={iconStyle}
+              >
+                <LogoutSharpIcon />
+              </IconButton>
+            )}
 
-        {!user && (
-          <IconButton
-            onClick={() => {
-              navigate("/sign-in");
-            }}
-            style={iconStyle}
-          >
-            <LoginSharpIcon />
-          </IconButton>
-        )}
-      </Grid>
+            {!user && (
+              <IconButton
+                onClick={() => {
+                  navigate("/sign-in");
+                }}
+                style={iconStyle}
+              >
+                <LoginSharpIcon />
+              </IconButton>
+            )}
+          </Grid>
+        </Toolbar>
+      </AppBar>
     </div>
   );
 }
