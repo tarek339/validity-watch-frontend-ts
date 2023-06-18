@@ -3,13 +3,13 @@ import * as Yup from "yup";
 import { Button, Grid, ThemeProvider, createTheme } from "@mui/material";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import GridContainer from "../components/GridContainer";
+import GridContainer from "./GridContainer";
 import { removeSnackbar, setSnackbar } from "../redux/slices/snackbarSlice";
 import { RootState } from "../redux/store";
 import { motion } from "framer-motion";
-import Textfield from "../components/Textfield";
-import SnackBar from "../components/SnackBar";
-import Filter2RoundedIcon from "@mui/icons-material/Filter2Rounded";
+import Textfield from "./Textfield";
+import SnackBar from "./SnackBar";
+import Filter3RoundedIcon from "@mui/icons-material/Filter3Rounded";
 
 const theme = createTheme({
   breakpoints: {
@@ -33,13 +33,9 @@ const validationSchema = Yup.object({
       "Incorrect type of email"
     )
     .required("required"),
-  password: Yup.string().required("required"),
-  confirmPassword: Yup.string()
-    .required("required")
-    .oneOf([Yup.ref("password")], "Passwords must match"),
 });
 
-const CompanySecretData = () => {
+const CompanyEmail = () => {
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user.user);
   const snackbar = useSelector((state: RootState) => state.snackbar);
@@ -47,13 +43,11 @@ const CompanySecretData = () => {
   const formik = useFormik({
     initialValues: {
       email: user?.email,
-      password: "",
-      confirmPassword: "",
     },
     validationSchema,
     onSubmit: async (values) => {
       await axios
-        .put(``, values)
+        .put(`/company/edit-email`, values)
         .then((res) => {
           console.log(res.data);
           dispatch(
@@ -71,7 +65,6 @@ const CompanySecretData = () => {
             5000
           );
         })
-
         .catch((err) => {
           console.log(err?.response?.data?.message);
           dispatch(
@@ -86,7 +79,7 @@ const CompanySecretData = () => {
               dispatch(
                 removeSnackbar({ open: false, severity: "", message: "" })
               ),
-            4000
+            5000
           );
         });
     },
@@ -105,74 +98,36 @@ const CompanySecretData = () => {
             {snackbar.open ? <SnackBar /> : null}
             <form onSubmit={formik.handleSubmit}>
               <GridContainer
-                backgroundColor="#ff1744"
-                icon={<Filter2RoundedIcon />}
-                content="Secret data"
+                backgroundColor="#3d5afe"
+                icon={<Filter3RoundedIcon />}
+                content="Change E-mail"
               />
               <Grid container spacing={2}>
-                <Grid item xs={12} sm={6} md={4} lg={4}>
+                <Grid item xs={12} sm={12} md={6}>
                   <Textfield
+                    autoFocus={false}
                     label="E-Mail"
                     name="email"
                     value={formik.values.email}
                     onChange={formik.handleChange}
-                    helperText={
-                      formik.touched.email ? (
-                        <div className="error">{formik.errors.email} </div>
-                      ) : null
-                    }
                     error={
                       Boolean(formik.errors.email) &&
                       Boolean(formik.touched.email)
                     }
                     type={undefined}
+                    helperText={undefined}
                   />
+                  {formik.touched.email ? (
+                    <div className="error"> {formik.errors.email} </div>
+                  ) : null}
                 </Grid>
 
-                <Grid item xs={12} sm={6} md={4} lg={4}>
-                  <Textfield
-                    label="Password"
-                    name="password"
-                    value={formik.values.password}
-                    onChange={formik.handleChange}
-                    helperText={
-                      formik.touched.password ? (
-                        <div className="error">{formik.errors.password} </div>
-                      ) : null
-                    }
-                    error={
-                      Boolean(formik.errors.password) &&
-                      Boolean(formik.touched.password)
-                    }
-                    type="password"
-                  />
-                </Grid>
-
-                <Grid item xs={12} sm={6} md={4} lg={4}>
-                  <Textfield
-                    label="Confirm password"
-                    name="confirmPassword"
-                    value={formik.values.confirmPassword}
-                    onChange={formik.handleChange}
-                    helperText={
-                      formik.touched.confirmPassword ? (
-                        <div className="error">
-                          {formik.errors.confirmPassword}{" "}
-                        </div>
-                      ) : null
-                    }
-                    error={
-                      Boolean(formik.errors.confirmPassword) &&
-                      Boolean(formik.touched.confirmPassword)
-                    }
-                    type="password"
-                  />
-                </Grid>
-
-                <Grid item xs={12}>
-                  <Button fullWidth variant="contained" type="submit">
-                    Edit
-                  </Button>
+                <Grid item xs={12} sm={12} md={6}>
+                  <div className="edit-button">
+                    <Button fullWidth variant="contained" type="submit">
+                      Edit
+                    </Button>
+                  </div>
                 </Grid>
               </Grid>
             </form>
@@ -182,4 +137,4 @@ const CompanySecretData = () => {
     </div>
   );
 };
-export default CompanySecretData;
+export default CompanyEmail;

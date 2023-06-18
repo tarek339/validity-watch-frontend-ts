@@ -4,17 +4,20 @@ import { SetStateAction, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { addUser } from "../redux/slices/userSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import Textfield from "../components/Textfield";
 import LockOpenRoundedIcon from "@mui/icons-material/LockOpenRounded";
+import { removeSnackbar, setSnackbar } from "../redux/slices/snackbarSlice";
+import SnackBar from "../components/SnackBar";
+import { RootState } from "../redux/store";
 
 function SignUpCompany() {
   const [email, setEmail] = useState("tarekjassine@gmail.com");
   const [password, setPassword] = useState("tarek123");
-  const [message, setMessage] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const snackbar = useSelector((state: RootState) => state.snackbar);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -27,10 +30,26 @@ function SignUpCompany() {
         localStorage.setItem("token", res.data.token);
         dispatch(addUser(res.data.company));
       })
-      .then(() => navigate("/"))
+      .then(() => {
+        navigate("/");
+        window.location.reload();
+      })
       .catch((err) => {
         console.log(err?.response?.data?.message);
-        setMessage(err?.response?.data?.message);
+        dispatch(
+          setSnackbar({
+            open: true,
+            severity: "error",
+            message: err?.response?.data?.message,
+          })
+        );
+        setTimeout(
+          () =>
+            dispatch(
+              removeSnackbar({ open: false, severity: "", message: "" })
+            ),
+          5000
+        );
       });
   };
 
@@ -43,6 +62,7 @@ function SignUpCompany() {
         transition={{ duration: 0.3 }}
       >
         <div className="sign-form">
+          {snackbar.open ? <SnackBar /> : null}
           <form onSubmit={handleSubmit}>
             <GridContainer
               backgroundColor="#00a152"
@@ -52,27 +72,29 @@ function SignUpCompany() {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <Textfield
+                  autoFocus={false}
                   label="E-Mail"
                   name="email"
                   value={email}
                   onChange={(e: {
                     target: { value: SetStateAction<string> };
                   }) => setEmail(e.target.value)}
-                  error={message ? true : false}
-                  helperText={<div className="error">{message}</div>}
+                  error={false}
+                  helperText={undefined}
                   type={undefined}
                 />
               </Grid>
               <Grid item xs={12}>
                 <Textfield
+                  autoFocus={false}
                   label="Password"
                   name="password"
                   value={password}
                   onChange={(e: {
                     target: { value: SetStateAction<string> };
                   }) => setPassword(e.target.value)}
-                  error={message ? true : false}
-                  helperText={<div className="error">{message}</div>}
+                  error={false}
+                  helperText={undefined}
                   type="password"
                 />
               </Grid>

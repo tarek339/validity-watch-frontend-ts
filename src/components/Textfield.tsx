@@ -12,9 +12,10 @@ function Textfield(props: {
   name: string;
   value: string | number | undefined;
   onChange: any;
-  helperText: any;
+  helperText: any | undefined;
   error: boolean;
   type: string | undefined;
+  autoFocus: boolean;
 }) {
   return (
     <div>
@@ -22,6 +23,7 @@ function Textfield(props: {
         {props.label}
       </InputLabel>
       <TextField
+        autoFocus={props.autoFocus}
         fullWidth
         name={props.name}
         variant="outlined"
