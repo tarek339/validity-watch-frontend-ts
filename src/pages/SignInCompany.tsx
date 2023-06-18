@@ -1,4 +1,11 @@
-import { Button, Grid, Typography, Link } from "@mui/material";
+import {
+  Button,
+  Grid,
+  Typography,
+  Link,
+  createTheme,
+  ThemeProvider,
+} from "@mui/material";
 import GridContainer from "../components/GridContainer";
 import { SetStateAction, useState } from "react";
 import axios from "axios";
@@ -11,6 +18,21 @@ import LockOpenRoundedIcon from "@mui/icons-material/LockOpenRounded";
 import { removeSnackbar, setSnackbar } from "../redux/slices/snackbarSlice";
 import SnackBar from "../components/SnackBar";
 import { RootState } from "../redux/store";
+
+const theme = createTheme({
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 510,
+      md: 750,
+      lg: 980,
+      xl: 1530,
+    },
+  },
+  typography: {
+    fontFamily: "Inter, sans-serif",
+  },
+});
 
 function SignUpCompany() {
   const [email, setEmail] = useState("tarekjassine@gmail.com");
@@ -61,65 +83,86 @@ function SignUpCompany() {
         exit={{ opacity: 0 }}
         transition={{ duration: 0.3 }}
       >
-        <div className="sign-form">
-          {snackbar.open ? <SnackBar /> : null}
-          <form onSubmit={handleSubmit}>
-            <GridContainer
-              backgroundColor="#00a152"
-              icon={<LockOpenRoundedIcon />}
-              content="Sign in"
-            />
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <Textfield
-                  autoFocus={false}
-                  label="E-Mail"
-                  name="email"
-                  value={email}
-                  onChange={(e: {
-                    target: { value: SetStateAction<string> };
-                  }) => setEmail(e.target.value)}
-                  error={false}
-                  helperText={undefined}
-                  type={undefined}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Textfield
-                  autoFocus={false}
-                  label="Password"
-                  name="password"
-                  value={password}
-                  onChange={(e: {
-                    target: { value: SetStateAction<string> };
-                  }) => setPassword(e.target.value)}
-                  error={false}
-                  helperText={undefined}
-                  type="password"
-                />
-              </Grid>
+        <ThemeProvider theme={theme}>
+          <div className="sign-form">
+            {snackbar.open ? <SnackBar /> : null}
+            <form onSubmit={handleSubmit}>
+              <GridContainer
+                backgroundColor="#00a152"
+                icon={<LockOpenRoundedIcon />}
+                content="Sign in"
+              />
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <Textfield
+                    autoFocus={false}
+                    label="E-Mail"
+                    name="email"
+                    value={email}
+                    onChange={(e: {
+                      target: { value: SetStateAction<string> };
+                    }) => setEmail(e.target.value)}
+                    error={false}
+                    helperText={undefined}
+                    type={undefined}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Textfield
+                    autoFocus={false}
+                    label="Password"
+                    name="password"
+                    value={password}
+                    onChange={(e: {
+                      target: { value: SetStateAction<string> };
+                    }) => setPassword(e.target.value)}
+                    error={false}
+                    helperText={undefined}
+                    type="password"
+                  />
+                </Grid>
 
-              <Grid item xs={12}>
-                <Button fullWidth variant="contained" type="submit">
-                  Sign in
-                </Button>
+                <Grid item xs={12}>
+                  <Button fullWidth variant="contained" type="submit">
+                    Sign in
+                  </Button>
+                </Grid>
               </Grid>
-            </Grid>
-            <Typography sx={{ marginTop: "10px" }}>
-              Not an Account?{" "}
-              <Link
-                sx={{
-                  cursor: "pointer",
-                  textDecoration: "underline",
-                }}
-                underline="none"
-                onClick={() => navigate("/sign-up")}
-              >
-                Sign up
-              </Link>
-            </Typography>
-          </form>
-        </div>
+              <Grid container>
+                <Grid item xs={12} sm={6}>
+                  <Typography sx={{ marginTop: "10px" }}>
+                    Not an Account?{" "}
+                    <Link
+                      sx={{
+                        cursor: "pointer",
+                        textDecoration: "underline",
+                      }}
+                      underline="none"
+                      onClick={() => navigate("/sign-up")}
+                    >
+                      Sign up
+                    </Link>
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Typography sx={{ marginTop: "10px" }}>
+                    Forgot password?{" "}
+                    <Link
+                      sx={{
+                        cursor: "pointer",
+                        textDecoration: "underline",
+                      }}
+                      underline="none"
+                      onClick={() => navigate("/forgot-password")}
+                    >
+                      Reset here
+                    </Link>
+                  </Typography>
+                </Grid>
+              </Grid>
+            </form>
+          </div>
+        </ThemeProvider>
       </motion.div>
     </div>
   );
