@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import GridContainer from "./GridContainer";
 import { removeSnackbar, setSnackbar } from "../redux/slices/snackbarSlice";
 import { RootState } from "../redux/store";
-import { motion } from "framer-motion";
 import Textfield from "./Textfield";
 import SnackBar from "./SnackBar";
 import Filter2RoundedIcon from "@mui/icons-material/Filter2Rounded";
@@ -90,12 +89,7 @@ const ChangePassword = (props: { page: number; setPage: Function }) => {
   });
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.3 }}
-    >
+    <div>
       <ThemeProvider theme={theme}>
         {snackbar.open ? <SnackBar /> : null}
         <form onSubmit={formik.handleSubmit}>
@@ -151,7 +145,7 @@ const ChangePassword = (props: { page: number; setPage: Function }) => {
           </Grid>
         </form>
       </ThemeProvider>
-    </motion.div>
+    </div>
   );
 };
 export default ChangePassword;
