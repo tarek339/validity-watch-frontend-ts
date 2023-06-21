@@ -86,7 +86,7 @@ const CompanyEmail = () => {
   });
 
   return (
-    <div className="sign-up">
+    <div className="section">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -94,9 +94,12 @@ const CompanyEmail = () => {
         transition={{ duration: 0.3 }}
       >
         <ThemeProvider theme={theme}>
-          <div style={{ marginTop: "3em" }} className="user-profile-data">
+          <div className="section-child">
             {snackbar.open ? <SnackBar /> : null}
-            <form onSubmit={formik.handleSubmit}>
+            <form
+              className="section-child-content"
+              onSubmit={formik.handleSubmit}
+            >
               <GridContainer
                 backgroundColor="#3d5afe"
                 icon={<Filter3RoundedIcon />}

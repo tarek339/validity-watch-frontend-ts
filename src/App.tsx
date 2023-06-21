@@ -22,6 +22,7 @@ import SignUpCompany from "./pages/SignUpCompany";
 import UserProfile from "./pages/UserProfile";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import AddData from "./pages/AddData";
 
 const theme = createTheme({
   typography: {
@@ -78,6 +79,7 @@ function App() {
             {(user && emailVerified) || !user ? (
               <Routes>
                 <Route path="/" element={<Dashboard />} />
+                <Route path="/add-data" element={<AddData />} />
                 <Route path="/user-profile" element={<UserProfile />} />
                 <Route path="/sign-in" element={<SignInCompany />} />
                 <Route path="/sign-up" element={<SignUpCompany />} />

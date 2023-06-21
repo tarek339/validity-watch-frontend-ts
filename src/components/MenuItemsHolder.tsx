@@ -23,7 +23,7 @@ function MenuItemsHolder() {
         content={"Dashboard"}
       />
       <MenuItems
-        route={"/intro"}
+        route={"/add-data"}
         icon={<AddIcon style={menuIcon} />}
         content={"Data"}
       />

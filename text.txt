@@ -1,38 +1,16 @@
-const sendEmail = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    axios
-      .post("/company/forgot-password-email", { email })
-      .then(() => {
-        dispatch(
-          setSnackbar({
-            open: true,
-            severity: "success",
-            message: "Please check email inbox",
-          })
-        );
-        setTimeout(
-          () =>
-            dispatch(
-              removeSnackbar({ open: false, severity: "", message: "" })
-            ),
-          5000
-        );
-      })
-      .catch((err) => {
-        console.log(err?.response?.data?.message);
-        dispatch(
-          setSnackbar({
-            open: true,
-            severity: "error",
-            message: err?.response?.data?.message,
-          })
-        );
-        setTimeout(
-          () =>
-            dispatch(
-              removeSnackbar({ open: false, severity: "", message: "" })
-            ),
-          5000
-        );
-      });
-  };
+problems
+
+after verification the new acc and after hard refresh the user is signed out
+after signing in the getProfile useEffect ist responding after hard refresh
+example, commenting out the useEffect function, still able to log in, and after refresh logged out
+should not be able to log in without the get profile function
+redux is working perfectly fine
+maybe routing issue?
+prefixed with window.location.reload()
+
+
+props types
+select bar type onChange any
+index request any
+textfield onChange any
+3x any

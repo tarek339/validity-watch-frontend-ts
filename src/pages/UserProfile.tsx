@@ -10,10 +10,10 @@ function UserProfile() {
   const stepOne = [<VerifyPassword key={1} page={page} setPage={setPage} />];
   const stepTwo = [<ChangePassword key={2} page={page} setPage={setPage} />];
   return (
-    <div className="user-profile">
+    <div className="section">
       <BasicData />
-      <div className="sign-up">
-        <div style={{ marginTop: "3em" }} className="user-profile-data">
+      <div className="section-child">
+        <div style={{ marginTop: "3em" }} className="section-child-content">
           {page === 0 ? stepOne : stepTwo}
         </div>
       </div>
