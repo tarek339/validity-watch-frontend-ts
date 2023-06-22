@@ -47,7 +47,6 @@ function NavBar() {
                 onClick={() => {
                   localStorage.removeItem("token");
                   dispatch(removeUser());
-                  // window.location.reload();
                 }}
                 style={iconStyle}
               >
