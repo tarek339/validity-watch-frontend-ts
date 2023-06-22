@@ -1,16 +1,15 @@
-problems
+props types problems to solve
 
-after verification the new acc and after hard refresh the user is signed out
-after signing in the getProfile useEffect ist responding after hard refresh
-example, commenting out the useEffect function, still able to log in, and after refresh logged out
-should not be able to log in without the get profile function
-redux is working perfectly fine
-maybe routing issue?
-prefixed with window.location.reload()
+index.tsx request: any
 
+SelectBar.tsx
+  onChange: any;
 
-props types
-select bar type onChange any
-index request any
-textfield onChange any
-3x any
+Textfield.tsx 
+  onChange: any;
+
+PickDate.tsx assign types
+  views: any;
+  format: any;
+  value: any;
+  onChange: any;

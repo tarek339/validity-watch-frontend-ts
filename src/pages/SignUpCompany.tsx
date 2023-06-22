@@ -4,7 +4,6 @@ import { Button, Grid } from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addUser } from "../redux/slices/userSlice";
 import GridContainer from "../components/GridContainer";
 import { removeSnackbar, setSnackbar } from "../redux/slices/snackbarSlice";
 import SnackBar from "../components/SnackBar";
@@ -84,11 +83,6 @@ const SignUpCompany = () => {
     onSubmit: async (values) => {
       await axios
         .post("/company/sign-up", values)
-        .then((res) => {
-          localStorage.setItem("token", res.data.token);
-          dispatch(addUser(res.data.user));
-        })
-
         .then(() => navigate("/sign-in"))
         .catch((err) => {
           console.log(err?.response?.data?.message);

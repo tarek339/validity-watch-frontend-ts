@@ -1,4 +1,3 @@
-import React from "react";
 import MenuItems from "./MenuItems";
 import AddIcon from "@mui/icons-material/Add";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -43,7 +42,7 @@ function MenuItemsHolder() {
         content={"Trailers"}
       />
       <MenuItems
-        route={"/"}
+        route={"/drivers"}
         icon={<Person2Icon style={menuIcon} />}
         content={"Drivers"}
       />

@@ -10,6 +10,7 @@ import { motion } from "framer-motion";
 import Textfield from "./Textfield";
 import SnackBar from "./SnackBar";
 import Filter1RoundedIcon from "@mui/icons-material/Filter1Rounded";
+import { useNavigate } from "react-router-dom";
 
 const theme = createTheme({
   breakpoints: {
@@ -65,6 +66,7 @@ const BasicData = () => {
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user.user);
   const snackbar = useSelector((state: RootState) => state.snackbar);
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -106,6 +108,10 @@ const BasicData = () => {
         });
     },
   });
+
+  const deleteAcc = () => {
+    axios.delete(`/company/delete-acc`).then(() => navigate("/sign-in"));
+  };
 
   return (
     <div className="section">
@@ -310,9 +316,14 @@ const BasicData = () => {
                   ) : null}
                 </Grid>
 
-                <Grid item xs={12}>
+                <Grid item xs={12} sm={6}>
                   <Button fullWidth variant="contained" type="submit">
                     Edit
+                  </Button>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Button onClick={deleteAcc} fullWidth variant="contained">
+                    Delete Acc
                   </Button>
                 </Grid>
               </Grid>

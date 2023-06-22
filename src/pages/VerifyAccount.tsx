@@ -2,7 +2,6 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { addUser } from "../redux/slices/userSlice";
 import { RootState } from "../redux/store";
 
 function VerifyAccount() {
@@ -26,8 +25,7 @@ function VerifyAccount() {
       .post("/company/verify-account", { token: search.get("token") })
       .then((res) => {
         console.log(res.data);
-        dispatch(addUser(res.data));
-        navigate("/");
+        navigate("/sign-in");
       })
       .catch((err) => {
         console.log(err);

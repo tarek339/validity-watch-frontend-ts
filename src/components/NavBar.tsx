@@ -28,13 +28,17 @@ function NavBar() {
           <Grid container justifyContent="flex-end">
             {user && (
               <IconButton style={iconStyle}>
-                <MessageSharpIcon />{" "}
+                <Grid container justifyContent="center" alignItems="center">
+                  <MessageSharpIcon />{" "}
+                </Grid>
               </IconButton>
             )}
 
             {user && (
               <IconButton style={iconStyle}>
-                <FeedbackSharpIcon />
+                <Grid container justifyContent="center" alignItems="center">
+                  <FeedbackSharpIcon />
+                </Grid>
               </IconButton>
             )}
 
@@ -43,11 +47,13 @@ function NavBar() {
                 onClick={() => {
                   localStorage.removeItem("token");
                   dispatch(removeUser());
-                  window.location.reload();
+                  // window.location.reload();
                 }}
                 style={iconStyle}
               >
-                <LogoutSharpIcon />
+                <Grid container justifyContent="center" alignItems="center">
+                  <LogoutSharpIcon />
+                </Grid>
               </IconButton>
             )}
 
@@ -58,7 +64,9 @@ function NavBar() {
                 }}
                 style={iconStyle}
               >
-                <LoginSharpIcon />
+                <Grid container justifyContent="center" alignItems="center">
+                  <LoginSharpIcon />
+                </Grid>
               </IconButton>
             )}
           </Grid>
