@@ -4,7 +4,9 @@ function Textfield(props: {
   label: string;
   name: string;
   value: string | number | undefined;
-  onChange: any;
+  onChange: (
+    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => void;
   helperText: string | undefined;
   error: boolean;
   type: string | undefined;

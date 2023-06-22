@@ -110,7 +110,10 @@ const BasicData = () => {
   });
 
   const deleteAcc = () => {
-    axios.delete(`/company/delete-acc`).then(() => navigate("/sign-in"));
+    axios.delete(`/company/delete-acc`).then(() => {
+      localStorage.removeItem("token");
+      navigate("/sign-in");
+    });
   };
 
   return (

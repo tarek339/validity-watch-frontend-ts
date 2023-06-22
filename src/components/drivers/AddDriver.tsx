@@ -59,13 +59,14 @@ const validationSchema = Yup.object({
   driverCardNumber: Yup.string()
     .matches(/^[a-zA-Z0-9 ]*$/)
     .required("required"),
-  driverCardNumberExpire: Yup.string().required("required"),
+  // driverCardNumberExpire: Yup.string().required("required"),
 });
 
 const AddDriver = () => {
   const dispatch = useDispatch();
   const snackbar = useSelector((state: RootState) => state.snackbar);
   const user = useSelector((state: RootState) => state.user.user);
+
   const formik = useFormik({
     initialValues: {
       id: user?._id,
@@ -327,7 +328,7 @@ const AddDriver = () => {
               <Grid item xs={12} sm={6}>
                 <Textfield
                   autoFocus={false}
-                  label="Driver card number"
+                  label="Driver card number expire"
                   name="driverCardNumberExpire"
                   value={formik.values.driverCardNumberExpire}
                   onChange={formik.handleChange}

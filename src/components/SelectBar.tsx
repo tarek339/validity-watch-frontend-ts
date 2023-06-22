@@ -1,10 +1,14 @@
-import { InputLabel, Select } from "@mui/material";
+import { InputLabel, Select, SelectChangeEvent } from "@mui/material";
+import { ReactNode } from "react";
 
 function SelectBar(props: {
   label: string;
   name: string;
   value: string | number;
-  onChange: any;
+  onChange: (
+    event: SelectChangeEvent<string | number>,
+    child: ReactNode
+  ) => void;
   error: boolean;
   children: React.ReactNode;
 }) {

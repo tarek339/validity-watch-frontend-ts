@@ -1,15 +1,2 @@
 props types problems to solve
-
 index.tsx request: any
-
-SelectBar.tsx
-  onChange: any;
-
-Textfield.tsx 
-  onChange: any;
-
-PickDate.tsx assign types
-  views: any;
-  format: any;
-  value: any;
-  onChange: any;
