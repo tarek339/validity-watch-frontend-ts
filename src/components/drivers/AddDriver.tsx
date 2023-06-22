@@ -16,7 +16,6 @@ import Textfield from "../Textfield";
 import SnackBar from "../SnackBar";
 import Person2Icon from "@mui/icons-material/Person2";
 import SelectBar from "../SelectBar";
-import PickDate from "../PickDate";
 
 const theme = createTheme({
   breakpoints: {
@@ -60,15 +59,16 @@ const validationSchema = Yup.object({
   driverCardNumber: Yup.string()
     .matches(/^[a-zA-Z0-9 ]*$/)
     .required("required"),
-  // driverCardNumberExpire: Yup.string().required("required"),
+  driverCardNumberExpire: Yup.string().required("required"),
 });
 
 const AddDriver = () => {
   const dispatch = useDispatch();
   const snackbar = useSelector((state: RootState) => state.snackbar);
-
+  const user = useSelector((state: RootState) => state.user.user);
   const formik = useFormik({
     initialValues: {
+      id: user?._id,
       firstName: "",
       lastName: "",
       phoneNumber: "",
@@ -78,12 +78,12 @@ const AddDriver = () => {
       codeNumber: "",
       codeNumberExpire: "",
       driverCardNumber: "",
-      driverCardNumberExpire: null,
+      driverCardNumberExpire: "",
     },
     validationSchema,
     onSubmit: async (values) => {
       await axios
-        .post("", values)
+        .post("/driver/sign-up", values)
         .then((res) => {
           dispatch(
             setSnackbar({
@@ -325,16 +325,18 @@ const AddDriver = () => {
                 ) : null}
               </Grid>
               <Grid item xs={12} sm={6}>
-                <PickDate
+                <Textfield
+                  autoFocus={false}
+                  label="Driver card number"
+                  name="driverCardNumberExpire"
+                  value={formik.values.driverCardNumberExpire}
+                  onChange={formik.handleChange}
+                  helperText={undefined}
                   error={
                     Boolean(formik.errors.driverCardNumberExpire) &&
                     Boolean(formik.touched.driverCardNumberExpire)
                   }
-                  inputLabel="Driver card number expire date"
-                  views={["day", "month", "year"]}
-                  format={"DD.MM.YYYY"}
-                  value={formik.values.driverCardNumberExpire}
-                  onChange={formik.handleChange}
+                  type={undefined}
                 />
                 {formik.touched.driverCardNumberExpire ? (
                   <div className="error">

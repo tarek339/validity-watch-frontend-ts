@@ -23,6 +23,7 @@ import UserProfile from "./pages/UserProfile";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import AddData from "./pages/AddData";
+import Drivers from "./pages/Drivers";
 
 const theme = createTheme({
   typography: {
@@ -81,6 +82,7 @@ function App() {
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/add-data" element={<AddData />} />
                 <Route path="/user-profile" element={<UserProfile />} />
+                <Route path="/drivers" element={<Drivers />} />
                 <Route path="/sign-in" element={<SignInCompany />} />
                 <Route path="/sign-up" element={<SignUpCompany />} />
                 <Route path="*" element={<NotFound />} />

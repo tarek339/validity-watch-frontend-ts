@@ -54,7 +54,7 @@ function SignUpCompany() {
       })
       .then(() => {
         navigate("/");
-        window.location.reload();
+        // window.location.reload();
       })
       .catch((err) => {
         console.log(err?.response?.data?.message);
