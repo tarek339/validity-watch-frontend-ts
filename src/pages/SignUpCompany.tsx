@@ -134,6 +134,7 @@ const SignUpCompany = () => {
                     Boolean(formik.touched.firstName)
                   }
                   type={undefined}
+                  inputProps={undefined}
                 />
                 {formik.touched.firstName ? (
                   <div className="error">{formik.errors.firstName} </div>
@@ -152,6 +153,7 @@ const SignUpCompany = () => {
                     Boolean(formik.touched.lastName)
                   }
                   type={undefined}
+                  inputProps={undefined}
                 />
                 {formik.touched.lastName ? (
                   <div className="error">{formik.errors.lastName} </div>
@@ -170,6 +172,7 @@ const SignUpCompany = () => {
                     Boolean(formik.touched.companyName)
                   }
                   type={undefined}
+                  inputProps={undefined}
                 />
                 {formik.touched.companyName ? (
                   <div className="error">{formik.errors.companyName} </div>
@@ -187,6 +190,7 @@ const SignUpCompany = () => {
                     Boolean(formik.errors.ceo) && Boolean(formik.touched.ceo)
                   }
                   type={undefined}
+                  inputProps={undefined}
                 />
                 {formik.touched.ceo ? (
                   <div className="error">{formik.errors.ceo} </div>
@@ -205,6 +209,7 @@ const SignUpCompany = () => {
                     Boolean(formik.touched.email)
                   }
                   type={undefined}
+                  inputProps={undefined}
                 />
                 {formik.touched.email ? (
                   <div className="error">{formik.errors.email} </div>
@@ -223,6 +228,7 @@ const SignUpCompany = () => {
                     Boolean(formik.touched.phoneNumber)
                   }
                   type={undefined}
+                  inputProps={undefined}
                 />
                 {formik.touched.phoneNumber ? (
                   <div className="error">{formik.errors.phoneNumber} </div>
@@ -241,6 +247,7 @@ const SignUpCompany = () => {
                     Boolean(formik.touched.password)
                   }
                   type="password"
+                  inputProps={undefined}
                 />
                 {formik.touched.password ? (
                   <div className="error">{formik.errors.password} </div>
@@ -259,6 +266,7 @@ const SignUpCompany = () => {
                     Boolean(formik.touched.confirmPassword)
                   }
                   type="password"
+                  inputProps={undefined}
                 />
                 {formik.touched.confirmPassword ? (
                   <div className="error">{formik.errors.confirmPassword} </div>
@@ -277,6 +285,7 @@ const SignUpCompany = () => {
                     Boolean(formik.touched.street)
                   }
                   type={undefined}
+                  inputProps={undefined}
                 />
                 {formik.touched.street ? (
                   <div className="error">{formik.errors.street} </div>
@@ -295,6 +304,7 @@ const SignUpCompany = () => {
                     Boolean(formik.touched.houseNumber)
                   }
                   type={undefined}
+                  inputProps={undefined}
                 />
                 {formik.touched.houseNumber ? (
                   <div className="error">{formik.errors.houseNumber} </div>
@@ -313,6 +323,7 @@ const SignUpCompany = () => {
                     Boolean(formik.touched.zipCode)
                   }
                   type={undefined}
+                  inputProps={undefined}
                 />
                 {formik.touched.zipCode ? (
                   <div className="error">{formik.errors.zipCode} </div>
@@ -330,6 +341,7 @@ const SignUpCompany = () => {
                     Boolean(formik.errors.city) && Boolean(formik.touched.city)
                   }
                   type={undefined}
+                  inputProps={undefined}
                 />
                 {formik.touched.city ? (
                   <div className="error">{formik.errors.city} </div>
@@ -348,6 +360,7 @@ const SignUpCompany = () => {
                     Boolean(formik.touched.communityLicence)
                   }
                   type={undefined}
+                  inputProps={undefined}
                 />
                 {formik.touched.communityLicence ? (
                   <div className="error">{formik.errors.communityLicence} </div>

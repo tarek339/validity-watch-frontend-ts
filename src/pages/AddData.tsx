@@ -2,8 +2,8 @@ import { useState } from "react";
 import AddDriver from "../components/drivers/AddDriver";
 import withRestriction from "../hoc/withRestrictions";
 import { Button, Grid } from "@mui/material";
-import AddTrucks from "../components/drivers/AddTrucks";
-import AddTrailers from "../components/drivers/AddTrailers";
+import AddTrucks from "../components/trucks/AddTrucks";
+import AddTrailers from "../components/trailers/AddTrailers";
 import { motion } from "framer-motion";
 
 function AddData() {

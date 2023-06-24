@@ -1,11 +1,11 @@
-import { useTheme } from "@mui/material/styles";
+import { ThemeProvider, createTheme, useTheme } from "@mui/material/styles";
 import FirstPageIcon from "@mui/icons-material/FirstPage";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Driver } from "../types/driverTypes";
+import { Driver } from "../../types/driverTypes";
 import {
   Box,
   IconButton,
@@ -21,6 +21,25 @@ import {
   tableCellClasses,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { useDispatch } from "react-redux";
+import { addDriver } from "../../redux/slices/driverSlice";
+import ModalView from "../ModalView";
+import MobileViewHolder from "./MobileViewHolder";
+
+const theme = createTheme({
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 500,
+      md: 750,
+      lg: 1024,
+      xl: 1530,
+    },
+  },
+  typography: {
+    fontFamily: "Inter, sans-serif",
+  },
+});
 
 interface TablePaginationActionsProps {
   count: number;
@@ -105,8 +124,8 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
 export default function DriverTable() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-
   const [drivers, setDrivers] = useState([]);
+  const dispatch = useDispatch();
 
   const getDrivers = async () => {
     await axios
@@ -141,14 +160,12 @@ export default function DriverTable() {
     setPage(0);
   };
 
-  const HeadFontStyle = {
-    fontSize: "16px",
-  };
-
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-      backgroundColor: theme.palette.common.black,
-      color: theme.palette.common.white,
+      borderTop: "1px solid rgba(224, 224, 224, 1)",
+      backgroundColor: "#E8E8E8",
+      borderRadius: "0px",
+      fontSize: "16px",
     },
     [`&.${tableCellClasses.body}`]: {
       fontSize: 14,
@@ -159,81 +176,81 @@ export default function DriverTable() {
     "&:nth-of-type(even)": {
       backgroundColor: theme.palette.action.hover,
     },
+    [theme.breakpoints.up("lg")]: {
+      ":hover": {
+        backgroundColor: "#E8E8E8",
+        cursor: "pointer",
+        transition: "0.2s",
+      },
+    },
   }));
-
-  const headStyle = {
-    borderTop: "1px solid rgba(224, 224, 224, 1)",
-    backgroundColor: "#E8E8E8",
-    borderRadius: "0px",
-  };
 
   return (
     <TableContainer square={true} component={Paper} elevation={0}>
-      <Table aria-label="custom pagination table">
-        <TableHead style={headStyle}>
-          <TableRow>
-            <TableCell style={HeadFontStyle}>Drivers name</TableCell>
-            <TableCell style={HeadFontStyle} align="right">
-              Contact
-            </TableCell>
-            <TableCell style={HeadFontStyle} align="right">
-              Licence type
-            </TableCell>
-            <TableCell style={HeadFontStyle} align="right">
-              Licence type
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {(rowsPerPage > 0
-            ? drivers.slice(
-                page * rowsPerPage,
-                page * rowsPerPage + rowsPerPage
-              )
-            : drivers
-          ).map((driver: Driver) => (
-            <StyledTableRow key={driver._id}>
-              <StyledTableCell component="th" scope="row">
-                {driver.firstName} {driver.lastName}
-              </StyledTableCell>
-              <StyledTableCell style={{ width: 160 }} align="right">
-                {driver.phoneNumber}
-              </StyledTableCell>
-              <StyledTableCell style={{ width: 160 }} align="right">
-                {driver.licenceTyp}
-              </StyledTableCell>
-              <StyledTableCell style={{ width: 160 }} align="right">
-                {driver.licenceTyp}
-              </StyledTableCell>
-            </StyledTableRow>
-          ))}
-          {emptyRows > 0 && (
-            <TableRow style={{ height: 53 * emptyRows }}>
-              <TableCell colSpan={6} />
+      <ModalView children={<MobileViewHolder />} />
+      <ThemeProvider theme={theme}>
+        <Table aria-label="custom pagination table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell>Name</StyledTableCell>
+              <StyledTableCell align="left">Type</StyledTableCell>
+              <StyledTableCell align="left">Activity</StyledTableCell>
             </TableRow>
-          )}
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
-              colSpan={4}
-              count={drivers.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              SelectProps={{
-                inputProps: {
-                  "aria-label": "rows per page",
-                },
-                native: true,
-              }}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              ActionsComponent={TablePaginationActions}
-            />
-          </TableRow>
-        </TableFooter>
-      </Table>
+          </TableHead>
+          <TableBody>
+            {(rowsPerPage > 0
+              ? drivers.slice(
+                  page * rowsPerPage,
+                  page * rowsPerPage + rowsPerPage
+                )
+              : drivers
+            ).map((driver: Driver, index) => (
+              <StyledTableRow
+                onClick={() => {
+                  axios.get(`/driver/driver/${driver._id}`).then((res) => {
+                    dispatch(addDriver(res.data));
+                  });
+                }}
+                key={driver._id}
+              >
+                <StyledTableCell>
+                  {index + 1} {driver.firstName} {driver.lastName}
+                </StyledTableCell>
+                <StyledTableCell align="left">
+                  {driver.licenceTyp}
+                </StyledTableCell>
+                <StyledTableCell align="left">
+                  {driver.licenceTyp}
+                </StyledTableCell>
+              </StyledTableRow>
+            ))}
+            {emptyRows > 0 && (
+              <TableRow style={{ height: 53 * emptyRows }}>
+                <TableCell colSpan={6} />
+              </TableRow>
+            )}
+          </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
+                count={drivers.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                SelectProps={{
+                  inputProps: {
+                    "aria-label": "rows per page",
+                  },
+                  native: true,
+                }}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                ActionsComponent={TablePaginationActions}
+              />
+            </TableRow>
+          </TableFooter>
+        </Table>
+      </ThemeProvider>
     </TableContainer>
   );
 }

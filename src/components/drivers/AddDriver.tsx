@@ -48,18 +48,18 @@ const validationSchema = Yup.object({
     )
     .required("required"),
   licenceNumber: Yup.string()
-    .matches(/^[a-zA-Z0-9 ]*$/)
+    .matches(/^[a-zA-Z0-9 ]*$/, "No special characters")
     .required("required"),
   licenceTyp: Yup.string().required("required"),
   licenceTypExpire: Yup.string().required("required"),
   codeNumber: Yup.string()
-    .matches(/^[a-zA-Z0-9 ]*$/)
+    .matches(/^[a-zA-Z0-9 ]*$/, "No special characters")
     .required("required"),
   codeNumberExpire: Yup.string().required("required"),
   driverCardNumber: Yup.string()
-    .matches(/^[a-zA-Z0-9 ]*$/)
+    .matches(/^[a-zA-Z0-9 ]*$/, "No special characters")
     .required("required"),
-  // driverCardNumberExpire: Yup.string().required("required"),
+  driverCardNumberExpire: Yup.string().required("required"),
 });
 
 const AddDriver = () => {
@@ -161,6 +161,7 @@ const AddDriver = () => {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <Textfield
+                  inputProps={undefined}
                   autoFocus={false}
                   label="First Name"
                   name="firstName"
@@ -179,6 +180,7 @@ const AddDriver = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Textfield
+                  inputProps={undefined}
                   autoFocus={false}
                   label="Last Name"
                   name="lastName"
@@ -197,6 +199,7 @@ const AddDriver = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Textfield
+                  inputProps={undefined}
                   autoFocus={false}
                   label="Phone number"
                   name="phoneNumber"
@@ -215,6 +218,7 @@ const AddDriver = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Textfield
+                  inputProps={undefined}
                   autoFocus={false}
                   label="Licence number"
                   name="licenceNumber"
@@ -233,6 +237,7 @@ const AddDriver = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <SelectBar
+                  sx={undefined}
                   label="Licence Typ"
                   name="licenceTyp"
                   value={formik.values.licenceTyp}
@@ -255,6 +260,7 @@ const AddDriver = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Textfield
+                  inputProps={undefined}
                   autoFocus={false}
                   label="Licence typ expiry date"
                   name="licenceTypExpire"
@@ -273,6 +279,7 @@ const AddDriver = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Textfield
+                  inputProps={undefined}
                   autoFocus={false}
                   label="Code number"
                   name="codeNumber"
@@ -291,6 +298,7 @@ const AddDriver = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Textfield
+                  inputProps={undefined}
                   autoFocus={false}
                   label="Code number expiry date"
                   name="codeNumberExpire"
@@ -309,6 +317,7 @@ const AddDriver = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Textfield
+                  inputProps={undefined}
                   autoFocus={false}
                   label="Driver card number"
                   name="driverCardNumber"
@@ -327,6 +336,7 @@ const AddDriver = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Textfield
+                  inputProps={undefined}
                   autoFocus={false}
                   label="Driver card number expire"
                   name="driverCardNumberExpire"

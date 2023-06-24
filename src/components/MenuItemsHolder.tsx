@@ -32,19 +32,19 @@ function MenuItemsHolder() {
         content={"Profile"}
       />
       <MenuItems
-        route={"/"}
+        route={"/drivers"}
+        icon={<Person2Icon style={menuIcon} />}
+        content={"Drivers"}
+      />
+      <MenuItems
+        route={"/trucks"}
         icon={<LocalShippingIcon style={menuIcon} />}
         content={"Trucks"}
       />
       <MenuItems
-        route={"/"}
+        route={"/trailers"}
         icon={<RvHookupIcon style={menuIcon} />}
         content={"Trailers"}
-      />
-      <MenuItems
-        route={"/drivers"}
-        icon={<Person2Icon style={menuIcon} />}
-        content={"Drivers"}
       />
     </div>
   );

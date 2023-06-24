@@ -1,7 +1,7 @@
 import { InputLabel, TextField } from "@mui/material";
 
 function Textfield(props: {
-  label: string;
+  label: string | undefined;
   name: string;
   value: string | number | undefined;
   onChange: (
@@ -11,6 +11,7 @@ function Textfield(props: {
   error: boolean;
   type: string | undefined;
   autoFocus: boolean;
+  inputProps: object | undefined;
 }) {
   return (
     <div>
@@ -28,6 +29,7 @@ function Textfield(props: {
         helperText={props.helperText}
         error={props.error}
         type={props.type}
+        inputProps={props.inputProps}
       />
     </div>
   );
