@@ -7,6 +7,7 @@ import LoginSharpIcon from "@mui/icons-material/LoginSharp";
 import LogoutSharpIcon from "@mui/icons-material/LogoutSharp";
 import FeedbackSharpIcon from "@mui/icons-material/FeedbackSharp";
 import MessageSharpIcon from "@mui/icons-material/MessageSharp";
+import { removeDriver } from "../redux/slices/driverSlice";
 
 const iconStyle = {
   color: "grey",
@@ -18,7 +19,7 @@ function NavBar() {
   const user = useSelector((state: RootState) => state.user.user);
   const dispatch = useDispatch();
   return (
-    <div>
+    <div className="navbar">
       <AppBar
         position="fixed"
         elevation={0}
@@ -46,6 +47,7 @@ function NavBar() {
               <IconButton
                 onClick={() => {
                   localStorage.removeItem("token");
+                  dispatch(removeDriver());
                   dispatch(removeUser());
                 }}
                 style={iconStyle}

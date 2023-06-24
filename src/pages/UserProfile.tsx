@@ -1,7 +1,7 @@
-import BasicData from "../components/BasicData";
-import EmailData from "../components/CompanyEmail";
-import ChangePassword from "../components/ChangePassword";
-import VerifyPassword from "../components/VerifyPassword";
+import BasicData from "../components/company/BasicData";
+import EmailData from "../components/company/CompanyEmail";
+import ChangePassword from "../components/company/ChangePassword";
+import VerifyPassword from "../components/company/VerifyPassword";
 import withRestriction from "../hoc/withRestrictions";
 import { useState } from "react";
 
@@ -13,7 +13,7 @@ function UserProfile() {
     <div className="section">
       <BasicData />
       <div className="section-child">
-        <div style={{ marginTop: "3em" }} className="section-child-content">
+        <div style={{ marginTop: "4em" }} className="section-child-content">
           {page === 0 ? stepOne : stepTwo}
         </div>
       </div>

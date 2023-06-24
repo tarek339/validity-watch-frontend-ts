@@ -104,6 +104,7 @@ const ResetPassword = () => {
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <Textfield
+                  inputProps={undefined}
                   autoFocus={false}
                   label="Password"
                   name="password"
@@ -122,6 +123,7 @@ const ResetPassword = () => {
               </Grid>
               <Grid item xs={6}>
                 <Textfield
+                  inputProps={undefined}
                   autoFocus={false}
                   label="Confirm password"
                   name="confirmPassword"

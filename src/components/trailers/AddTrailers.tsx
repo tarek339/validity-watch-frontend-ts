@@ -110,6 +110,7 @@ const AddTrailers = () => {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <Textfield
+                  inputProps={undefined}
                   autoFocus={false}
                   label="Indicator"
                   name="indicator"
@@ -128,6 +129,7 @@ const AddTrailers = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Textfield
+                  inputProps={undefined}
                   autoFocus={false}
                   label="Name"
                   name="name"
@@ -145,6 +147,7 @@ const AddTrailers = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Textfield
+                  inputProps={undefined}
                   autoFocus={false}
                   label="Type"
                   name="type"
@@ -162,6 +165,7 @@ const AddTrailers = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Textfield
+                  inputProps={undefined}
                   autoFocus={false}
                   label="Weight"
                   name="weight"
@@ -180,6 +184,7 @@ const AddTrailers = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Textfield
+                  inputProps={undefined}
                   autoFocus={false}
                   label="Next HU"
                   name="nextHU"
@@ -198,6 +203,7 @@ const AddTrailers = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Textfield
+                  inputProps={undefined}
                   autoFocus={false}
                   label="Next SP"
                   name="nextSP"

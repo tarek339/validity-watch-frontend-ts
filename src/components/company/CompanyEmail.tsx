@@ -3,12 +3,12 @@ import * as Yup from "yup";
 import { Button, Grid, ThemeProvider, createTheme } from "@mui/material";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import GridContainer from "./GridContainer";
-import { removeSnackbar, setSnackbar } from "../redux/slices/snackbarSlice";
-import { RootState } from "../redux/store";
+import GridContainer from "../GridContainer";
+import { removeSnackbar, setSnackbar } from "../../redux/slices/snackbarSlice";
+import { RootState } from "../../redux/store";
 import { motion } from "framer-motion";
-import Textfield from "./Textfield";
-import SnackBar from "./SnackBar";
+import Textfield from "../Textfield";
+import SnackBar from "../SnackBar";
 import Filter3RoundedIcon from "@mui/icons-material/Filter3Rounded";
 
 const theme = createTheme({
@@ -108,6 +108,7 @@ const CompanyEmail = () => {
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={12} md={6}>
                   <Textfield
+                    inputProps={undefined}
                     autoFocus={false}
                     label="E-Mail"
                     name="email"

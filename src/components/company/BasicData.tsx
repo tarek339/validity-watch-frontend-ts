@@ -3,12 +3,12 @@ import * as Yup from "yup";
 import { Button, Grid, ThemeProvider, createTheme } from "@mui/material";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import GridContainer from "./GridContainer";
-import { removeSnackbar, setSnackbar } from "../redux/slices/snackbarSlice";
-import { RootState } from "../redux/store";
+import GridContainer from "../GridContainer";
+import { removeSnackbar, setSnackbar } from "../../redux/slices/snackbarSlice";
+import { RootState } from "../../redux/store";
 import { motion } from "framer-motion";
-import Textfield from "./Textfield";
-import SnackBar from "./SnackBar";
+import Textfield from "../Textfield";
+import SnackBar from "../SnackBar";
 import Filter1RoundedIcon from "@mui/icons-material/Filter1Rounded";
 import { useNavigate } from "react-router-dom";
 
@@ -139,6 +139,7 @@ const BasicData = () => {
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6} md={4} lg={4}>
                   <Textfield
+                    inputProps={undefined}
                     autoFocus={false}
                     label="First Name"
                     name="firstName"
@@ -157,6 +158,7 @@ const BasicData = () => {
                 </Grid>
                 <Grid item xs={12} sm={6} md={4} lg={4}>
                   <Textfield
+                    inputProps={undefined}
                     autoFocus={false}
                     label="Last Name"
                     name="lastName"
@@ -175,6 +177,7 @@ const BasicData = () => {
                 </Grid>
                 <Grid item xs={12} sm={6} md={4} lg={4}>
                   <Textfield
+                    inputProps={undefined}
                     autoFocus={false}
                     label="Phone number"
                     name="phoneNumber"
@@ -193,6 +196,7 @@ const BasicData = () => {
                 </Grid>
                 <Grid item xs={12} sm={6} md={4} lg={4}>
                   <Textfield
+                    inputProps={undefined}
                     autoFocus={false}
                     label="Company name"
                     name="companyName"
@@ -211,6 +215,7 @@ const BasicData = () => {
                 </Grid>
                 <Grid item xs={12} sm={6} md={4} lg={4}>
                   <Textfield
+                    inputProps={undefined}
                     autoFocus={false}
                     label="CEO"
                     name="ceo"
@@ -228,6 +233,7 @@ const BasicData = () => {
                 </Grid>
                 <Grid item xs={12} sm={6} md={4} lg={4}>
                   <Textfield
+                    inputProps={undefined}
                     autoFocus={false}
                     label="Community Licence"
                     name="communityLicence"
@@ -248,6 +254,7 @@ const BasicData = () => {
                 </Grid>
                 <Grid item xs={12} sm={8} md={4} lg={4}>
                   <Textfield
+                    inputProps={undefined}
                     autoFocus={false}
                     label="Street"
                     name="street"
@@ -266,6 +273,7 @@ const BasicData = () => {
                 </Grid>
                 <Grid item xs={12} sm={4} md={2} lg={2}>
                   <Textfield
+                    inputProps={undefined}
                     autoFocus={false}
                     label="House Number"
                     name="houseNumber"
@@ -284,6 +292,7 @@ const BasicData = () => {
                 </Grid>
                 <Grid item xs={12} sm={6} md={3} lg={3}>
                   <Textfield
+                    inputProps={undefined}
                     autoFocus={false}
                     label="ZIP code"
                     name="zipCode"
@@ -302,6 +311,7 @@ const BasicData = () => {
                 </Grid>
                 <Grid item xs={12} sm={6} md={3} lg={3}>
                   <Textfield
+                    inputProps={undefined}
                     autoFocus={false}
                     label="City"
                     name="city"

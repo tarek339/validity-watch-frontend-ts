@@ -104,6 +104,7 @@ function SignUpCompany() {
                     error={false}
                     helperText={undefined}
                     type={undefined}
+                    inputProps={undefined}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -118,6 +119,7 @@ function SignUpCompany() {
                     error={false}
                     helperText={undefined}
                     type="password"
+                    inputProps={undefined}
                   />
                 </Grid>
 

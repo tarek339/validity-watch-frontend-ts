@@ -3,11 +3,11 @@ import * as Yup from "yup";
 import { Button, Grid, ThemeProvider, createTheme } from "@mui/material";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import GridContainer from "./GridContainer";
-import { removeSnackbar, setSnackbar } from "../redux/slices/snackbarSlice";
-import { RootState } from "../redux/store";
-import Textfield from "./Textfield";
-import SnackBar from "./SnackBar";
+import GridContainer from "../GridContainer";
+import { removeSnackbar, setSnackbar } from "../../redux/slices/snackbarSlice";
+import { RootState } from "../../redux/store";
+import Textfield from "../Textfield";
+import SnackBar from "../SnackBar";
 import Filter2RoundedIcon from "@mui/icons-material/Filter2Rounded";
 import { useEffect } from "react";
 
@@ -101,6 +101,7 @@ const ChangePassword = (props: { page: number; setPage: Function }) => {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <Textfield
+                inputProps={undefined}
                 autoFocus={true}
                 label="Password"
                 name="password"
@@ -120,6 +121,7 @@ const ChangePassword = (props: { page: number; setPage: Function }) => {
 
             <Grid item xs={12} sm={6}>
               <Textfield
+                inputProps={undefined}
                 autoFocus={false}
                 label="Confirm password"
                 name="confirmPassword"

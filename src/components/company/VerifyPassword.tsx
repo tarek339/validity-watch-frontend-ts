@@ -3,11 +3,11 @@ import { SetStateAction, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
-import Textfield from "./Textfield";
-import { removeSnackbar, setSnackbar } from "../redux/slices/snackbarSlice";
-import SnackBar from "./SnackBar";
-import { RootState } from "../redux/store";
-import GridContainer from "./GridContainer";
+import Textfield from "../Textfield";
+import { removeSnackbar, setSnackbar } from "../../redux/slices/snackbarSlice";
+import SnackBar from "../SnackBar";
+import { RootState } from "../../redux/store";
+import GridContainer from "../GridContainer";
 import Filter2RoundedIcon from "@mui/icons-material/Filter2Rounded";
 
 function VerifyPassword(props: { page: number; setPage: Function }) {
@@ -58,6 +58,7 @@ function VerifyPassword(props: { page: number; setPage: Function }) {
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Textfield
+              inputProps={undefined}
               autoFocus={false}
               label="Password"
               name="password"
