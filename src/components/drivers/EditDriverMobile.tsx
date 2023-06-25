@@ -10,6 +10,8 @@ import axios from "axios";
 import { removeSnackbar, setSnackbar } from "../../redux/slices/snackbarSlice";
 import SelectBar from "../SelectBar";
 import SnackBar from "../SnackBar";
+import PickDate from "../PickDate";
+import moment from "moment";
 
 const validationSchema = Yup.object({
   firstName: Yup.string()
@@ -256,19 +258,20 @@ function EditDriversMobile() {
             <Typography>Expiry date</Typography>
           </Grid>
           <Grid item xs={6}>
-            <Textfield
-              autoFocus={false}
-              label={undefined}
-              name="licenceTypExpire"
-              value={formik.values.licenceTypExpire}
-              onChange={formik.handleChange}
-              helperText={undefined}
+            <PickDate
+              views={["year", "month", "day"]}
+              format={"DD.MM.YYYY"}
+              value={moment(formik.values.licenceTypExpire)}
+              onChange={(value, context) => {
+                const date = moment(value);
+                // convert the string value to a Moment object
+                formik.setFieldValue("licenceTypExpire", date);
+              }}
               error={
                 Boolean(formik.errors.licenceTypExpire) &&
                 Boolean(formik.touched.licenceTypExpire)
               }
-              type={undefined}
-              inputProps={height}
+              inputLabel={"Expiry date"}
             />
             {formik.touched.licenceTypExpire ? (
               <div className="error">{formik.errors.licenceTypExpire} </div>
@@ -300,19 +303,20 @@ function EditDriversMobile() {
             <Typography>Expiry date</Typography>
           </Grid>
           <Grid item xs={6}>
-            <Textfield
-              autoFocus={false}
-              label={undefined}
-              name="codeNumberExpire"
-              value={formik.values.codeNumberExpire}
-              onChange={formik.handleChange}
-              helperText={undefined}
+            <PickDate
+              views={["year", "month", "day"]}
+              format={"DD.MM.YYYY"}
+              value={moment(formik.values.codeNumberExpire)}
+              onChange={(value, context) => {
+                const date = moment(value);
+                // convert the string value to a Moment object
+                formik.setFieldValue("codeNumberExpire", date);
+              }}
               error={
                 Boolean(formik.errors.codeNumberExpire) &&
                 Boolean(formik.touched.codeNumberExpire)
               }
-              type={undefined}
-              inputProps={height}
+              inputLabel={"Expiry date"}
             />
             {formik.touched.codeNumberExpire ? (
               <div className="error">{formik.errors.codeNumberExpire} </div>
@@ -344,19 +348,20 @@ function EditDriversMobile() {
             <Typography>Expiry date</Typography>
           </Grid>
           <Grid item xs={6}>
-            <Textfield
-              autoFocus={false}
-              label={undefined}
-              name="driverCardNumberExpire"
-              value={formik.values.driverCardNumberExpire}
-              onChange={formik.handleChange}
-              helperText={undefined}
+            <PickDate
+              views={["year", "month", "day"]}
+              format={"DD.MM.YYYY"}
+              value={moment(formik.values.driverCardNumberExpire)}
+              onChange={(value, context) => {
+                const date = moment(value);
+                // convert the string value to a Moment object
+                formik.setFieldValue("driverCardNumberExpire", date);
+              }}
               error={
                 Boolean(formik.errors.driverCardNumberExpire) &&
                 Boolean(formik.touched.driverCardNumberExpire)
               }
-              type={undefined}
-              inputProps={height}
+              inputLabel="Expiry date"
             />
             {formik.touched.driverCardNumberExpire ? (
               <div className="error">

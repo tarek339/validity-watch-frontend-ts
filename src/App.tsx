@@ -24,6 +24,8 @@ import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import AddData from "./pages/AddData";
 import Drivers from "./pages/Drivers";
+import Trucks from "./pages/Trucks";
+import Trailers from "./pages/Trailers";
 
 const theme = createTheme({
   typography: {
@@ -83,6 +85,8 @@ function App() {
                 <Route path="/add-data" element={<AddData />} />
                 <Route path="/user-profile" element={<UserProfile />} />
                 <Route path="/drivers" element={<Drivers />} />
+                <Route path="/trucks" element={<Trucks />} />
+                <Route path="/trailers" element={<Trailers />} />
                 <Route path="/sign-in" element={<SignInCompany />} />
                 <Route path="/sign-up" element={<SignUpCompany />} />
                 <Route path="*" element={<NotFound />} />
