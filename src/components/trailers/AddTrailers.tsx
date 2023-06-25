@@ -9,6 +9,8 @@ import GridContainer from "../GridContainer";
 import Textfield from "../Textfield";
 import SnackBar from "../SnackBar";
 import RvHookupIcon from "@mui/icons-material/RvHookup";
+import PickDate from "../PickDate";
+import moment from "moment";
 
 const theme = createTheme({
   breakpoints: {
@@ -38,6 +40,8 @@ const validationSchema = Yup.object({
   weight: Yup.string()
     .matches(/^[0-9]+$/, "Numbers only")
     .required("required"),
+  nextHU: Yup.string().required("required"),
+  nextSP: Yup.string().required("required"),
 });
 
 const AddTrailers = () => {
@@ -54,10 +58,11 @@ const AddTrailers = () => {
       nextSP: "",
     },
     validationSchema,
-    onSubmit: async (values) => {
+    onSubmit: async (values, { resetForm }) => {
       await axios
-        .post("", values)
+        .post("/trailer/sign-up", values)
         .then((res) => {
+          resetForm();
           dispatch(
             setSnackbar({
               open: true,
@@ -183,38 +188,40 @@ const AddTrailers = () => {
                 ) : null}
               </Grid>
               <Grid item xs={12} sm={6}>
-                <Textfield
-                  inputProps={undefined}
-                  autoFocus={false}
-                  label="Next HU"
-                  name="nextHU"
-                  value={formik.values.nextHU}
-                  onChange={formik.handleChange}
-                  helperText={undefined}
+                <PickDate
+                  views={["year", "month", "day"]}
+                  format={"DD.MM.YYYY"}
+                  value={moment(formik.values.nextHU)}
+                  onChange={(value, context) => {
+                    const date = moment(value);
+                    // convert the string value to a Moment object
+                    formik.setFieldValue("nextHU", date);
+                  }}
                   error={
                     Boolean(formik.errors.nextHU) &&
                     Boolean(formik.touched.nextHU)
                   }
-                  type={undefined}
+                  inputLabel={"Next HU"}
                 />
                 {formik.touched.nextHU ? (
                   <div className="error">{formik.errors.nextHU} </div>
                 ) : null}
               </Grid>
               <Grid item xs={12} sm={6}>
-                <Textfield
-                  inputProps={undefined}
-                  autoFocus={false}
-                  label="Next SP"
-                  name="nextSP"
-                  value={formik.values.nextSP}
-                  onChange={formik.handleChange}
-                  helperText={undefined}
+                <PickDate
+                  views={["year", "month", "day"]}
+                  format={"DD.MM.YYYY"}
+                  value={moment(formik.values.nextSP)}
+                  onChange={(value, context) => {
+                    const date = moment(value);
+                    // convert the string value to a Moment object
+                    formik.setFieldValue("nextSP", date);
+                  }}
                   error={
                     Boolean(formik.errors.nextSP) &&
                     Boolean(formik.touched.nextSP)
                   }
-                  type={undefined}
+                  inputLabel={"Next SP"}
                 />
                 {formik.touched.nextSP ? (
                   <div className="error">{formik.errors.nextSP} </div>

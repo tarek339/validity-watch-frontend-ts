@@ -16,6 +16,8 @@ import Textfield from "../Textfield";
 import SnackBar from "../SnackBar";
 import Person2Icon from "@mui/icons-material/Person2";
 import SelectBar from "../SelectBar";
+import PickDate from "../PickDate";
+import moment from "moment";
 
 const theme = createTheme({
   breakpoints: {
@@ -82,10 +84,11 @@ const AddDriver = () => {
       driverCardNumberExpire: "",
     },
     validationSchema,
-    onSubmit: async (values) => {
+    onSubmit: async (values, { resetForm }) => {
       await axios
         .post("/driver/sign-up", values)
         .then((res) => {
+          resetForm();
           dispatch(
             setSnackbar({
               open: true,
@@ -101,6 +104,7 @@ const AddDriver = () => {
             4000
           );
         })
+
         .catch((err) => {
           console.log(err?.response?.data?.message);
           dispatch(
@@ -259,19 +263,20 @@ const AddDriver = () => {
                 ) : null}
               </Grid>
               <Grid item xs={12} sm={6}>
-                <Textfield
-                  inputProps={undefined}
-                  autoFocus={false}
-                  label="Licence typ expiry date"
-                  name="licenceTypExpire"
-                  value={formik.values.licenceTypExpire}
-                  onChange={formik.handleChange}
-                  helperText={undefined}
+                <PickDate
+                  views={["year", "month", "day"]}
+                  format={"DD.MM.YYYY"}
+                  value={moment(formik.values.licenceTypExpire)}
+                  onChange={(value, context) => {
+                    const date = moment(value);
+                    // convert the string value to a Moment object
+                    formik.setFieldValue("licenceTypExpire", date);
+                  }}
                   error={
                     Boolean(formik.errors.licenceTypExpire) &&
                     Boolean(formik.touched.licenceTypExpire)
                   }
-                  type={undefined}
+                  inputLabel={"Expiry date"}
                 />
                 {formik.touched.licenceTypExpire ? (
                   <div className="error">{formik.errors.licenceTypExpire} </div>
@@ -297,19 +302,20 @@ const AddDriver = () => {
                 ) : null}
               </Grid>
               <Grid item xs={12} sm={6}>
-                <Textfield
-                  inputProps={undefined}
-                  autoFocus={false}
-                  label="Code number expiry date"
-                  name="codeNumberExpire"
-                  value={formik.values.codeNumberExpire}
-                  onChange={formik.handleChange}
-                  helperText={undefined}
+                <PickDate
+                  views={["year", "month", "day"]}
+                  format={"DD.MM.YYYY"}
+                  value={moment(formik.values.codeNumberExpire)}
+                  onChange={(value, context) => {
+                    const date = moment(value);
+                    // convert the string value to a Moment object
+                    formik.setFieldValue("codeNumberExpire", date);
+                  }}
                   error={
                     Boolean(formik.errors.codeNumberExpire) &&
                     Boolean(formik.touched.codeNumberExpire)
                   }
-                  type={undefined}
+                  inputLabel={"Expiry date"}
                 />
                 {formik.touched.codeNumberExpire ? (
                   <div className="error">{formik.errors.codeNumberExpire} </div>
@@ -334,20 +340,22 @@ const AddDriver = () => {
                   <div className="error">{formik.errors.driverCardNumber}</div>
                 ) : null}
               </Grid>
+
               <Grid item xs={12} sm={6}>
-                <Textfield
-                  inputProps={undefined}
-                  autoFocus={false}
-                  label="Driver card number expire"
-                  name="driverCardNumberExpire"
-                  value={formik.values.driverCardNumberExpire}
-                  onChange={formik.handleChange}
-                  helperText={undefined}
+                <PickDate
+                  views={["year", "month", "day"]}
+                  format={"DD.MM.YYYY"}
+                  value={moment(formik.values.driverCardNumberExpire)}
+                  onChange={(value, context) => {
+                    const date = moment(value);
+                    // convert the string value to a Moment object
+                    formik.setFieldValue("driverCardNumberExpire", date);
+                  }}
                   error={
                     Boolean(formik.errors.driverCardNumberExpire) &&
                     Boolean(formik.touched.driverCardNumberExpire)
                   }
-                  type={undefined}
+                  inputLabel="Expiry date"
                 />
                 {formik.touched.driverCardNumberExpire ? (
                   <div className="error">

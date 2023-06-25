@@ -1,7 +1,10 @@
 import { Modal, Box } from "@mui/material";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
+import { removeDriver } from "../redux/slices/driverSlice";
+import { removeTruck } from "../redux/slices/truckSlice";
+import { removeTrailer } from "../redux/slices/trailerSlice";
 
 const style = {
   position: "absolute" as "absolute",
@@ -16,19 +19,27 @@ const style = {
 };
 
 function ModalView(props: { children: React.ReactNode }) {
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = useCallback(() => {
+    setOpen(false);
+    dispatch(removeDriver());
+    dispatch(removeTruck());
+    dispatch(removeTrailer());
+  }, [dispatch]);
   const driver = useSelector((state: RootState) => state.driver.driver);
+  const truck = useSelector((state: RootState) => state.truck.truck);
+  const trailer = useSelector((state: RootState) => state.trailer.trailer);
 
   useEffect(() => {
-    if (driver) {
+    if (driver || truck || trailer) {
       handleOpen();
     }
     if (window.innerWidth > 900) {
       handleClose();
     }
-  }, [driver]);
+  }, [driver, truck, trailer, handleClose]);
   return (
     <Box>
       <Modal disableAutoFocus={true} open={open} onClose={handleClose}>

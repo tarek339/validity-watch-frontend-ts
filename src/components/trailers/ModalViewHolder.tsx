@@ -1,24 +1,24 @@
-// ModalViewHolder Drivers
+// ModalViewHolder Trailers
 import { useState } from "react";
-import DriverProfileMobile from "./DriverProfileMobile";
 import { BottomNavigation, BottomNavigationAction, Grid } from "@mui/material";
 import ModeEditOutlineRoundedIcon from "@mui/icons-material/ModeEditOutlineRounded";
-import PersonRemoveRoundedIcon from "@mui/icons-material/PersonRemoveRounded";
+import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { removeDriver } from "../../redux/slices/driverSlice";
 import { RootState } from "../../redux/store";
-import EditDriversMobile from "./EditDriverMobile";
+import { removeTrailer } from "../../redux/slices/trailerSlice";
+import TrailersProfileMobile from "./TrailerProfileMobile";
+import EditTrailerMobile from "./EditTrailerMobile";
 
 function MobileViewHolder() {
   const [page, setPage] = useState(0);
-  const driver = useSelector((state: RootState) => state.driver.driver);
+  const trailer = useSelector((state: RootState) => state.trailer.trailer);
   const dispatch = useDispatch();
 
-  const deleteDriver = () => {
-    axios.delete(`/driver/delete/${driver?._id}`).then(() => {
-      dispatch(removeDriver());
+  const deleteTrailer = () => {
+    axios.delete(`/trailer/delete/${trailer?._id}`).then(() => {
+      dispatch(removeTrailer());
     });
   };
 
@@ -30,7 +30,7 @@ function MobileViewHolder() {
         justifyContent="space-between"
         sx={{ height: "580px" }}
       >
-        {page === 0 ? <DriverProfileMobile /> : <EditDriversMobile />}
+        {page === 0 ? <TrailersProfileMobile /> : <EditTrailerMobile />}
 
         <Grid container direction="row" justifyContent="flex-end">
           <BottomNavigation showLabels>
@@ -51,8 +51,8 @@ function MobileViewHolder() {
             <BottomNavigationAction
               disableRipple
               label="Delete"
-              icon={<PersonRemoveRoundedIcon />}
-              onClick={deleteDriver}
+              icon={<RemoveCircleOutlineIcon />}
+              onClick={deleteTrailer}
             />
           </BottomNavigation>
         </Grid>

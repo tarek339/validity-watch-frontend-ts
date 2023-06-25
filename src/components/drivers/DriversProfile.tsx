@@ -3,20 +3,9 @@ import GridContainer from "../GridContainer";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { RootState } from "../../redux/store";
 import { Grid, Typography } from "@mui/material";
-import { useCallback, useEffect } from "react";
-import axios from "axios";
 
 function DriversProfile() {
   const driver = useSelector((state: RootState) => state.driver.driver);
-  const getSingleDriver = useCallback(async () => {
-    if (driver) {
-      await axios.get(`/driver/driver/${driver?._id}`);
-    }
-  }, [driver]);
-
-  useEffect(() => {
-    getSingleDriver();
-  }, [getSingleDriver]);
 
   return (
     <div className="profile-section-child">

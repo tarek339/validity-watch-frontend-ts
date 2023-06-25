@@ -1,23 +1,23 @@
-// ModalViewHolder Drivers
+// ModalViewHolder Trucks
 import { useState } from "react";
-import DriverProfileMobile from "./DriverProfileMobile";
 import { BottomNavigation, BottomNavigationAction, Grid } from "@mui/material";
 import ModeEditOutlineRoundedIcon from "@mui/icons-material/ModeEditOutlineRounded";
-import PersonRemoveRoundedIcon from "@mui/icons-material/PersonRemoveRounded";
+import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { removeDriver } from "../../redux/slices/driverSlice";
 import { RootState } from "../../redux/store";
-import EditDriversMobile from "./EditDriverMobile";
+import TrucksProfileMobile from "./TrucksProfileMobile";
+import EditTruckMobile from "./EditTruckMobile";
 
 function MobileViewHolder() {
   const [page, setPage] = useState(0);
-  const driver = useSelector((state: RootState) => state.driver.driver);
+  const truck = useSelector((state: RootState) => state.truck.truck);
   const dispatch = useDispatch();
 
-  const deleteDriver = () => {
-    axios.delete(`/driver/delete/${driver?._id}`).then(() => {
+  const deleteTruck = () => {
+    axios.delete(`/truck/delete/${truck?._id}`).then(() => {
       dispatch(removeDriver());
     });
   };
@@ -30,7 +30,7 @@ function MobileViewHolder() {
         justifyContent="space-between"
         sx={{ height: "580px" }}
       >
-        {page === 0 ? <DriverProfileMobile /> : <EditDriversMobile />}
+        {page === 0 ? <TrucksProfileMobile /> : <EditTruckMobile />}
 
         <Grid container direction="row" justifyContent="flex-end">
           <BottomNavigation showLabels>
@@ -51,8 +51,8 @@ function MobileViewHolder() {
             <BottomNavigationAction
               disableRipple
               label="Delete"
-              icon={<PersonRemoveRoundedIcon />}
-              onClick={deleteDriver}
+              icon={<RemoveCircleOutlineIcon />}
+              onClick={deleteTruck}
             />
           </BottomNavigation>
         </Grid>
