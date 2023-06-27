@@ -1,6 +1,4 @@
-import GridContainer from "../GridContainer";
 import { Button, Grid } from "@mui/material";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import * as Yup from "yup";
@@ -337,15 +335,11 @@ function EditDriversProfile() {
   );
 
   return (
-    <div className="profile-section-child">
+    <div>
       {snackbar.open ? <SnackBar /> : null}
-      <GridContainer
-        backgroundColor="#00a152"
-        icon={<AccountCircleIcon />}
-        content="Edit data"
-      />
+
       <form onSubmit={formik.handleSubmit}>
-        <Grid container rowSpacing={2} alignItems="center">
+        <Grid container rowSpacing={{ xs: 3 }} alignItems="center">
           {page === 0 ? pageOne : pageTwo}
           <Grid item xs={12}>
             <Button variant="contained" size="small" type="submit">

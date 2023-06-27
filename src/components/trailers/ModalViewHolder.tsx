@@ -8,8 +8,10 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { removeTrailer } from "../../redux/slices/trailerSlice";
-import TrailersProfileMobile from "./TrailerProfileMobile";
-import EditTrailerMobile from "./EditTrailerMobile";
+import TrailersProfile from "./TrailersProfile";
+import EditTrailer from "./EditTrailer";
+import GridContainer from "../GridContainer";
+import RvHookupIcon from "@mui/icons-material/RvHookup";
 
 function MobileViewHolder() {
   const [page, setPage] = useState(0);
@@ -24,13 +26,18 @@ function MobileViewHolder() {
 
   return (
     <div>
+      <GridContainer
+        backgroundColor={page === 0 ? "#00a152" : "#3d5afe"}
+        icon={page === 0 ? <RvHookupIcon /> : <ModeEditOutlineRoundedIcon />}
+        content={page === 0 ? "Profile" : "Edit"}
+      />
       <Grid
         container
         direction="column"
         justifyContent="space-between"
         sx={{ height: "580px" }}
       >
-        {page === 0 ? <TrailersProfileMobile /> : <EditTrailerMobile />}
+        {page === 0 ? <TrailersProfile /> : <EditTrailer />}
 
         <Grid container direction="row" justifyContent="flex-end">
           <BottomNavigation showLabels>

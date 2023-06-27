@@ -11,6 +11,8 @@ import EditDriversProfile from "./EditDriversProfile";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import axios from "axios";
 import { removeDriver } from "../../redux/slices/driverSlice";
+import GridContainer from "../GridContainer";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const boxStyle = {
   margin: "8px 10px 10px 10px",
@@ -114,15 +116,25 @@ function ProfileDrawer() {
         variant="persistent"
         elevation={0}
       >
-        <Box sx={boxStyle}>
+        <Box className="profile-section-child" sx={boxStyle}>
+          <GridContainer
+            backgroundColor={page === 0 ? "#00a152" : "#3d5afe"}
+            icon={
+              page === 0 ? (
+                <AccountCircleIcon />
+              ) : (
+                <ModeEditOutlineRoundedIcon />
+              )
+            }
+            content={page === 0 ? "Profile" : "Edit"}
+          />
           <Grid
             container
             direction="column"
             justifyContent="space-between"
-            sx={{ height: "100%" }}
+            sx={{ height: "95%" }}
           >
             {page === 0 ? <DriversProfile /> : <EditDriversProfile />}
-
             <Grid container direction="row" justifyContent="space-between">
               {bottomNavigation.map((btn: BottomNavBtns) => {
                 return (

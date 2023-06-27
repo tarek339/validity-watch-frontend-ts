@@ -25,6 +25,7 @@ import { Truck } from "../../types/truckTypes";
 import { addTruck } from "../../redux/slices/truckSlice";
 import MobileViewHolder from "./MobileViewHolder";
 import ModalView from "../ModalView";
+import moment from "moment";
 
 const theme = createTheme({
   breakpoints: {
@@ -216,8 +217,12 @@ export default function TruckTable() {
                 <StyledTableCell>
                   {index + 1} {truck.indicator}
                 </StyledTableCell>
-                <StyledTableCell align="left">{truck.nextHU}</StyledTableCell>
-                <StyledTableCell align="left">{truck.nextSP}</StyledTableCell>
+                <StyledTableCell align="left">
+                  {moment(truck.nextHU).format("DD.MM.YYYY")}
+                </StyledTableCell>
+                <StyledTableCell align="left">
+                  {moment(truck.nextSP).format("DD.MM.YYYY")}
+                </StyledTableCell>
               </StyledTableRow>
             ))}
             {emptyRows > 0 && (

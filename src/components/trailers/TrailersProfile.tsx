@@ -1,19 +1,13 @@
 import { useSelector } from "react-redux";
-import GridContainer from "../GridContainer";
 import { RootState } from "../../redux/store";
 import { Grid, Typography } from "@mui/material";
-import RvHookupIcon from "@mui/icons-material/RvHookup";
+import moment from "moment";
 
 function TrailersProfile() {
   const trailer = useSelector((state: RootState) => state.trailer.trailer);
 
   return (
-    <div className="profile-section-child">
-      <GridContainer
-        backgroundColor="#00a152"
-        icon={<RvHookupIcon />}
-        content="Profile"
-      />
+    <div>
       <Grid container rowSpacing={2}>
         <Grid item xs={5}>
           <Typography>Indicator</Typography>
@@ -43,13 +37,17 @@ function TrailersProfile() {
           <Typography>Next HU</Typography>
         </Grid>
         <Grid item xs={7}>
-          <Typography>{trailer?.nextHU}</Typography>
+          <Typography>
+            {moment(trailer?.nextHU).format("DD.MM.YYYY")}
+          </Typography>
         </Grid>
         <Grid item xs={5}>
           <Typography>Next SP</Typography>
         </Grid>
         <Grid item xs={7}>
-          <Typography>{trailer?.nextSP}</Typography>
+          <Typography>
+            {moment(trailer?.nextSP).format("DD.MM.YYYY")}
+          </Typography>
         </Grid>
       </Grid>
     </div>

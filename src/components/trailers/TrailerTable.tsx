@@ -25,6 +25,7 @@ import { addTrailer } from "../../redux/slices/trailerSlice";
 import { Trailer } from "../../types/trailerTypes";
 import ModalView from "../ModalView";
 import MobileViewHolder from "./ModalViewHolder";
+import moment from "moment";
 
 const theme = createTheme({
   breakpoints: {
@@ -216,8 +217,12 @@ export default function TrailerTable() {
                 <StyledTableCell>
                   {index + 1} {trailer.indicator}
                 </StyledTableCell>
-                <StyledTableCell align="left">{trailer.nextHU}</StyledTableCell>
-                <StyledTableCell align="left">{trailer.nextSP}</StyledTableCell>
+                <StyledTableCell align="left">
+                  {moment(trailer.nextHU).format("DD.MM.YYYY")}
+                </StyledTableCell>
+                <StyledTableCell align="left">
+                  {moment(trailer.nextSP).format("DD.MM.YYYY")}
+                </StyledTableCell>
               </StyledTableRow>
             ))}
             {emptyRows > 0 && (

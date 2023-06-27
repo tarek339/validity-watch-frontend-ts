@@ -107,10 +107,10 @@ function StepTwo(props: {
 }) {
   return (
     <>
-      <Grid item xs={6}>
+      <Grid item xs={5}>
         <Typography>Licence num.</Typography>
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={7}>
         <Textfield
           autoFocus={false}
           label={undefined}
@@ -124,10 +124,10 @@ function StepTwo(props: {
         />
         {props.holderLicenceNumber}
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={5}>
         <Typography>Licence type</Typography>
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={7}>
         <SelectBar
           sx={{
             height: "26px",
@@ -147,10 +147,10 @@ function StepTwo(props: {
         />
         {props.holderLicenceTyp}
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={5}>
         <Typography>Expiry date</Typography>
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={7}>
         <PickDate
           views={["year", "month", "day"]}
           format={"DD.MM.YYYY"}
@@ -162,10 +162,10 @@ function StepTwo(props: {
         />
         {props.holderLicenceTypExpire}
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={5}>
         <Typography>Code num.</Typography>
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={7}>
         <SelectBar
           label={undefined}
           name={"codeNumber"}
@@ -183,10 +183,10 @@ function StepTwo(props: {
         />
         {props.holderCodeNumber}
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={5}>
         <Typography>Expiry date</Typography>
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={7}>
         <PickDate
           views={["year", "month", "day"]}
           format={"DD.MM.YYYY"}
@@ -198,10 +198,10 @@ function StepTwo(props: {
         />
         {props.holderCodeNumberExpire}
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={5}>
         <Typography>Driver card num.</Typography>
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={7}>
         <Textfield
           autoFocus={false}
           label={undefined}
@@ -215,10 +215,10 @@ function StepTwo(props: {
         />
         {props.holderDriverCardNumber}
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={5}>
         <Typography>Expiry date</Typography>
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={7}>
         <PickDate
           views={["year", "month", "day"]}
           format={"DD.MM.YYYY"}
