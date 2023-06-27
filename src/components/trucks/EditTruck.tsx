@@ -1,6 +1,4 @@
 import { Button, Grid, Typography } from "@mui/material";
-import GridContainer from "../GridContainer";
-import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
@@ -88,12 +86,7 @@ function EditTruck() {
     style: { height: "10px" },
   };
   return (
-    <div className="profile-section-child">
-      <GridContainer
-        backgroundColor="#00a162"
-        icon={<LocalShippingIcon />}
-        content="Edit"
-      />
+    <div>
       {snackbar.open ? <SnackBar /> : null}
       <form onSubmit={formik.handleSubmit}>
         <Grid container rowSpacing={2} alignItems="center">
@@ -198,8 +191,8 @@ function EditTruck() {
               error={
                 Boolean(formik.errors.nextHU) && Boolean(formik.touched.nextHU)
               }
-              inputLabel={"Next HU"}
-              inputProps={undefined}
+              inputLabel={undefined}
+              inputProps={height}
             />
             {formik.touched.nextHU ? (
               <div className="error">{formik.errors.nextHU} </div>
@@ -221,8 +214,8 @@ function EditTruck() {
               error={
                 Boolean(formik.errors.nextSP) && Boolean(formik.touched.nextSP)
               }
-              inputLabel={"Next SP"}
-              inputProps={undefined}
+              inputLabel={undefined}
+              inputProps={height}
             />
             {formik.touched.nextSP ? (
               <div className="error">{formik.errors.nextSP} </div>

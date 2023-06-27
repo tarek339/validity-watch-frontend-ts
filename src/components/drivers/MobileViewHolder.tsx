@@ -1,15 +1,17 @@
 // ModalViewHolder Drivers
 import { useState } from "react";
-import DriverProfileMobile from "./DriverProfileMobile";
 import { BottomNavigation, BottomNavigationAction, Grid } from "@mui/material";
 import ModeEditOutlineRoundedIcon from "@mui/icons-material/ModeEditOutlineRounded";
 import PersonRemoveRoundedIcon from "@mui/icons-material/PersonRemoveRounded";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { removeDriver } from "../../../redux/slices/driverSlice";
-import { RootState } from "../../../redux/store";
-import EditDriversMobile from "./EditDriverMobile";
+import { removeDriver } from "../../redux/slices/driverSlice";
+import { RootState } from "../../redux/store";
+import DriversProfile from "./DriversProfile";
+import EditDriversProfile from "./EditDriversProfile";
+import GridContainer from "../GridContainer";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 function MobileViewHolder() {
   const [page, setPage] = useState(0);
@@ -22,13 +24,28 @@ function MobileViewHolder() {
     });
   };
 
+  const style = {
+    backgroundColor: "transparent",
+  };
+
   return (
     <div>
-      <Grid container direction="column" justifyContent="space-between">
-        {page === 0 ? <DriverProfileMobile /> : <EditDriversMobile />}
-
+      <GridContainer
+        backgroundColor={page === 0 ? "#00a152" : "#3d5afe"}
+        icon={
+          page === 0 ? <AccountCircleIcon /> : <ModeEditOutlineRoundedIcon />
+        }
+        content={page === 0 ? "Profile" : "Edit"}
+      />
+      <Grid
+        container
+        direction="column"
+        justifyContent="space-between"
+        sx={{ height: "600px" }}
+      >
+        {page === 0 ? <DriversProfile /> : <EditDriversProfile />}
         <Grid container direction="row" justifyContent="flex-end">
-          <BottomNavigation showLabels>
+          <BottomNavigation style={style} showLabels>
             <BottomNavigationAction
               disableRipple
               label={page === 0 ? "Edit" : "Back"}

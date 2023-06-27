@@ -11,6 +11,8 @@ import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { removeTrailer } from "../../redux/slices/trailerSlice";
 import TrailersProfile from "./TrailersProfile";
 import EditTrailer from "./EditTrailer";
+import GridContainer from "../GridContainer";
+import RvHookupIcon from "@mui/icons-material/RvHookup";
 
 const boxStyle = {
   margin: "8px 10px 10px 10px",
@@ -114,12 +116,19 @@ function TrailerDrawer() {
         variant="persistent"
         elevation={0}
       >
-        <Box sx={boxStyle}>
+        <Box className="profile-section-child" sx={boxStyle}>
+          <GridContainer
+            backgroundColor={page === 0 ? "#00a152" : "#3d5afe"}
+            icon={
+              page === 0 ? <RvHookupIcon /> : <ModeEditOutlineRoundedIcon />
+            }
+            content={page === 0 ? "Profile" : "Edit"}
+          />
           <Grid
             container
             direction="column"
             justifyContent="space-between"
-            sx={{ height: "100%" }}
+            sx={{ height: "95%" }}
           >
             {page === 0 ? <TrailersProfile /> : <EditTrailer />}
 

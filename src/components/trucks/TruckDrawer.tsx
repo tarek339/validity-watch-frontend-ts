@@ -11,6 +11,8 @@ import TrucksProfile from "./TrucksProfile";
 import EditTruck from "./EditTruck";
 import { removeTruck } from "../../redux/slices/truckSlice";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import GridContainer from "../GridContainer";
 
 const boxStyle = {
   margin: "8px 10px 10px 10px",
@@ -114,12 +116,23 @@ function TruckDrawer() {
         variant="persistent"
         elevation={0}
       >
-        <Box sx={boxStyle}>
+        <Box className="profile-section-child" sx={boxStyle}>
+          <GridContainer
+            backgroundColor={page === 0 ? "#00a152" : "#3d5afe"}
+            icon={
+              page === 0 ? (
+                <LocalShippingIcon />
+              ) : (
+                <ModeEditOutlineRoundedIcon />
+              )
+            }
+            content={page === 0 ? "Profile" : "Edit"}
+          />
           <Grid
             container
             direction="column"
             justifyContent="space-between"
-            sx={{ height: "100%" }}
+            sx={{ height: "95%" }}
           >
             {page === 0 ? <TrucksProfile /> : <EditTruck />}
 

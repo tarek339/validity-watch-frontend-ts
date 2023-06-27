@@ -1,5 +1,3 @@
-import GridContainer from "../GridContainer";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { RootState } from "../../redux/store";
 import { Grid, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
@@ -8,12 +6,7 @@ import moment from "moment";
 function DriversProfile() {
   const driver = useSelector((state: RootState) => state.driver.driver);
   return (
-    <div className="profile-section-child">
-      <GridContainer
-        backgroundColor="#00a152"
-        icon={<AccountCircleIcon />}
-        content="Profile"
-      />
+    <div>
       <Grid container rowSpacing={2}>
         <Grid item xs={5}>
           <Typography>Name</Typography>
