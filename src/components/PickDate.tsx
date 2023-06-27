@@ -16,7 +16,8 @@ export default function PickDate(props: {
       ) => void)
     | undefined;
   error: boolean;
-  inputLabel: string;
+  inputLabel: string | undefined;
+  inputProps: object | undefined;
 }) {
   return (
     <div>
@@ -33,6 +34,7 @@ export default function PickDate(props: {
               className: "TextField-without-border-radius",
               size: "small",
               error: props.error,
+              inputProps: props.inputProps,
             },
           }}
         />

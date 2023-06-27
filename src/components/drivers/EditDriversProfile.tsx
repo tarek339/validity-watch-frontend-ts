@@ -1,17 +1,17 @@
 import GridContainer from "../GridContainer";
-import { Button, Grid, MenuItem, Typography } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import Textfield from "../Textfield";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import axios from "axios";
 import { removeSnackbar, setSnackbar } from "../../redux/slices/snackbarSlice";
-import SelectBar from "../SelectBar";
 import SnackBar from "../SnackBar";
-import PickDate from "../PickDate";
+import { useState } from "react";
+import StepOne from "./StepOne";
 import moment from "moment";
+import StepTwo from "./StepTwo";
 
 const validationSchema = Yup.object({
   firstName: Yup.string()
@@ -27,6 +27,22 @@ const validationSchema = Yup.object({
       /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s/0-9]*$/g,
       "Incorrect type of phone number"
     )
+    .required("required"),
+  street: Yup.string()
+    .matches(/^[A-Za-z\s]+$/, "Letters only")
+    .required("required"),
+  houseNumber: Yup.string()
+    .matches(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s/0-9]*$/g, "Numbers only")
+    .required("required"),
+  zipCode: Yup.string()
+    .matches(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s/0-9]*$/g, "Numbers only")
+    .required("required"),
+  city: Yup.string()
+    .matches(/^[A-Za-z\s]+$/, "Letters only")
+    .required("required"),
+  birthday: Yup.string().required("required"),
+  birthPlace: Yup.string()
+    .matches(/^[A-Za-z\s]+$/, "Letters only")
     .required("required"),
   licenceNumber: Yup.string()
     .matches(/^[a-zA-Z0-9 ]*$/, "No special characters")
@@ -47,6 +63,7 @@ function EditDriversProfile() {
   const driver = useSelector((state: RootState) => state.driver.driver);
   const snackbar = useSelector((state: RootState) => state.snackbar);
   const dispatch = useDispatch();
+  const [page, setPage] = useState(0);
 
   const formik = useFormik({
     initialValues: {
@@ -54,6 +71,12 @@ function EditDriversProfile() {
       firstName: driver?.firstName,
       lastName: driver?.lastName,
       phoneNumber: driver?.phoneNumber,
+      birthday: driver?.birthday,
+      birthPlace: driver?.birthPlace,
+      street: driver?.street,
+      houseNumber: driver?.houseNumber,
+      zipCode: driver?.zipCode,
+      city: driver?.city,
       licenceNumber: driver?.licenceNumber,
       licenceTyp: driver?.licenceTyp,
       licenceTypExpire: driver?.licenceTypExpire,
@@ -64,70 +87,255 @@ function EditDriversProfile() {
     },
     validationSchema,
     onSubmit: async (values) => {
-      await axios
-        .put(`/driver/edit/${driver?._id}`, values)
-        .then((res) => {
-          dispatch(
-            setSnackbar({
-              open: true,
-              severity: "success",
-              message: res?.data?.message,
-            })
-          );
-          setTimeout(
-            () =>
-              dispatch(
-                removeSnackbar({ open: false, severity: "error", message: "" })
-              ),
-            4000
-          );
-        })
-        .catch((err) => {
-          console.log(err?.response?.data?.message);
-          dispatch(
-            setSnackbar({
-              open: true,
-              severity: "error",
-              message: err?.response?.data?.message,
-            })
-          );
-          setTimeout(
-            () =>
-              dispatch(
-                removeSnackbar({ open: false, severity: "error", message: "" })
-              ),
-            4000
-          );
-        });
+      if (page === 0) {
+        setPage(page + 1);
+      }
+      if (page === 1) {
+        await axios
+          .put(`/driver/edit/${driver?._id}`, values)
+          .then((res) => {
+            dispatch(
+              setSnackbar({
+                open: true,
+                severity: "success",
+                message: res?.data?.message,
+              })
+            );
+            setTimeout(
+              () =>
+                dispatch(
+                  removeSnackbar({
+                    open: false,
+                    severity: "error",
+                    message: "",
+                  })
+                ),
+              4000
+            );
+          })
+          .catch((err) => {
+            console.log(err?.response?.data?.message);
+            dispatch(
+              setSnackbar({
+                open: true,
+                severity: "error",
+                message: err?.response?.data?.message,
+              })
+            );
+            setTimeout(
+              () =>
+                dispatch(
+                  removeSnackbar({
+                    open: false,
+                    severity: "error",
+                    message: "",
+                  })
+                ),
+              4000
+            );
+          });
+      }
     },
   });
 
-  const values = [
-    {
-      id: 1,
-      value: "C1E",
-      name: "C1E",
-    },
-    {
-      id: 2,
-      value: "C1",
-      name: "C1",
-    },
-    {
-      id: 3,
-      value: "C",
-      name: "C",
-    },
-    {
-      id: 4,
-      value: "CE",
-      name: "CE",
-    },
-  ];
+  const pageOne = (
+    <StepOne
+      // value
+      valueFirstName={formik.values.firstName}
+      valueLastName={formik.values.lastName}
+      valuePhoneNumber={formik.values.phoneNumber}
+      valueBirthday={moment(formik.values.birthday)}
+      valueStreet={formik.values.street}
+      valueHouseNumber={formik.values.houseNumber}
+      valueZipCode={formik.values.zipCode}
+      valueCity={formik.values.city}
+      valueBirthPlace={formik.values.birthPlace}
+      // onChange
+      onChangeFirstName={formik.handleChange}
+      onChangeLastName={formik.handleChange}
+      onChangePhoneNumber={formik.handleChange}
+      onChangeBirthday={(value, context) => {
+        const date = moment(value);
+        formik.setFieldValue("birthday", date);
+      }}
+      onChangeBirthPlace={formik.handleChange}
+      onChangeStreet={formik.handleChange}
+      onChangeHouseNumber={formik.handleChange}
+      onChangeZipCode={formik.handleChange}
+      onChangeCity={formik.handleChange}
+      // error
+      errorFirstName={
+        Boolean(formik.errors.firstName) && Boolean(formik.touched.firstName)
+      }
+      errorLastName={
+        Boolean(formik.errors.lastName) && Boolean(formik.touched.lastName)
+      }
+      errorPhoneNumber={
+        Boolean(formik.errors.phoneNumber) &&
+        Boolean(formik.touched.phoneNumber)
+      }
+      errorBirthday={
+        Boolean(formik.errors.birthday) && Boolean(formik.touched.birthday)
+      }
+      errorBirthPlace={
+        Boolean(formik.errors.birthPlace) && Boolean(formik.touched.birthPlace)
+      }
+      errorStreet={
+        Boolean(formik.errors.street) && Boolean(formik.touched.street)
+      }
+      errorHouseNumber={
+        Boolean(formik.errors.houseNumber) &&
+        Boolean(formik.touched.houseNumber)
+      }
+      errorZipCode={
+        Boolean(formik.errors.zipCode) && Boolean(formik.touched.zipCode)
+      }
+      errorCity={Boolean(formik.errors.city) && Boolean(formik.touched.city)}
+      // holder
+      holderFirstName={
+        formik.touched.firstName ? (
+          <div className="error">{formik.errors.firstName} </div>
+        ) : null
+      }
+      holderLastName={
+        formik.touched.lastName ? (
+          <div className="error">{formik.errors.lastName} </div>
+        ) : null
+      }
+      holderPhoneNumber={
+        formik.touched.phoneNumber ? (
+          <div className="error">{formik.errors.phoneNumber} </div>
+        ) : null
+      }
+      holderBirthday={
+        formik.touched.birthday ? (
+          <div className="error">{formik.errors.birthday} </div>
+        ) : null
+      }
+      holderBirthPlace={
+        formik.touched.birthPlace ? (
+          <div className="error">{formik.errors.birthPlace} </div>
+        ) : null
+      }
+      holderStreet={
+        formik.touched.street ? (
+          <div className="error">{formik.errors.street} </div>
+        ) : null
+      }
+      holderHouseNumber={
+        formik.touched.houseNumber ? (
+          <div className="error">{formik.errors.houseNumber} </div>
+        ) : null
+      }
+      holderZipCode={
+        formik.touched.zipCode ? (
+          <div className="error">{formik.errors.zipCode} </div>
+        ) : null
+      }
+      holderCity={
+        formik.touched.city ? (
+          <div className="error">{formik.errors.city} </div>
+        ) : null
+      }
+    />
+  );
 
-  const height = {
-    style: { height: "10px" },
-  };
+  const pageTwo = (
+    <StepTwo
+      // value
+      valueLicenceNumber={formik.values.licenceNumber}
+      valueLicenceTyp={formik.values.licenceTyp}
+      valueLicenceTypExpire={moment(formik.values.licenceTypExpire)}
+      valueCodeNumber={formik.values.codeNumber}
+      valueCodeNumberExpire={moment(formik.values.codeNumberExpire)}
+      valueDriverCardNumber={formik.values.driverCardNumber}
+      valueDriverCardNumberExpire={moment(formik.values.driverCardNumberExpire)}
+      // onChange
+      onChangeLicenceNumber={formik.handleChange}
+      onChangeLicenceTyp={formik.handleChange}
+      onChangeLicenceTypExpire={(value, context) => {
+        const date = moment(value);
+        // convert the string value to a Moment object
+        formik.setFieldValue("licenceTypExpire", date);
+      }}
+      onChangeCodeNumber={formik.handleChange}
+      onChangeCodeNumberExpire={(value, context) => {
+        const date = moment(value);
+        // convert the string value to a Moment object
+        formik.setFieldValue("codeNumberExpire", date);
+      }}
+      onChangeDriverCardNumber={formik.handleChange}
+      onChangeDriverCardNumberExpire={(value, context) => {
+        const date = moment(value);
+        // convert the string value to a Moment object
+        formik.setFieldValue("driverCardNumberExpire", date);
+      }}
+      // error
+      errorLicenceNumber={
+        Boolean(formik.errors.licenceNumber) &&
+        Boolean(formik.touched.licenceNumber)
+      }
+      errorLicenceTyp={
+        Boolean(formik.errors.licenceTyp) && Boolean(formik.touched.licenceTyp)
+      }
+      errorLicenceTypExpire={
+        Boolean(formik.errors.licenceTypExpire) &&
+        Boolean(formik.touched.licenceTypExpire)
+      }
+      errorCodeNumber={
+        Boolean(formik.errors.codeNumber) && Boolean(formik.touched.codeNumber)
+      }
+      errorCodeNumberExpire={
+        Boolean(formik.errors.codeNumberExpire) &&
+        Boolean(formik.touched.codeNumberExpire)
+      }
+      errorDriverCardNumber={
+        Boolean(formik.errors.driverCardNumber) &&
+        Boolean(formik.touched.driverCardNumber)
+      }
+      errorDriverCardNumberExpire={
+        Boolean(formik.errors.driverCardNumberExpire) &&
+        Boolean(formik.touched.driverCardNumberExpire)
+      }
+      // holder
+      holderLicenceNumber={
+        formik.touched.licenceNumber ? (
+          <div className="error">{formik.errors.licenceNumber} </div>
+        ) : null
+      }
+      holderLicenceTyp={
+        formik.touched.licenceTyp ? (
+          <div className="error">{formik.errors.licenceTyp} </div>
+        ) : null
+      }
+      holderLicenceTypExpire={
+        formik.touched.licenceTypExpire ? (
+          <div className="error">{formik.errors.licenceTypExpire} </div>
+        ) : null
+      }
+      holderCodeNumber={
+        formik.touched.codeNumber ? (
+          <div className="error">{formik.errors.codeNumber} </div>
+        ) : null
+      }
+      holderCodeNumberExpire={
+        formik.touched.codeNumberExpire ? (
+          <div className="error">{formik.errors.codeNumberExpire} </div>
+        ) : null
+      }
+      holderDriverCardNumber={
+        formik.touched.driverCardNumber ? (
+          <div className="error">{formik.errors.driverCardNumber}</div>
+        ) : null
+      }
+      holderDriverCardNumberExpire={
+        formik.touched.driverCardNumberExpire ? (
+          <div className="error">{formik.errors.driverCardNumberExpire} </div>
+        ) : null
+      }
+    />
+  );
+
   return (
     <div className="profile-section-child">
       {snackbar.open ? <SnackBar /> : null}
@@ -138,240 +346,10 @@ function EditDriversProfile() {
       />
       <form onSubmit={formik.handleSubmit}>
         <Grid container rowSpacing={2} alignItems="center">
-          <Grid item xs={5}>
-            <Typography>First name</Typography>
-          </Grid>
-          <Grid item xs={7}>
-            <Textfield
-              label={undefined}
-              name={"firstName"}
-              value={formik.values.firstName}
-              onChange={formik.handleChange}
-              helperText={undefined}
-              error={
-                Boolean(formik.errors.firstName) &&
-                Boolean(formik.touched.firstName)
-              }
-              type={undefined}
-              autoFocus={false}
-              inputProps={height}
-            />
-            {formik.touched.firstName ? (
-              <div className="error">{formik.errors.firstName}</div>
-            ) : null}
-          </Grid>
-          <Grid item xs={5}>
-            <Typography>Last name</Typography>
-          </Grid>
-          <Grid item xs={7}>
-            <Textfield
-              autoFocus={false}
-              label={undefined}
-              name="lastName"
-              value={formik.values.lastName}
-              onChange={formik.handleChange}
-              helperText={undefined}
-              error={
-                Boolean(formik.errors.lastName) &&
-                Boolean(formik.touched.lastName)
-              }
-              type={undefined}
-              inputProps={height}
-            />
-            {formik.touched.lastName ? (
-              <div className="error">{formik.errors.lastName}</div>
-            ) : null}
-          </Grid>
-          <Grid item xs={5}>
-            <Typography>Phone num.</Typography>
-          </Grid>
-          <Grid item xs={7}>
-            <Textfield
-              autoFocus={false}
-              label={undefined}
-              name="phoneNumber"
-              value={formik.values.phoneNumber}
-              onChange={formik.handleChange}
-              helperText={undefined}
-              error={
-                Boolean(formik.errors.phoneNumber) &&
-                Boolean(formik.touched.phoneNumber)
-              }
-              type={undefined}
-              inputProps={height}
-            />
-            {formik.touched.phoneNumber ? (
-              <div className="error">{formik.errors.phoneNumber} </div>
-            ) : null}
-          </Grid>
-          <Grid item xs={5}>
-            <Typography>Licence num.</Typography>
-          </Grid>
-          <Grid item xs={7}>
-            <Textfield
-              autoFocus={false}
-              label={undefined}
-              name="licenceNumber"
-              value={formik.values.licenceNumber}
-              onChange={formik.handleChange}
-              helperText={undefined}
-              error={
-                Boolean(formik.errors.licenceNumber) &&
-                Boolean(formik.touched.licenceNumber)
-              }
-              type={undefined}
-              inputProps={height}
-            />
-            {formik.touched.licenceNumber ? (
-              <div className="error">{formik.errors.licenceNumber} </div>
-            ) : null}
-          </Grid>
-          <Grid item xs={5}>
-            <Typography>Licence type</Typography>
-          </Grid>
-          <Grid item xs={7}>
-            <SelectBar
-              sx={{
-                height: "27px",
-              }}
-              label={undefined}
-              name="licenceTyp"
-              value={formik.values.licenceTyp}
-              onChange={formik.handleChange}
-              error={
-                Boolean(formik.errors.licenceTyp) &&
-                Boolean(formik.touched.licenceTyp)
-              }
-              children={values.map((value) => {
-                return (
-                  <MenuItem key={value.id} value={value.value}>
-                    {value.name}
-                  </MenuItem>
-                );
-              })}
-            />
-            {formik.touched.licenceTyp ? (
-              <div className="error">{formik.errors.licenceTyp} </div>
-            ) : null}
-          </Grid>
-          <Grid item xs={5}>
-            <Typography>Expiry date</Typography>
-          </Grid>
-          <Grid item xs={7}>
-            <PickDate
-              views={["year", "month", "day"]}
-              format={"DD.MM.YYYY"}
-              value={moment(formik.values.licenceTypExpire)}
-              onChange={(value, context) => {
-                const date = moment(value);
-                // convert the string value to a Moment object
-                formik.setFieldValue("licenceTypExpire", date);
-              }}
-              error={
-                Boolean(formik.errors.licenceTypExpire) &&
-                Boolean(formik.touched.licenceTypExpire)
-              }
-              inputLabel={"Expiry date"}
-            />
-            {formik.touched.licenceTypExpire ? (
-              <div className="error">{formik.errors.licenceTypExpire} </div>
-            ) : null}
-          </Grid>
-          <Grid item xs={5}>
-            <Typography>Code num.</Typography>
-          </Grid>
-          <Grid item xs={7}>
-            <Textfield
-              autoFocus={false}
-              label={undefined}
-              name="codeNumber"
-              value={formik.values.codeNumber}
-              onChange={formik.handleChange}
-              helperText={undefined}
-              error={
-                Boolean(formik.errors.codeNumber) &&
-                Boolean(formik.touched.codeNumber)
-              }
-              type={undefined}
-              inputProps={height}
-            />
-            {formik.touched.codeNumber ? (
-              <div className="error">{formik.errors.codeNumber} </div>
-            ) : null}
-          </Grid>
-          <Grid item xs={5}>
-            <Typography>Expiry date</Typography>
-          </Grid>
-          <Grid item xs={7}>
-            <PickDate
-              views={["year", "month", "day"]}
-              format={"DD.MM.YYYY"}
-              value={moment(formik.values.codeNumberExpire)}
-              onChange={(value, context) => {
-                const date = moment(value);
-                // convert the string value to a Moment object
-                formik.setFieldValue("codeNumberExpire", date);
-              }}
-              error={
-                Boolean(formik.errors.codeNumberExpire) &&
-                Boolean(formik.touched.codeNumberExpire)
-              }
-              inputLabel={"Expiry date"}
-            />
-            {formik.touched.codeNumberExpire ? (
-              <div className="error">{formik.errors.codeNumberExpire} </div>
-            ) : null}
-          </Grid>
-          <Grid item xs={5}>
-            <Typography>Driver card num.</Typography>
-          </Grid>
-          <Grid item xs={7}>
-            <Textfield
-              autoFocus={false}
-              label={undefined}
-              name="driverCardNumber"
-              value={formik.values.driverCardNumber}
-              onChange={formik.handleChange}
-              helperText={undefined}
-              error={
-                Boolean(formik.errors.driverCardNumber) &&
-                Boolean(formik.touched.driverCardNumber)
-              }
-              type={undefined}
-              inputProps={height}
-            />
-            {formik.touched.driverCardNumber ? (
-              <div className="error">{formik.errors.driverCardNumber}</div>
-            ) : null}
-          </Grid>
-          <Grid item xs={5}>
-            <Typography>Expiry date</Typography>
-          </Grid>
-          <Grid item xs={7}>
-            <PickDate
-              views={["year", "month", "day"]}
-              format={"DD.MM.YYYY"}
-              value={moment(formik.values.driverCardNumberExpire)}
-              onChange={(value, context) => {
-                const date = moment(value);
-                // convert the string value to a Moment object
-                formik.setFieldValue("driverCardNumberExpire", date);
-              }}
-              error={
-                Boolean(formik.errors.driverCardNumberExpire) &&
-                Boolean(formik.touched.driverCardNumberExpire)
-              }
-              inputLabel="Expiry date"
-            />
-            {formik.touched.driverCardNumberExpire ? (
-              <div className="error">
-                {formik.errors.driverCardNumberExpire}{" "}
-              </div>
-            ) : null}
-          </Grid>
+          {page === 0 ? pageOne : pageTwo}
           <Grid item xs={12}>
-            <Button type="submit" variant="contained" size="small">
-              Confirm
+            <Button variant="contained" size="small" type="submit">
+              {page === 0 ? "Next" : "Confirm"}
             </Button>
           </Grid>
         </Grid>

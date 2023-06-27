@@ -24,7 +24,7 @@ import { styled } from "@mui/material/styles";
 import { useDispatch } from "react-redux";
 import { addDriver } from "../../redux/slices/driverSlice";
 import ModalView from "../ModalView";
-import MobileViewHolder from "./MobileViewHolder";
+import MobileViewHolder from "./mobile/MobileViewHolder";
 
 const theme = createTheme({
   breakpoints: {
