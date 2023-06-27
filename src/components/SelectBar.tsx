@@ -25,15 +25,6 @@ function SelectBar(props: {
         size="small"
         error={props.error}
         sx={props.sx}
-        // sx={{
-        //   width: 240,
-        //   [`& .${selectClasses.indicator}`]: {
-        //     transition: "0.2s",
-        //     [`&.${selectClasses.expanded}`]: {
-        //       transform: "rotate(-180deg)",
-        //     },
-        //   },
-        // }}
       >
         {props.children}
       </Select>

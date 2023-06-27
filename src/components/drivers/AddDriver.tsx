@@ -23,10 +23,10 @@ const theme = createTheme({
   breakpoints: {
     values: {
       xs: 0,
-      sm: 501,
-      md: 750,
-      lg: 980,
-      xl: 1530,
+      sm: 500,
+      md: 601,
+      lg: 750,
+      xl: 980,
     },
   },
   typography: {
@@ -48,6 +48,22 @@ const validationSchema = Yup.object({
       /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s/0-9]*$/g,
       "Incorrect type of phone number"
     )
+    .required("required"),
+  street: Yup.string()
+    .matches(/^[A-Za-z\s]+$/, "Letters only")
+    .required("required"),
+  houseNumber: Yup.string()
+    .matches(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s/0-9]*$/g, "Numbers only")
+    .required("required"),
+  zipCode: Yup.string()
+    .matches(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s/0-9]*$/g, "Numbers only")
+    .required("required"),
+  city: Yup.string()
+    .matches(/^[A-Za-z\s]+$/, "Letters only")
+    .required("required"),
+  birthday: Yup.string().required("required"),
+  birthPlace: Yup.string()
+    .matches(/^[A-Za-z\s]+$/, "Letters only")
     .required("required"),
   licenceNumber: Yup.string()
     .matches(/^[a-zA-Z0-9 ]*$/, "No special characters")
@@ -75,6 +91,12 @@ const AddDriver = () => {
       firstName: "",
       lastName: "",
       phoneNumber: "",
+      street: "",
+      houseNumber: "",
+      zipCode: "",
+      city: "",
+      birthday: "",
+      birthPlace: "",
       licenceNumber: "",
       licenceTyp: "",
       licenceTypExpire: "",
@@ -148,6 +170,19 @@ const AddDriver = () => {
     },
   ];
 
+  const valueCodeNum = [
+    {
+      id: 1,
+      value: "Ja",
+      name: "Ja",
+    },
+    {
+      id: 2,
+      value: "Nein",
+      name: "Nein",
+    },
+  ];
+
   return (
     <div className="section">
       <ThemeProvider theme={theme}>
@@ -163,7 +198,7 @@ const AddDriver = () => {
               content="Add drivers"
             />
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={6} md={3}>
                 <Textfield
                   inputProps={undefined}
                   autoFocus={false}
@@ -182,7 +217,7 @@ const AddDriver = () => {
                   <div className="error">{formik.errors.firstName} </div>
                 ) : null}
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={6} md={3}>
                 <Textfield
                   inputProps={undefined}
                   autoFocus={false}
@@ -201,7 +236,7 @@ const AddDriver = () => {
                   <div className="error">{formik.errors.lastName} </div>
                 ) : null}
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} md={6}>
                 <Textfield
                   inputProps={undefined}
                   autoFocus={false}
@@ -220,7 +255,122 @@ const AddDriver = () => {
                   <div className="error">{formik.errors.phoneNumber} </div>
                 ) : null}
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={8} md={4}>
+                <Textfield
+                  inputProps={undefined}
+                  autoFocus={false}
+                  label="Street"
+                  name="street"
+                  value={formik.values.street}
+                  onChange={formik.handleChange}
+                  helperText={undefined}
+                  error={
+                    Boolean(formik.errors.street) &&
+                    Boolean(formik.touched.street)
+                  }
+                  type={undefined}
+                />
+                {formik.touched.street ? (
+                  <div className="error">{formik.errors.street} </div>
+                ) : null}
+              </Grid>
+              <Grid item xs={12} sm={4} md={2}>
+                <Textfield
+                  inputProps={undefined}
+                  autoFocus={false}
+                  label="House Nr."
+                  name="houseNumber"
+                  value={formik.values.houseNumber}
+                  onChange={formik.handleChange}
+                  helperText={undefined}
+                  error={
+                    Boolean(formik.errors.houseNumber) &&
+                    Boolean(formik.touched.houseNumber)
+                  }
+                  type={undefined}
+                />
+                {formik.touched.houseNumber ? (
+                  <div className="error">{formik.errors.houseNumber} </div>
+                ) : null}
+              </Grid>
+              <Grid item xs={12} sm={4} md={2}>
+                <Textfield
+                  inputProps={undefined}
+                  autoFocus={false}
+                  label="ZIP Code"
+                  name="zipCode"
+                  value={formik.values.zipCode}
+                  onChange={formik.handleChange}
+                  helperText={undefined}
+                  error={
+                    Boolean(formik.errors.zipCode) &&
+                    Boolean(formik.touched.zipCode)
+                  }
+                  type={undefined}
+                />
+                {formik.touched.zipCode ? (
+                  <div className="error">{formik.errors.zipCode} </div>
+                ) : null}
+              </Grid>
+              <Grid item xs={12} sm={8} md={4}>
+                <Textfield
+                  inputProps={undefined}
+                  autoFocus={false}
+                  label="City"
+                  name="city"
+                  value={formik.values.city}
+                  onChange={formik.handleChange}
+                  helperText={undefined}
+                  error={
+                    Boolean(formik.errors.city) && Boolean(formik.touched.city)
+                  }
+                  type={undefined}
+                />
+                {formik.touched.city ? (
+                  <div className="error">{formik.errors.city} </div>
+                ) : null}
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <PickDate
+                  views={["year", "month", "day"]}
+                  format={"DD.MM.YYYY"}
+                  value={moment(formik.values.licenceTypExpire)}
+                  onChange={(value, context) => {
+                    const date = moment(value);
+                    // convert the string value to a Moment object
+                    formik.setFieldValue("birthday", date);
+                  }}
+                  error={
+                    Boolean(formik.errors.birthday) &&
+                    Boolean(formik.touched.birthday)
+                  }
+                  inputLabel={"Date of birth"}
+                  inputProps={undefined}
+                />
+                {formik.touched.birthday ? (
+                  <div className="error">{formik.errors.birthday} </div>
+                ) : null}
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <Textfield
+                  inputProps={undefined}
+                  autoFocus={false}
+                  label="Place of birth"
+                  name="birthPlace"
+                  value={formik.values.birthPlace}
+                  onChange={formik.handleChange}
+                  helperText={undefined}
+                  error={
+                    Boolean(formik.errors.birthPlace) &&
+                    Boolean(formik.touched.birthPlace)
+                  }
+                  type={undefined}
+                />
+                {formik.touched.birthPlace ? (
+                  <div className="error">{formik.errors.birthPlace} </div>
+                ) : null}
+              </Grid>
+              <Grid item xs={12} md={6}>
                 <Textfield
                   inputProps={undefined}
                   autoFocus={false}
@@ -239,7 +389,7 @@ const AddDriver = () => {
                   <div className="error">{formik.errors.licenceNumber} </div>
                 ) : null}
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={6} md={6}>
                 <SelectBar
                   sx={undefined}
                   label="Licence Typ"
@@ -262,7 +412,7 @@ const AddDriver = () => {
                   <div className="error">{formik.errors.licenceTyp} </div>
                 ) : null}
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={6} md={6}>
                 <PickDate
                   views={["year", "month", "day"]}
                   format={"DD.MM.YYYY"}
@@ -277,31 +427,36 @@ const AddDriver = () => {
                     Boolean(formik.touched.licenceTypExpire)
                   }
                   inputLabel={"Expiry date"}
+                  inputProps={undefined}
                 />
                 {formik.touched.licenceTypExpire ? (
                   <div className="error">{formik.errors.licenceTypExpire} </div>
                 ) : null}
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <Textfield
-                  inputProps={undefined}
-                  autoFocus={false}
-                  label="Code number"
-                  name="codeNumber"
+              <Grid item xs={12} sm={6} md={6}>
+                <SelectBar
+                  label={"Code number 95"}
+                  name={"codeNumber"}
                   value={formik.values.codeNumber}
                   onChange={formik.handleChange}
-                  helperText={undefined}
                   error={
                     Boolean(formik.errors.codeNumber) &&
                     Boolean(formik.touched.codeNumber)
                   }
-                  type={undefined}
+                  children={valueCodeNum.map((value) => {
+                    return (
+                      <MenuItem key={value.id} value={value.value}>
+                        {value.name}
+                      </MenuItem>
+                    );
+                  })}
+                  sx={undefined}
                 />
                 {formik.touched.codeNumber ? (
                   <div className="error">{formik.errors.codeNumber} </div>
                 ) : null}
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={6} md={6}>
                 <PickDate
                   views={["year", "month", "day"]}
                   format={"DD.MM.YYYY"}
@@ -316,12 +471,13 @@ const AddDriver = () => {
                     Boolean(formik.touched.codeNumberExpire)
                   }
                   inputLabel={"Expiry date"}
+                  inputProps={undefined}
                 />
                 {formik.touched.codeNumberExpire ? (
                   <div className="error">{formik.errors.codeNumberExpire} </div>
                 ) : null}
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={6} md={6}>
                 <Textfield
                   inputProps={undefined}
                   autoFocus={false}
@@ -341,7 +497,7 @@ const AddDriver = () => {
                 ) : null}
               </Grid>
 
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={6} md={6}>
                 <PickDate
                   views={["year", "month", "day"]}
                   format={"DD.MM.YYYY"}
@@ -356,6 +512,7 @@ const AddDriver = () => {
                     Boolean(formik.touched.driverCardNumberExpire)
                   }
                   inputLabel="Expiry date"
+                  inputProps={undefined}
                 />
                 {formik.touched.driverCardNumberExpire ? (
                   <div className="error">

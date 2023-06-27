@@ -202,6 +202,7 @@ const AddTrailers = () => {
                     Boolean(formik.touched.nextHU)
                   }
                   inputLabel={"Next HU"}
+                  inputProps={undefined}
                 />
                 {formik.touched.nextHU ? (
                   <div className="error">{formik.errors.nextHU} </div>
@@ -222,6 +223,7 @@ const AddTrailers = () => {
                     Boolean(formik.touched.nextSP)
                   }
                   inputLabel={"Next SP"}
+                  inputProps={undefined}
                 />
                 {formik.touched.nextSP ? (
                   <div className="error">{formik.errors.nextSP} </div>

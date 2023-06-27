@@ -7,8 +7,8 @@ import PersonRemoveRoundedIcon from "@mui/icons-material/PersonRemoveRounded";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { removeDriver } from "../../redux/slices/driverSlice";
-import { RootState } from "../../redux/store";
+import { removeDriver } from "../../../redux/slices/driverSlice";
+import { RootState } from "../../../redux/store";
 import EditDriversMobile from "./EditDriverMobile";
 
 function MobileViewHolder() {
@@ -24,12 +24,7 @@ function MobileViewHolder() {
 
   return (
     <div>
-      <Grid
-        container
-        direction="column"
-        justifyContent="space-between"
-        sx={{ height: "580px" }}
-      >
+      <Grid container direction="column" justifyContent="space-between">
         {page === 0 ? <DriverProfileMobile /> : <EditDriversMobile />}
 
         <Grid container direction="row" justifyContent="flex-end">

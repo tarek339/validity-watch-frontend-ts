@@ -4,6 +4,12 @@ export interface Driver {
   firstName: string;
   lastName: string;
   phoneNumber: string;
+  street: string;
+  houseNumber: string;
+  zipCode: string;
+  city: string;
+  birthday: string;
+  birthPlace: string;
   licenceNumber: string;
   licenceTyp: string;
   licenceTypExpire: string;

@@ -35,8 +35,8 @@ const theme = createTheme({
 });
 
 function SignUpCompany() {
-  const [email, setEmail] = useState("tarekjassine@gmail.com");
-  const [password, setPassword] = useState("tarek123");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const snackbar = useSelector((state: RootState) => state.snackbar);

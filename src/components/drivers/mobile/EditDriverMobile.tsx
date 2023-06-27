@@ -1,16 +1,19 @@
-import GridContainer from "../GridContainer";
+import GridContainer from "../../GridContainer";
 import { Button, Grid, MenuItem, Typography } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
-import Textfield from "../Textfield";
+import { RootState } from "../../../redux/store";
+import Textfield from "../../Textfield";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import axios from "axios";
-import { removeSnackbar, setSnackbar } from "../../redux/slices/snackbarSlice";
-import SelectBar from "../SelectBar";
-import SnackBar from "../SnackBar";
-import PickDate from "../PickDate";
+import {
+  removeSnackbar,
+  setSnackbar,
+} from "../../../redux/slices/snackbarSlice";
+import SelectBar from "../../SelectBar";
+import SnackBar from "../../SnackBar";
+import PickDate from "../../PickDate";
 import moment from "moment";
 
 const validationSchema = Yup.object({
@@ -28,6 +31,19 @@ const validationSchema = Yup.object({
       "Incorrect type of phone number"
     )
     .required("required"),
+  street: Yup.string()
+    .matches(/^[A-Za-z\s]+$/, "Letters only")
+    .required("required"),
+  houseNumber: Yup.string()
+    .matches(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s/0-9]*$/g, "Numbers only")
+    .required("required"),
+  zipCode: Yup.string()
+    .matches(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s/0-9]*$/g, "Numbers only")
+    .required("required"),
+  city: Yup.string()
+    .matches(/^[A-Za-z\s]+$/, "Letters only")
+    .required("required"),
+  birthday: Yup.string().required("required"),
   licenceNumber: Yup.string()
     .matches(/^[a-zA-Z0-9 ]*$/, "No special characters")
     .required("required"),
@@ -54,6 +70,11 @@ function EditDriversMobile() {
       firstName: driver?.firstName,
       lastName: driver?.lastName,
       phoneNumber: driver?.phoneNumber,
+      birthday: driver?.birthday,
+      street: driver?.street,
+      houseNumber: driver?.houseNumber,
+      zipCode: driver?.zipCode,
+      city: driver?.city,
       licenceNumber: driver?.licenceNumber,
       licenceTyp: driver?.licenceTyp,
       licenceTypExpire: driver?.licenceTypExpire,
@@ -205,6 +226,116 @@ function EditDriversMobile() {
             ) : null}
           </Grid>
           <Grid item xs={6}>
+            <Typography>Date of birth</Typography>
+          </Grid>
+          <Grid item xs={6}>
+            <PickDate
+              views={["year", "month", "day"]}
+              format={"DD.MM.YYYY"}
+              value={moment(formik.values.birthday)}
+              onChange={(value, context) => {
+                const date = moment(value);
+                // convert the string value to a Moment object
+                formik.setFieldValue("birthday", date);
+              }}
+              error={
+                Boolean(formik.errors.birthday) &&
+                Boolean(formik.touched.birthday)
+              }
+              inputLabel={undefined}
+              inputProps={height}
+            />
+            {formik.touched.birthday ? (
+              <div className="error">{formik.errors.birthday} </div>
+            ) : null}
+          </Grid>
+          <Grid item xs={6}>
+            <Typography>Street</Typography>
+          </Grid>
+          <Grid item xs={6}>
+            <Textfield
+              autoFocus={false}
+              label={undefined}
+              name="street"
+              value={formik.values.street}
+              onChange={formik.handleChange}
+              helperText={undefined}
+              error={
+                Boolean(formik.errors.street) && Boolean(formik.touched.street)
+              }
+              type={undefined}
+              inputProps={height}
+            />
+            {formik.touched.street ? (
+              <div className="error">{formik.errors.street} </div>
+            ) : null}
+          </Grid>
+          <Grid item xs={6}>
+            <Typography>House Nr</Typography>
+          </Grid>
+          <Grid item xs={6}>
+            <Textfield
+              autoFocus={false}
+              label={undefined}
+              name="houseNumber"
+              value={formik.values.houseNumber}
+              onChange={formik.handleChange}
+              helperText={undefined}
+              error={
+                Boolean(formik.errors.houseNumber) &&
+                Boolean(formik.touched.houseNumber)
+              }
+              type={undefined}
+              inputProps={height}
+            />
+            {formik.touched.houseNumber ? (
+              <div className="error">{formik.errors.houseNumber} </div>
+            ) : null}
+          </Grid>
+          <Grid item xs={6}>
+            <Typography>Zip Code</Typography>
+          </Grid>
+          <Grid item xs={6}>
+            <Textfield
+              autoFocus={false}
+              label={undefined}
+              name="zipCode"
+              value={formik.values.zipCode}
+              onChange={formik.handleChange}
+              helperText={undefined}
+              error={
+                Boolean(formik.errors.zipCode) &&
+                Boolean(formik.touched.zipCode)
+              }
+              type={undefined}
+              inputProps={height}
+            />
+            {formik.touched.zipCode ? (
+              <div className="error">{formik.errors.zipCode} </div>
+            ) : null}
+          </Grid>
+          <Grid item xs={6}>
+            <Typography>City</Typography>
+          </Grid>
+          <Grid item xs={6}>
+            <Textfield
+              autoFocus={false}
+              label={undefined}
+              name="city"
+              value={formik.values.city}
+              onChange={formik.handleChange}
+              helperText={undefined}
+              error={
+                Boolean(formik.errors.city) && Boolean(formik.touched.city)
+              }
+              type={undefined}
+              inputProps={height}
+            />
+            {formik.touched.city ? (
+              <div className="error">{formik.errors.city} </div>
+            ) : null}
+          </Grid>
+          <Grid item xs={6}>
             <Typography>Licence num.</Typography>
           </Grid>
           <Grid item xs={6}>
@@ -271,7 +402,8 @@ function EditDriversMobile() {
                 Boolean(formik.errors.licenceTypExpire) &&
                 Boolean(formik.touched.licenceTypExpire)
               }
-              inputLabel={"Expiry date"}
+              inputLabel={undefined}
+              inputProps={height}
             />
             {formik.touched.licenceTypExpire ? (
               <div className="error">{formik.errors.licenceTypExpire} </div>
@@ -316,7 +448,8 @@ function EditDriversMobile() {
                 Boolean(formik.errors.codeNumberExpire) &&
                 Boolean(formik.touched.codeNumberExpire)
               }
-              inputLabel={"Expiry date"}
+              inputLabel={undefined}
+              inputProps={height}
             />
             {formik.touched.codeNumberExpire ? (
               <div className="error">{formik.errors.codeNumberExpire} </div>
@@ -361,7 +494,8 @@ function EditDriversMobile() {
                 Boolean(formik.errors.driverCardNumberExpire) &&
                 Boolean(formik.touched.driverCardNumberExpire)
               }
-              inputLabel="Expiry date"
+              inputLabel={undefined}
+              inputProps={height}
             />
             {formik.touched.driverCardNumberExpire ? (
               <div className="error">

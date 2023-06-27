@@ -11,6 +11,7 @@ import Textfield from "../Textfield";
 import SnackBar from "../SnackBar";
 import Filter1RoundedIcon from "@mui/icons-material/Filter1Rounded";
 import { useNavigate } from "react-router-dom";
+import { removeUser } from "../../redux/slices/userSlice";
 
 const theme = createTheme({
   breakpoints: {
@@ -111,6 +112,7 @@ const BasicData = () => {
 
   const deleteAcc = () => {
     axios.delete(`/company/delete-acc`).then(() => {
+      dispatch(removeUser());
       localStorage.removeItem("token");
       navigate("/sign-in");
     });

@@ -199,6 +199,7 @@ function EditTrailer() {
                 Boolean(formik.errors.nextHU) && Boolean(formik.touched.nextHU)
               }
               inputLabel={"Next HU"}
+              inputProps={undefined}
             />
             {formik.touched.nextHU ? (
               <div className="error">{formik.errors.nextHU} </div>
@@ -221,6 +222,7 @@ function EditTrailer() {
                 Boolean(formik.errors.nextSP) && Boolean(formik.touched.nextSP)
               }
               inputLabel={"Next SP"}
+              inputProps={undefined}
             />
             {formik.touched.nextSP ? (
               <div className="error">{formik.errors.nextSP} </div>
