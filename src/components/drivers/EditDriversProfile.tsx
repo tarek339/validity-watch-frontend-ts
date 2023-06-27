@@ -337,9 +337,13 @@ function EditDriversProfile() {
   return (
     <div>
       {snackbar.open ? <SnackBar /> : null}
-
       <form onSubmit={formik.handleSubmit}>
-        <Grid container rowSpacing={{ xs: 3 }} alignItems="center">
+        <Grid
+          container
+          rowSpacing={{ xs: 3 }}
+          direction="row"
+          alignItems="center"
+        >
           {page === 0 ? pageOne : pageTwo}
           <Grid item xs={12}>
             <Button variant="contained" size="small" type="submit">
