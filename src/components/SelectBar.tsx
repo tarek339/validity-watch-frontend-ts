@@ -10,7 +10,7 @@ function SelectBar(props: {
     child: ReactNode
   ) => void;
   error: boolean;
-  children: React.ReactNode;
+  children: React.ReactElement[];
   sx: object | undefined;
 }) {
   return (

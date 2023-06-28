@@ -4,7 +4,7 @@ import BottomNavigation from "@mui/material/BottomNavigation";
 const style = {
   backgroundColor: "transparent",
 };
-export default function BottomNav(props: { children: React.ReactNode }) {
+export default function BottomNav(props: { children: JSX.Element }) {
   return (
     <Box>
       <BottomNavigation style={style}>{props.children}</BottomNavigation>

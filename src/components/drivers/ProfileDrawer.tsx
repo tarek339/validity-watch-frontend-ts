@@ -24,10 +24,10 @@ const boxStyle = {
 
 interface BottomNavBtns {
   id: number;
-  component: React.ReactNode;
+  component: JSX.Element;
 }
 
-function ProfileDrawer() {
+function ProfileDrawer(props: { getDrivers: () => Promise<void> }) {
   const [open, setOpen] = useState(false);
   const [page, setPage] = useState(0);
   const driver = useSelector((state: RootState) => state.driver.driver);
@@ -134,7 +134,11 @@ function ProfileDrawer() {
             justifyContent="space-between"
             sx={{ height: "95%" }}
           >
-            {page === 0 ? <DriversProfile /> : <EditDriversProfile />}
+            {page === 0 ? (
+              <DriversProfile />
+            ) : (
+              <EditDriversProfile getDrivers={props.getDrivers} />
+            )}
             <Grid container direction="row" justifyContent="space-between">
               {bottomNavigation.map((btn: BottomNavBtns) => {
                 return (

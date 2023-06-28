@@ -24,7 +24,7 @@ const boxStyle = {
 
 interface BottomNavBtns {
   id: number;
-  component: React.ReactNode;
+  component: JSX.Element;
 }
 
 function TruckDrawer() {

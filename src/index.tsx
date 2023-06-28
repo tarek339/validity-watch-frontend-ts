@@ -8,8 +8,8 @@ import { store } from "./redux/store";
 
 axios.defaults.baseURL = "http://localhost:4500";
 
-axios.interceptors.request.use((request: any) => {
-  request.headers = { Authorization: localStorage.getItem("token") };
+axios.interceptors.request.use((request) => {
+  request.headers.Authorization = localStorage.getItem("token");
   return request;
 });
 
