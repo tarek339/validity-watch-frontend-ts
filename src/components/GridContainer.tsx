@@ -2,7 +2,7 @@ import { Box, Grid, Paper, Typography } from "@mui/material";
 
 export default function GridContainer(props: {
   content: string;
-  icon: React.ReactNode;
+  icon: JSX.Element;
   backgroundColor: string;
 }) {
   return (

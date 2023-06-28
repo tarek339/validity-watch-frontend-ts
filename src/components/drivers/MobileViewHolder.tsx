@@ -13,7 +13,7 @@ import EditDriversProfile from "./EditDriversProfile";
 import GridContainer from "../GridContainer";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
-function MobileViewHolder() {
+function MobileViewHolder(props: { getDrivers: () => Promise<void> }) {
   const [page, setPage] = useState(0);
   const driver = useSelector((state: RootState) => state.driver.driver);
   const dispatch = useDispatch();
@@ -43,7 +43,11 @@ function MobileViewHolder() {
         justifyContent="space-between"
         sx={{ height: "600px" }}
       >
-        {page === 0 ? <DriversProfile /> : <EditDriversProfile />}
+        {page === 0 ? (
+          <DriversProfile />
+        ) : (
+          <EditDriversProfile getDrivers={props.getDrivers} />
+        )}
         <Grid container direction="row" justifyContent="flex-end">
           <BottomNavigation style={style} showLabels>
             <BottomNavigationAction

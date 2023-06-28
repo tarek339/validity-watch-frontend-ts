@@ -23,7 +23,7 @@ const buttonStyle = {
 };
 
 function MenuItems(props: {
-  icon: React.ReactNode;
+  icon: JSX.Element;
   content: string;
   route: string;
 }) {

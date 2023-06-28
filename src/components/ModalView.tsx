@@ -14,7 +14,7 @@ const style = {
   borderRadius: "15px",
 };
 
-function ModalView(props: { children: React.ReactNode }) {
+function ModalView(props: { children: JSX.Element }) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = useCallback(() => setOpen(false), []);

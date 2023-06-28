@@ -3,7 +3,7 @@ import FirstPageIcon from "@mui/icons-material/FirstPage";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { Driver } from "../../types/driverTypes";
 import {
@@ -121,30 +121,18 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
   );
 }
 
-export default function DriverTable() {
+export default function DriverTable(props: {
+  drivers: Driver[];
+  getDrivers: () => Promise<void>;
+}) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [drivers, setDrivers] = useState([]);
+
   const dispatch = useDispatch();
-
-  const getDrivers = async () => {
-    await axios
-      .get(`/driver/drivers`)
-      .then((res) => {
-        setDrivers(res.data);
-      })
-      .catch((err) => {
-        console.log("Err", err);
-      });
-  };
-
-  useEffect(() => {
-    getDrivers();
-  }, []);
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - drivers.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - props.drivers.length) : 0;
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
@@ -187,7 +175,9 @@ export default function DriverTable() {
 
   return (
     <TableContainer square={true} component={Paper} elevation={0}>
-      <ModalView children={<MobileViewHolder />} />
+      <ModalView
+        children={<MobileViewHolder getDrivers={props.getDrivers} />}
+      />
       <ThemeProvider theme={theme}>
         <Table aria-label="custom pagination table">
           <TableHead>
@@ -199,11 +189,11 @@ export default function DriverTable() {
           </TableHead>
           <TableBody>
             {(rowsPerPage > 0
-              ? drivers.slice(
+              ? props.drivers.slice(
                   page * rowsPerPage,
                   page * rowsPerPage + rowsPerPage
                 )
-              : drivers
+              : props.drivers
             ).map((driver: Driver, index) => (
               <StyledTableRow
                 onClick={() => {
@@ -234,7 +224,7 @@ export default function DriverTable() {
             <TableRow>
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
-                count={drivers.length}
+                count={props.drivers.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 SelectProps={{
