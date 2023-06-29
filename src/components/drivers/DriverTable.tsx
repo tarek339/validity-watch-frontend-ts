@@ -8,6 +8,7 @@ import axios from "axios";
 import { Driver } from "../../types/driverTypes";
 import {
   Box,
+  Grid,
   IconButton,
   Paper,
   Table,
@@ -25,6 +26,7 @@ import { useDispatch } from "react-redux";
 import { addDriver } from "../../redux/slices/driverSlice";
 import ModalView from "../ModalView";
 import MobileViewHolder from "./MobileViewHolder";
+import ReportIcon from "@mui/icons-material/Report";
 
 const theme = createTheme({
   breakpoints: {
@@ -124,6 +126,9 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
 export default function DriverTable(props: {
   drivers: Driver[];
   getDrivers: () => Promise<void>;
+  leftDays: number;
+  leftDaysSecond: number;
+  leftDaysThird: number;
 }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -176,7 +181,14 @@ export default function DriverTable(props: {
   return (
     <TableContainer square={true} component={Paper} elevation={0}>
       <ModalView
-        children={<MobileViewHolder getDrivers={props.getDrivers} />}
+        children={
+          <MobileViewHolder
+            leftDays={props.leftDays}
+            leftDaysSecond={props.leftDaysSecond}
+            leftDaysThird={props.leftDaysThird}
+            getDrivers={props.getDrivers}
+          />
+        }
       />
       <ThemeProvider theme={theme}>
         <Table aria-label="custom pagination table">
@@ -204,7 +216,12 @@ export default function DriverTable(props: {
                 key={driver._id}
               >
                 <StyledTableCell>
-                  {index + 1} {driver.firstName} {driver.lastName}
+                  <Grid container alignItems="center">
+                    {index + 1} {driver.firstName} {driver.lastName}
+                    {props.leftDays <= 90 && props.leftDays < 180 ? (
+                      <ReportIcon sx={{ color: "#d32f2f" }} />
+                    ) : null}
+                  </Grid>
                 </StyledTableCell>
                 <StyledTableCell align="left">
                   {driver.licenceTyp}

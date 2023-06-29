@@ -10,6 +10,7 @@ import { useState } from "react";
 import StepOne from "./StepOne";
 import moment from "moment";
 import StepTwo from "./StepTwo";
+import { addDriver } from "../../redux/slices/driverSlice";
 
 const validationSchema = Yup.object({
   firstName: Yup.string()
@@ -89,28 +90,31 @@ function EditDriversProfile(props: { getDrivers: () => Promise<void> }) {
         setPage(page + 1);
       }
       if (page === 1) {
+        await axios.put(`/driver/edit/${driver?._id}`, values).then((res) => {
+          props.getDrivers();
+          dispatch(
+            setSnackbar({
+              open: true,
+              severity: "success",
+              message: res?.data?.message,
+            })
+          );
+          setTimeout(
+            () =>
+              dispatch(
+                removeSnackbar({
+                  open: false,
+                  severity: "error",
+                  message: "",
+                })
+              ),
+            4000
+          );
+        });
         await axios
-          .put(`/driver/edit/${driver?._id}`, values)
+          .get(`/driver/driver/${driver?._id}`)
           .then((res) => {
-            props.getDrivers();
-            dispatch(
-              setSnackbar({
-                open: true,
-                severity: "success",
-                message: res?.data?.message,
-              })
-            );
-            setTimeout(
-              () =>
-                dispatch(
-                  removeSnackbar({
-                    open: false,
-                    severity: "error",
-                    message: "",
-                  })
-                ),
-              4000
-            );
+            dispatch(addDriver(res.data));
           })
           .catch((err) => {
             console.log(err?.response?.data?.message);

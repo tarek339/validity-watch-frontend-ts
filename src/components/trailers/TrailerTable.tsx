@@ -218,10 +218,10 @@ export default function TrailerTable() {
                   {index + 1} {trailer.indicator}
                 </StyledTableCell>
                 <StyledTableCell align="left">
-                  {moment(trailer.nextHU).format("DD.MM.YYYY")}
+                  {moment(trailer.nextHU).format("MM.YYYY")}
                 </StyledTableCell>
                 <StyledTableCell align="left">
-                  {moment(trailer.nextSP).format("DD.MM.YYYY")}
+                  {moment(trailer.nextSP).format("MM.YYYY")}
                 </StyledTableCell>
               </StyledTableRow>
             ))}

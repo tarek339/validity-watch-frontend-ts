@@ -27,7 +27,12 @@ interface BottomNavBtns {
   component: JSX.Element;
 }
 
-function ProfileDrawer(props: { getDrivers: () => Promise<void> }) {
+function ProfileDrawer(props: {
+  getDrivers: () => Promise<void>;
+  leftDays: number;
+  leftDaysSecond: number;
+  leftDaysThird: number;
+}) {
   const [open, setOpen] = useState(false);
   const [page, setPage] = useState(0);
   const driver = useSelector((state: RootState) => state.driver.driver);
@@ -135,7 +140,11 @@ function ProfileDrawer(props: { getDrivers: () => Promise<void> }) {
             sx={{ height: "95%" }}
           >
             {page === 0 ? (
-              <DriversProfile />
+              <DriversProfile
+                leftDays={props.leftDays}
+                leftDaysSecond={props.leftDaysSecond}
+                leftDaysThird={props.leftDaysThird}
+              />
             ) : (
               <EditDriversProfile getDrivers={props.getDrivers} />
             )}

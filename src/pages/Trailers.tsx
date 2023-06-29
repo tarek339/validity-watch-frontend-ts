@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import TrailerListing from "../components/trailers/TrailerListing";
+import withRestriction from "../hoc/withRestrictions";
 function Trucks() {
   return (
     <div>
@@ -15,4 +16,4 @@ function Trucks() {
   );
 }
 
-export default Trucks;
+export default withRestriction(Trucks);

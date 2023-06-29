@@ -4,8 +4,12 @@ import DriverTable from "./DriverTable";
 import ProfileDrawer from "./ProfileDrawer";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { differenceInDays } from "date-fns";
 
 function DriverListing() {
+  const driver = useSelector((state: RootState) => state.driver.driver);
   const [drivers, setDrivers] = useState([]);
   const getDrivers = async () => {
     await axios
@@ -22,9 +26,33 @@ function DriverListing() {
     getDrivers();
   }, []);
 
+  const leftDays = differenceInDays(
+    driver?.driverCardNumberExpire
+      ? new Date(driver.licenceTypExpire)
+      : new Date(),
+    new Date()
+  );
+  const leftDaysSecond = differenceInDays(
+    driver?.driverCardNumberExpire
+      ? new Date(driver.codeNumberExpire)
+      : new Date(),
+    new Date()
+  );
+  const leftDaysThird = differenceInDays(
+    driver?.driverCardNumberExpire
+      ? new Date(driver.driverCardNumberExpire)
+      : new Date(),
+    new Date()
+  );
+
   return (
     <div className="section">
-      <ProfileDrawer getDrivers={getDrivers} />
+      <ProfileDrawer
+        leftDays={leftDays}
+        leftDaysSecond={leftDaysSecond}
+        leftDaysThird={leftDaysThird}
+        getDrivers={getDrivers}
+      />
       <div className="section-child">
         <div className="section-table-content">
           <GridContainer
@@ -33,7 +61,13 @@ function DriverListing() {
             content="Driver listing"
           />
           <div className="table-content">
-            <DriverTable getDrivers={getDrivers} drivers={drivers} />
+            <DriverTable
+              leftDays={leftDays}
+              leftDaysSecond={leftDaysSecond}
+              leftDaysThird={leftDaysThird}
+              getDrivers={getDrivers}
+              drivers={drivers}
+            />
           </div>
         </div>
       </div>

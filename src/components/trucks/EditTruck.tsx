@@ -180,8 +180,8 @@ function EditTruck() {
           </Grid>
           <Grid item xs={7}>
             <PickDate
-              views={["year", "month", "day"]}
-              format={"DD.MM.YYYY"}
+              views={["year", "month"]}
+              format={"MM.YYYY"}
               value={moment(formik.values.nextHU)}
               onChange={(value, context) => {
                 const date = moment(value);
@@ -203,8 +203,8 @@ function EditTruck() {
           </Grid>
           <Grid item xs={7}>
             <PickDate
-              views={["year", "month", "day"]}
-              format={"DD.MM.YYYY"}
+              views={["year", "month"]}
+              format={"MM.YYYY"}
               value={moment(formik.values.nextSP)}
               onChange={(value, context) => {
                 const date = moment(value);
