@@ -37,13 +37,13 @@ function TrucksProfile() {
           <Typography>Next HU</Typography>
         </Grid>
         <Grid item xs={7}>
-          <Typography>{moment(truck?.nextHU).format("DD.MM.YYYY")}</Typography>
+          <Typography>{moment(truck?.nextHU).format("MM.YYYY")}</Typography>
         </Grid>
         <Grid item xs={5}>
           <Typography>Next SP</Typography>
         </Grid>
         <Grid item xs={7}>
-          <Typography>{moment(truck?.nextSP).format("DD.MM.YYYY")}</Typography>
+          <Typography>{moment(truck?.nextSP).format("MM.YYYY")}</Typography>
         </Grid>
       </Grid>
     </div>

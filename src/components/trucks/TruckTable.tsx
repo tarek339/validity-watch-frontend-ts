@@ -218,10 +218,10 @@ export default function TruckTable() {
                   {index + 1} {truck.indicator}
                 </StyledTableCell>
                 <StyledTableCell align="left">
-                  {moment(truck.nextHU).format("DD.MM.YYYY")}
+                  {moment(truck.nextHU).format("MM.YYYY")}
                 </StyledTableCell>
                 <StyledTableCell align="left">
-                  {moment(truck.nextSP).format("DD.MM.YYYY")}
+                  {moment(truck.nextSP).format("MM.YYYY")}
                 </StyledTableCell>
               </StyledTableRow>
             ))}

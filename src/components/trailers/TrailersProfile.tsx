@@ -37,17 +37,13 @@ function TrailersProfile() {
           <Typography>Next HU</Typography>
         </Grid>
         <Grid item xs={7}>
-          <Typography>
-            {moment(trailer?.nextHU).format("DD.MM.YYYY")}
-          </Typography>
+          <Typography>{moment(trailer?.nextHU).format("MM.YYYY")}</Typography>
         </Grid>
         <Grid item xs={5}>
           <Typography>Next SP</Typography>
         </Grid>
         <Grid item xs={7}>
-          <Typography>
-            {moment(trailer?.nextSP).format("DD.MM.YYYY")}
-          </Typography>
+          <Typography>{moment(trailer?.nextSP).format("MM.YYYY")}</Typography>
         </Grid>
       </Grid>
     </div>

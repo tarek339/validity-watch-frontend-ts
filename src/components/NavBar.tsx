@@ -8,6 +8,8 @@ import LogoutSharpIcon from "@mui/icons-material/LogoutSharp";
 import FeedbackSharpIcon from "@mui/icons-material/FeedbackSharp";
 import MessageSharpIcon from "@mui/icons-material/MessageSharp";
 import { removeDriver } from "../redux/slices/driverSlice";
+import { removeTruck } from "../redux/slices/truckSlice";
+import { removeTrailer } from "../redux/slices/trailerSlice";
 
 const iconStyle = {
   color: "grey",
@@ -48,6 +50,8 @@ function NavBar() {
                 onClick={() => {
                   localStorage.removeItem("token");
                   dispatch(removeDriver());
+                  dispatch(removeTruck());
+                  dispatch(removeTrailer());
                   dispatch(removeUser());
                 }}
                 style={iconStyle}

@@ -47,9 +47,11 @@ const validationSchema = Yup.object({
 const AddTrucks = () => {
   const dispatch = useDispatch();
   const snackbar = useSelector((state: RootState) => state.snackbar);
+  const user = useSelector((state: RootState) => state.user.user);
 
   const formik = useFormik({
     initialValues: {
+      id: user?._id,
       indicator: "",
       name: "",
       type: "",
@@ -189,8 +191,8 @@ const AddTrucks = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <PickDate
-                  views={["year", "month", "day"]}
-                  format={"DD.MM.YYYY"}
+                  views={["year", "month"]}
+                  format={"MM.YYYY"}
                   value={moment(formik.values.nextHU)}
                   onChange={(value, context) => {
                     const date = moment(value);
@@ -210,8 +212,8 @@ const AddTrucks = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <PickDate
-                  views={["year", "month", "day"]}
-                  format={"DD.MM.YYYY"}
+                  views={["year", "month"]}
+                  format={"MM.YYYY"}
                   value={moment(formik.values.nextSP)}
                   onChange={(value, context) => {
                     const date = moment(value);
