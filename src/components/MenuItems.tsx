@@ -6,7 +6,6 @@ import {
   createTheme,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 
 const theme = createTheme();
 
@@ -29,7 +28,6 @@ function MenuItems(props: {
   route: string;
 }) {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   return (
     <div>
       <ThemeProvider theme={theme}>
