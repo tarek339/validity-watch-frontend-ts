@@ -27,7 +27,7 @@ const validationSchema = Yup.object({
   nextSP: Yup.string().required("required"),
 });
 
-function EditTruck() {
+function EditTruck(props: { getTrucks: () => Promise<void> }) {
   const dispatch = useDispatch();
   const snackbar = useSelector((state: RootState) => state.snackbar);
   const truck = useSelector((state: RootState) => state.truck.truck);
@@ -47,6 +47,7 @@ function EditTruck() {
       await axios
         .put(`/truck/edit-truck/${truck?._id}`, values)
         .then((res) => {
+          props.getTrucks();
           dispatch(
             setSnackbar({
               open: true,

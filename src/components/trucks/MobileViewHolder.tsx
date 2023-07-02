@@ -13,7 +13,7 @@ import EditTruck from "./EditTruck";
 import GridContainer from "../GridContainer";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 
-function MobileViewHolder() {
+function MobileViewHolder(props: { getTrucks: () => Promise<void> }) {
   const [page, setPage] = useState(0);
   const truck = useSelector((state: RootState) => state.truck.truck);
   const dispatch = useDispatch();
@@ -39,7 +39,11 @@ function MobileViewHolder() {
         justifyContent="space-between"
         sx={{ height: "580px" }}
       >
-        {page === 0 ? <TrucksProfile /> : <EditTruck />}
+        {page === 0 ? (
+          <TrucksProfile />
+        ) : (
+          <EditTruck getTrucks={props.getTrucks} />
+        )}
 
         <Grid container direction="row" justifyContent="flex-end">
           <BottomNavigation showLabels>

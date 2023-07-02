@@ -1,16 +1,24 @@
 import GridContainer from "../GridContainer";
 import FormatListNumberedRoundedIcon from "@mui/icons-material/FormatListNumberedRounded";
-import DriverTable from "./DriverTable";
 import ProfileDrawer from "./ProfileDrawer";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { differenceInDays } from "date-fns";
+import TableComponent from "../TableComponent";
+import { Driver } from "../../types/driverTypes";
+import { useDispatch } from "react-redux";
+import { addDriver } from "../../redux/slices/driverSlice";
+import StyledTableParts from "../StyledTableParts";
 
 function DriverListing() {
   const driver = useSelector((state: RootState) => state.driver.driver);
+  const dispatch = useDispatch();
   const [drivers, setDrivers] = useState([]);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+
   const getDrivers = async () => {
     await axios
       .get(`/driver/drivers`)
@@ -27,15 +35,11 @@ function DriverListing() {
   }, []);
 
   const leftDays = differenceInDays(
-    driver?.driverCardNumberExpire
-      ? new Date(driver.licenceTypExpire)
-      : new Date(),
+    driver?.licenceTypExpire ? new Date(driver.licenceTypExpire) : new Date(),
     new Date()
   );
   const leftDaysSecond = differenceInDays(
-    driver?.driverCardNumberExpire
-      ? new Date(driver.codeNumberExpire)
-      : new Date(),
+    driver?.codeNumberExpire ? new Date(driver.codeNumberExpire) : new Date(),
     new Date()
   );
   const leftDaysThird = differenceInDays(
@@ -53,6 +57,7 @@ function DriverListing() {
         leftDaysThird={leftDaysThird}
         getDrivers={getDrivers}
       />
+
       <div className="section-child">
         <div className="section-table-content">
           <GridContainer
@@ -61,12 +66,35 @@ function DriverListing() {
             content="Driver listing"
           />
           <div className="table-content">
-            <DriverTable
-              leftDays={leftDays}
-              leftDaysSecond={leftDaysSecond}
-              leftDaysThird={leftDaysThird}
-              getDrivers={getDrivers}
-              drivers={drivers}
+            <TableComponent
+              page={page}
+              setPage={setPage}
+              rowsPerPage={rowsPerPage}
+              setRowsPerPage={setRowsPerPage}
+              childrenRows={drivers.length}
+              tableHeadOne={"Name"}
+              tableHeadTwo={"Type"}
+              tableHeadThree={"Activity"}
+              childrenCount={drivers.length}
+              mappedChildren={(rowsPerPage > 0
+                ? drivers.slice(
+                    page * rowsPerPage,
+                    page * rowsPerPage + rowsPerPage
+                  )
+                : drivers
+              ).map((driver: Driver, index) => (
+                <StyledTableParts
+                  onClick={() => {
+                    axios.get(`/driver/driver/${driver._id}`).then((res) => {
+                      dispatch(addDriver(res.data));
+                    });
+                  }}
+                  key={driver._id}
+                  firstChild={index + 1 + driver.firstName + driver.lastName}
+                  secondChild={driver.licenceTyp}
+                  thirdChild={driver.licenceTyp}
+                />
+              ))}
             />
           </div>
         </div>

@@ -1,12 +1,39 @@
 import GridContainer from "../GridContainer";
 import FormatListNumberedRoundedIcon from "@mui/icons-material/FormatListNumberedRounded";
 import TruckDrawer from "./TruckDrawer";
-import TruckTable from "./TruckTable";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import axios from "axios";
+import TableComponent from "../TableComponent";
+import { Truck } from "../../types/truckTypes";
+import { addTruck, removeTruck } from "../../redux/slices/truckSlice";
+import StyledTableParts from "../StyledTableParts";
+import moment from "moment";
 
 function DriverListing() {
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [trucks, setTrucks] = useState([]);
+  const dispatch = useDispatch();
+
+  const getTrucks = async () => {
+    await axios
+      .get(`/truck/trucks`)
+      .then((res) => {
+        setTrucks(res.data);
+      })
+      .catch((err) => {
+        console.log("Err", err);
+      });
+  };
+
+  useEffect(() => {
+    getTrucks();
+  }, []);
+
   return (
     <div className="section">
-      <TruckDrawer />
+      <TruckDrawer getTrucks={getTrucks} />
       <div className="section-child">
         <div className="section-table-content">
           <GridContainer
@@ -15,7 +42,37 @@ function DriverListing() {
             content="Truck listing"
           />
           <div className="table-content">
-            <TruckTable />
+            <TableComponent
+              childrenRows={trucks.length}
+              tableHeadOne={"Indicator"}
+              tableHeadTwo={"Next HU"}
+              tableHeadThree={"Next SP"}
+              childrenCount={trucks.length}
+              mappedChildren={(rowsPerPage > 0
+                ? trucks.slice(
+                    page * rowsPerPage,
+                    page * rowsPerPage + rowsPerPage
+                  )
+                : trucks
+              ).map((truck: Truck, index) => (
+                <StyledTableParts
+                  onClick={() => {
+                    axios.get(`/truck/truck/${truck._id}`).then((res) => {
+                      dispatch(removeTruck());
+                      dispatch(addTruck(res.data));
+                    });
+                  }}
+                  key={truck._id}
+                  firstChild={index + 1 + truck.indicator}
+                  secondChild={moment(truck.nextHU).format("DD.MM.YYYY")}
+                  thirdChild={moment(truck.nextSP).format("DD.MM.YYYY")}
+                />
+              ))}
+              page={page}
+              setPage={setPage}
+              rowsPerPage={rowsPerPage}
+              setRowsPerPage={setRowsPerPage}
+            />
           </div>
         </div>
       </div>

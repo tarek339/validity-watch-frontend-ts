@@ -334,7 +334,7 @@ const AddDriver = () => {
                 <PickDate
                   views={["year", "month", "day"]}
                   format={"DD.MM.YYYY"}
-                  value={moment(formik.values.licenceTypExpire)}
+                  value={moment(formik.values.birthday)}
                   onChange={(value, context) => {
                     const date = moment(value);
                     // convert the string value to a Moment object

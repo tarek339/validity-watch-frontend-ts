@@ -5,11 +5,11 @@ import { removeUser } from "../redux/slices/userSlice";
 import { useNavigate } from "react-router-dom";
 import LoginSharpIcon from "@mui/icons-material/LoginSharp";
 import LogoutSharpIcon from "@mui/icons-material/LogoutSharp";
-import FeedbackSharpIcon from "@mui/icons-material/FeedbackSharp";
 import MessageSharpIcon from "@mui/icons-material/MessageSharp";
 import { removeDriver } from "../redux/slices/driverSlice";
 import { removeTruck } from "../redux/slices/truckSlice";
 import { removeTrailer } from "../redux/slices/trailerSlice";
+import Notification from "./Notification";
 
 const iconStyle = {
   color: "grey",
@@ -20,6 +20,7 @@ function NavBar() {
   const navigate = useNavigate();
   const user = useSelector((state: RootState) => state.user.user);
   const dispatch = useDispatch();
+
   return (
     <div className="navbar">
       <AppBar
@@ -37,13 +38,7 @@ function NavBar() {
               </IconButton>
             )}
 
-            {user && (
-              <IconButton style={iconStyle}>
-                <Grid container justifyContent="center" alignItems="center">
-                  <FeedbackSharpIcon />
-                </Grid>
-              </IconButton>
-            )}
+            {user && <Notification />}
 
             {user && (
               <IconButton

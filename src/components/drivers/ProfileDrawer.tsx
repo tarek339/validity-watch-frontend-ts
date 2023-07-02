@@ -10,7 +10,7 @@ import PersonRemoveRoundedIcon from "@mui/icons-material/PersonRemoveRounded";
 import EditDriversProfile from "./EditDriversProfile";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import axios from "axios";
-import { removeDriver } from "../../redux/slices/driverSlice";
+import { addDriver, removeDriver } from "../../redux/slices/driverSlice";
 import GridContainer from "../GridContainer";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
@@ -41,6 +41,7 @@ function ProfileDrawer(props: {
   useEffect(() => {
     if (driver) {
       setOpen(true);
+      setPage(0);
     }
   }, [driver]);
 
@@ -61,9 +62,8 @@ function ProfileDrawer(props: {
           label="Close"
           icon={<CloseIcon />}
           onClick={() => {
-            dispatch(removeDriver());
-            setPage(0);
             setOpen(false);
+            dispatch(removeDriver());
           }}
         />
       ),
@@ -83,7 +83,14 @@ function ProfileDrawer(props: {
             )
           }
           onClick={
-            page === 0 ? () => setPage(page + 1) : () => setPage(page - 1)
+            page === 0
+              ? () => setPage(page + 1)
+              : () => {
+                  axios.get(`/driver/driver/${driver?._id}`).then((res) => {
+                    dispatch(addDriver(res.data));
+                  });
+                  setPage(page - 1);
+                }
           }
         />
       ),
