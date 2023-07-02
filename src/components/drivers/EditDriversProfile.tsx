@@ -10,7 +10,6 @@ import { useState } from "react";
 import StepOne from "./StepOne";
 import moment from "moment";
 import StepTwo from "./StepTwo";
-import { addDriver } from "../../redux/slices/driverSlice";
 
 const validationSchema = Yup.object({
   firstName: Yup.string()
@@ -111,32 +110,6 @@ function EditDriversProfile(props: { getDrivers: () => Promise<void> }) {
             4000
           );
         });
-        await axios
-          .get(`/driver/driver/${driver?._id}`)
-          .then((res) => {
-            dispatch(addDriver(res.data));
-          })
-          .catch((err) => {
-            console.log(err?.response?.data?.message);
-            dispatch(
-              setSnackbar({
-                open: true,
-                severity: "error",
-                message: err?.response?.data?.message,
-              })
-            );
-            setTimeout(
-              () =>
-                dispatch(
-                  removeSnackbar({
-                    open: false,
-                    severity: "error",
-                    message: "",
-                  })
-                ),
-              4000
-            );
-          });
       }
     },
   });

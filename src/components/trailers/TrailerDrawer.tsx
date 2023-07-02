@@ -27,7 +27,7 @@ interface BottomNavBtns {
   component: JSX.Element;
 }
 
-function TrailerDrawer() {
+function TrailerDrawer(props: { getTrailers: () => Promise<void> }) {
   const [open, setOpen] = useState(false);
   const [page, setPage] = useState(0);
   const trailer = useSelector((state: RootState) => state.trailer.trailer);
@@ -36,6 +36,7 @@ function TrailerDrawer() {
   useEffect(() => {
     if (trailer) {
       setOpen(true);
+      setPage(0);
     }
   }, [trailer]);
 
@@ -57,7 +58,6 @@ function TrailerDrawer() {
           icon={<CloseIcon />}
           onClick={() => {
             dispatch(removeTrailer());
-            setPage(0);
             setOpen(false);
           }}
         />
@@ -130,7 +130,11 @@ function TrailerDrawer() {
             justifyContent="space-between"
             sx={{ height: "95%" }}
           >
-            {page === 0 ? <TrailersProfile /> : <EditTrailer />}
+            {page === 0 ? (
+              <TrailersProfile />
+            ) : (
+              <EditTrailer getTrailers={props.getTrailers} />
+            )}
 
             <Grid container direction="row" justifyContent="space-between">
               {bottomNavigation.map((btn: BottomNavBtns) => {

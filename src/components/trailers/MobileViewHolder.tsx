@@ -13,7 +13,7 @@ import EditTrailer from "./EditTrailer";
 import GridContainer from "../GridContainer";
 import RvHookupIcon from "@mui/icons-material/RvHookup";
 
-function MobileViewHolder() {
+function MobileViewHolder(props: { getTrailers: () => Promise<void> }) {
   const [page, setPage] = useState(0);
   const trailer = useSelector((state: RootState) => state.trailer.trailer);
   const dispatch = useDispatch();
@@ -37,7 +37,11 @@ function MobileViewHolder() {
         justifyContent="space-between"
         sx={{ height: "580px" }}
       >
-        {page === 0 ? <TrailersProfile /> : <EditTrailer />}
+        {page === 0 ? (
+          <TrailersProfile />
+        ) : (
+          <EditTrailer getTrailers={props.getTrailers} />
+        )}
 
         <Grid container direction="row" justifyContent="flex-end">
           <BottomNavigation showLabels>

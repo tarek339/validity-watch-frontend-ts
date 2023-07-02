@@ -27,7 +27,7 @@ interface BottomNavBtns {
   component: JSX.Element;
 }
 
-function TruckDrawer() {
+function TruckDrawer(props: { getTrucks: () => Promise<void> }) {
   const [open, setOpen] = useState(false);
   const [page, setPage] = useState(0);
   const truck = useSelector((state: RootState) => state.truck.truck);
@@ -36,6 +36,7 @@ function TruckDrawer() {
   useEffect(() => {
     if (truck) {
       setOpen(true);
+      setPage(0);
     }
   }, [truck]);
 
@@ -57,7 +58,6 @@ function TruckDrawer() {
           icon={<CloseIcon />}
           onClick={() => {
             dispatch(removeTruck());
-            setPage(0);
             setOpen(false);
           }}
         />
@@ -134,7 +134,11 @@ function TruckDrawer() {
             justifyContent="space-between"
             sx={{ height: "95%" }}
           >
-            {page === 0 ? <TrucksProfile /> : <EditTruck />}
+            {page === 0 ? (
+              <TrucksProfile />
+            ) : (
+              <EditTruck getTrucks={props.getTrucks} />
+            )}
 
             <Grid container direction="row" justifyContent="space-between">
               {bottomNavigation.map((btn: BottomNavBtns) => {
