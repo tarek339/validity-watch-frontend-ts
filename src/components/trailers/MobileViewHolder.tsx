@@ -7,13 +7,17 @@ import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { removeTrailer } from "../../redux/slices/trailerSlice";
+import { addTrailer, removeTrailer } from "../../redux/slices/trailerSlice";
 import TrailersProfile from "./TrailersProfile";
 import EditTrailer from "./EditTrailer";
 import GridContainer from "../GridContainer";
 import RvHookupIcon from "@mui/icons-material/RvHookup";
 
-function MobileViewHolder(props: { getTrailers: () => Promise<void> }) {
+function MobileViewHolder(props: {
+  getTrailers: () => Promise<void>;
+  leftDays: number;
+  leftDaysSecond: number;
+}) {
   const [page, setPage] = useState(0);
   const trailer = useSelector((state: RootState) => state.trailer.trailer);
   const dispatch = useDispatch();
@@ -38,7 +42,10 @@ function MobileViewHolder(props: { getTrailers: () => Promise<void> }) {
         sx={{ height: "580px" }}
       >
         {page === 0 ? (
-          <TrailersProfile />
+          <TrailersProfile
+            leftDays={props.leftDays}
+            leftDaysSecond={props.leftDaysSecond}
+          />
         ) : (
           <EditTrailer getTrailers={props.getTrailers} />
         )}
@@ -56,7 +63,16 @@ function MobileViewHolder(props: { getTrailers: () => Promise<void> }) {
                 )
               }
               onClick={
-                page === 0 ? () => setPage(page + 1) : () => setPage(page - 1)
+                page === 0
+                  ? () => setPage(page + 1)
+                  : () => {
+                      axios
+                        .get(`/trailer/trailer/${trailer?._id}`)
+                        .then((res) => {
+                          dispatch(addTrailer(res.data));
+                        });
+                      setPage(page - 1);
+                    }
               }
             />
             <BottomNavigationAction

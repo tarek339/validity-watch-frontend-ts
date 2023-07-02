@@ -3,18 +3,23 @@ import FormatListNumberedRoundedIcon from "@mui/icons-material/FormatListNumbere
 import TrailerDrawer from "./TrailerDrawer";
 import TableComponent from "../TableComponent";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { Trailer } from "../../types/trailerTypes";
 import { addTrailer, removeTrailer } from "../../redux/slices/trailerSlice";
 import StyledTableParts from "../StyledTableParts";
 import moment from "moment";
+import MobileViewHolder from "./MobileViewHolder";
+import ModalView from "../ModalView";
+import { differenceInDays } from "date-fns";
+import { RootState } from "../../redux/store";
 
 function DriverListing() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [trailers, setTrailers] = useState([]);
   const dispatch = useDispatch();
+  const trailer = useSelector((state: RootState) => state.trailer.trailer);
 
   const getTrailers = async () => {
     await axios
@@ -31,9 +36,22 @@ function DriverListing() {
     getTrailers();
   }, []);
 
+  const leftDays = differenceInDays(
+    trailer?.nextHU ? new Date(trailer.nextHU) : new Date(),
+    new Date()
+  );
+  const leftDaysSecond = differenceInDays(
+    trailer?.nextSP ? new Date(trailer.nextSP) : new Date(),
+    new Date()
+  );
+
   return (
     <div className="section">
-      <TrailerDrawer getTrailers={getTrailers} />
+      <TrailerDrawer
+        getTrailers={getTrailers}
+        leftDays={leftDays}
+        leftDaysSecond={leftDaysSecond}
+      />
       <div className="section-child">
         <div className="section-table-content">
           <GridContainer
@@ -72,6 +90,17 @@ function DriverListing() {
               setPage={setPage}
               rowsPerPage={rowsPerPage}
               setRowsPerPage={setRowsPerPage}
+              modalView={
+                <ModalView
+                  children={
+                    <MobileViewHolder
+                      getTrailers={getTrailers}
+                      leftDays={leftDays}
+                      leftDaysSecond={leftDaysSecond}
+                    />
+                  }
+                />
+              }
             />
           </div>
         </div>

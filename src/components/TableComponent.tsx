@@ -115,6 +115,7 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
 }
 
 export default function TableComponent(props: {
+  modalView: JSX.Element;
   childrenRows: number;
   childrenCount: number;
   mappedChildren: JSX.Element[];
@@ -160,6 +161,7 @@ export default function TableComponent(props: {
 
   return (
     <TableContainer square={true} component={Paper} elevation={0}>
+      {props.modalView}
       <ThemeProvider theme={theme}>
         <Table aria-label="custom pagination table">
           <TableHead>
