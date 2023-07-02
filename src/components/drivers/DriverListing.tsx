@@ -11,6 +11,8 @@ import { Driver } from "../../types/driverTypes";
 import { useDispatch } from "react-redux";
 import { addDriver } from "../../redux/slices/driverSlice";
 import StyledTableParts from "../StyledTableParts";
+import ModalView from "../ModalView";
+import MobileViewHolder from "./MobileViewHolder";
 
 function DriverListing() {
   const driver = useSelector((state: RootState) => state.driver.driver);
@@ -95,6 +97,18 @@ function DriverListing() {
                   thirdChild={driver.licenceTyp}
                 />
               ))}
+              modalView={
+                <ModalView
+                  children={
+                    <MobileViewHolder
+                      getDrivers={getDrivers}
+                      leftDays={leftDays}
+                      leftDaysSecond={leftDaysSecond}
+                      leftDaysThird={leftDaysThird}
+                    />
+                  }
+                />
+              }
             />
           </div>
         </div>

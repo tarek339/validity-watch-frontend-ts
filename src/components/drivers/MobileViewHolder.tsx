@@ -6,7 +6,7 @@ import PersonRemoveRoundedIcon from "@mui/icons-material/PersonRemoveRounded";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { removeDriver } from "../../redux/slices/driverSlice";
+import { addDriver, removeDriver } from "../../redux/slices/driverSlice";
 import { RootState } from "../../redux/store";
 import DriversProfile from "./DriversProfile";
 import EditDriversProfile from "./EditDriversProfile";
@@ -70,7 +70,14 @@ function MobileViewHolder(props: {
                 )
               }
               onClick={
-                page === 0 ? () => setPage(page + 1) : () => setPage(page - 1)
+                page === 0
+                  ? () => setPage(page + 1)
+                  : () => {
+                      axios.get(`/driver/driver/${driver?._id}`).then((res) => {
+                        dispatch(addDriver(res.data));
+                      });
+                      setPage(page - 1);
+                    }
               }
             />
             <BottomNavigationAction

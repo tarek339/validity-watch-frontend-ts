@@ -2,19 +2,24 @@ import GridContainer from "../GridContainer";
 import FormatListNumberedRoundedIcon from "@mui/icons-material/FormatListNumberedRounded";
 import TruckDrawer from "./TruckDrawer";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import TableComponent from "../TableComponent";
 import { Truck } from "../../types/truckTypes";
 import { addTruck, removeTruck } from "../../redux/slices/truckSlice";
 import StyledTableParts from "../StyledTableParts";
 import moment from "moment";
+import MobileViewHolder from "./MobileViewHolder";
+import ModalView from "../ModalView";
+import { differenceInDays } from "date-fns";
+import { RootState } from "../../redux/store";
 
 function DriverListing() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [trucks, setTrucks] = useState([]);
   const dispatch = useDispatch();
+  const truck = useSelector((state: RootState) => state.truck.truck);
 
   const getTrucks = async () => {
     await axios
@@ -31,9 +36,22 @@ function DriverListing() {
     getTrucks();
   }, []);
 
+  const leftDays = differenceInDays(
+    truck?.nextHU ? new Date(truck.nextHU) : new Date(),
+    new Date()
+  );
+  const leftDaysSecond = differenceInDays(
+    truck?.nextSP ? new Date(truck.nextSP) : new Date(),
+    new Date()
+  );
+
   return (
     <div className="section">
-      <TruckDrawer getTrucks={getTrucks} />
+      <TruckDrawer
+        getTrucks={getTrucks}
+        leftDays={leftDays}
+        leftDaysSecond={leftDaysSecond}
+      />
       <div className="section-child">
         <div className="section-table-content">
           <GridContainer
@@ -72,6 +90,17 @@ function DriverListing() {
               setPage={setPage}
               rowsPerPage={rowsPerPage}
               setRowsPerPage={setRowsPerPage}
+              modalView={
+                <ModalView
+                  children={
+                    <MobileViewHolder
+                      getTrucks={getTrucks}
+                      leftDays={leftDays}
+                      leftDaysSecond={leftDaysSecond}
+                    />
+                  }
+                />
+              }
             />
           </div>
         </div>

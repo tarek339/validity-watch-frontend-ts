@@ -12,8 +12,13 @@ import TrucksProfile from "./TrucksProfile";
 import EditTruck from "./EditTruck";
 import GridContainer from "../GridContainer";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import { addTruck } from "../../redux/slices/truckSlice";
 
-function MobileViewHolder(props: { getTrucks: () => Promise<void> }) {
+function MobileViewHolder(props: {
+  getTrucks: () => Promise<void>;
+  leftDays: number;
+  leftDaysSecond: number;
+}) {
   const [page, setPage] = useState(0);
   const truck = useSelector((state: RootState) => state.truck.truck);
   const dispatch = useDispatch();
@@ -40,7 +45,10 @@ function MobileViewHolder(props: { getTrucks: () => Promise<void> }) {
         sx={{ height: "580px" }}
       >
         {page === 0 ? (
-          <TrucksProfile />
+          <TrucksProfile
+            leftDays={props.leftDays}
+            leftDaysSecond={props.leftDaysSecond}
+          />
         ) : (
           <EditTruck getTrucks={props.getTrucks} />
         )}
@@ -58,7 +66,14 @@ function MobileViewHolder(props: { getTrucks: () => Promise<void> }) {
                 )
               }
               onClick={
-                page === 0 ? () => setPage(page + 1) : () => setPage(page - 1)
+                page === 0
+                  ? () => setPage(page + 1)
+                  : () => {
+                      axios.get(`/truck/truck/${truck?._id}`).then((res) => {
+                        dispatch(addTruck(res.data));
+                      });
+                      setPage(page - 1);
+                    }
               }
             />
             <BottomNavigationAction

@@ -9,7 +9,7 @@ import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import axios from "axios";
 import TrucksProfile from "./TrucksProfile";
 import EditTruck from "./EditTruck";
-import { removeTruck } from "../../redux/slices/truckSlice";
+import { addTruck, removeTruck } from "../../redux/slices/truckSlice";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import GridContainer from "../GridContainer";
@@ -27,7 +27,11 @@ interface BottomNavBtns {
   component: JSX.Element;
 }
 
-function TruckDrawer(props: { getTrucks: () => Promise<void> }) {
+function TruckDrawer(props: {
+  getTrucks: () => Promise<void>;
+  leftDays: number;
+  leftDaysSecond: number;
+}) {
   const [open, setOpen] = useState(false);
   const [page, setPage] = useState(0);
   const truck = useSelector((state: RootState) => state.truck.truck);
@@ -78,7 +82,14 @@ function TruckDrawer(props: { getTrucks: () => Promise<void> }) {
             )
           }
           onClick={
-            page === 0 ? () => setPage(page + 1) : () => setPage(page - 1)
+            page === 0
+              ? () => setPage(page + 1)
+              : () => {
+                  axios.get(`/truck/truck/${truck?._id}`).then((res) => {
+                    dispatch(addTruck(res.data));
+                  });
+                  setPage(page - 1);
+                }
           }
         />
       ),
@@ -135,7 +146,10 @@ function TruckDrawer(props: { getTrucks: () => Promise<void> }) {
             sx={{ height: "95%" }}
           >
             {page === 0 ? (
-              <TrucksProfile />
+              <TrucksProfile
+                leftDays={props.leftDays}
+                leftDaysSecond={props.leftDaysSecond}
+              />
             ) : (
               <EditTruck getTrucks={props.getTrucks} />
             )}
