@@ -6,6 +6,7 @@ import { Truck } from "../types/truckTypes";
 import { Trailer } from "../types/trailerTypes";
 import { Driver } from "../types/driverTypes";
 import FeedbackSharpIcon from "@mui/icons-material/FeedbackSharp";
+import { io } from "socket.io-client";
 
 const iconStyle = {
   color: "grey",
@@ -38,13 +39,29 @@ function Notification() {
   }, []);
 
   useEffect(() => {
+    let socket = io("http://localhost:4500");
+    socket.on("DRIVERS", (drivers) => {
+      setAllDrivers(drivers);
+      console.log("real time drivers", drivers);
+    });
+    socket.on("TRUCKS", (trucks) => {
+      setAllTrucks(trucks);
+      console.log("real time trucks", trucks);
+    });
+    socket.on("TRAILERS", (trailers) => {
+      setAllTrailers(trailers);
+      console.log("real time trailers", trailers);
+    });
+  }, []);
+
+  useEffect(() => {
     getCompanyProperties();
   }, [getCompanyProperties]);
 
   let isDriverExpired = false;
   let isTruckExpired = false;
   let isTrailerExpired = false;
-  let expiredDriverFirstNames: string[] = [];
+  let expiredDriverNames: string[] = [];
   let expiredTruckIndicators: string[] = [];
   let expiredTrailerIndicators: string[] = [];
 
@@ -63,9 +80,7 @@ function Notification() {
     );
     if (leftDays <= 90 || leftDaysSecond <= 90 || leftDaysThird <= 90) {
       isDriverExpired = true;
-      expiredDriverFirstNames.push(
-        " " + driver.firstName + " " + driver.lastName
-      );
+      expiredDriverNames.push(" " + driver.firstName + " " + driver.lastName);
     }
   });
 
@@ -90,6 +105,33 @@ function Notification() {
     }
   });
 
+  const NotDriver =
+    isDriverExpired && expiredDriverNames.length > 1
+      ? `Check drivers ${expiredDriverNames} `
+      : isDriverExpired && expiredDriverNames.length <= 1
+      ? `Check driver ${expiredDriverNames} `
+      : isDriverExpired && expiredDriverNames.length === 0
+      ? null
+      : null;
+
+  const NotTrucks =
+    isTruckExpired && expiredTruckIndicators.length > 1
+      ? `Check trucks ${expiredTruckIndicators} `
+      : isTruckExpired && expiredTruckIndicators.length <= 1
+      ? `Check truck ${expiredTruckIndicators} `
+      : isTruckExpired && expiredTruckIndicators.length === 0
+      ? null
+      : null;
+
+  const NotTrailers =
+    isTrailerExpired && expiredTrailerIndicators.length > 1
+      ? `Check trucks ${expiredTrailerIndicators} `
+      : isTrailerExpired && expiredTrailerIndicators.length <= 1
+      ? `Check truck ${expiredTrailerIndicators} `
+      : isTrailerExpired && expiredTrailerIndicators.length === 0
+      ? null
+      : null;
+
   return (
     <div>
       <IconButton
@@ -101,7 +143,11 @@ function Notification() {
       >
         <Grid container justifyContent="center" alignItems="center">
           <Badge
-            variant={isDriverExpired ? "dot" : undefined}
+            badgeContent={
+              expiredDriverNames.length +
+              expiredTruckIndicators.length +
+              expiredTrailerIndicators.length
+            }
             color="error"
             anchorOrigin={{
               vertical: "top",
@@ -134,9 +180,9 @@ function Notification() {
         }}
       >
         <Typography sx={{ p: 1 }}>
-          {isDriverExpired ? `Check drivers ${expiredDriverFirstNames} ` : ""}
-          {isTruckExpired ? `Check trucks ${expiredTruckIndicators}` : ""}
-          {isTrailerExpired ? `Check trailers ${expiredTrailerIndicators}` : ""}
+          {NotDriver}
+          {NotTrucks}
+          {NotTrailers}
         </Typography>
       </Popover>
     </div>
