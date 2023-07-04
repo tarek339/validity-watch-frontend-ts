@@ -61,8 +61,8 @@ function TruckDrawer(props: {
           label="Close"
           icon={<CloseIcon />}
           onClick={() => {
-            dispatch(removeTruck());
             setOpen(false);
+            setTimeout(() => dispatch(removeTruck()), 1000);
           }}
         />
       ),

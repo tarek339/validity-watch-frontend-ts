@@ -63,7 +63,7 @@ function ProfileDrawer(props: {
           icon={<CloseIcon />}
           onClick={() => {
             setOpen(false);
-            dispatch(removeDriver());
+            setTimeout(() => dispatch(removeDriver()), 1000);
           }}
         />
       ),

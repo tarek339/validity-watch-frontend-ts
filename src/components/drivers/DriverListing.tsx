@@ -92,7 +92,9 @@ function DriverListing() {
                     });
                   }}
                   key={driver._id}
-                  firstChild={index + 1 + driver.firstName + driver.lastName}
+                  firstChild={
+                    index + 1 + " " + driver.firstName + " " + driver.lastName
+                  }
                   secondChild={driver.licenceTyp}
                   thirdChild={driver.licenceTyp}
                 />

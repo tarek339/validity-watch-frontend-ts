@@ -81,7 +81,7 @@ function DriverListing() {
                     });
                   }}
                   key={truck._id}
-                  firstChild={index + 1 + truck.indicator}
+                  firstChild={index + 1 + " " + truck.indicator}
                   secondChild={moment(truck.nextHU).format("DD.MM.YYYY")}
                   thirdChild={moment(truck.nextSP).format("DD.MM.YYYY")}
                 />

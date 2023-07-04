@@ -61,8 +61,8 @@ function TrailerDrawer(props: {
           label="Close"
           icon={<CloseIcon />}
           onClick={() => {
-            dispatch(removeTrailer());
             setOpen(false);
+            setTimeout(() => dispatch(removeTrailer()), 1000);
           }}
         />
       ),

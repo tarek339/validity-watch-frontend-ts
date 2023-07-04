@@ -81,7 +81,7 @@ function DriverListing() {
                     });
                   }}
                   key={trailer._id}
-                  firstChild={index + 1 + trailer.indicator}
+                  firstChild={index + 1 + " " + trailer.indicator}
                   secondChild={moment(trailer.nextHU).format("DD.MM.YYYY")}
                   thirdChild={moment(trailer.nextSP).format("DD.MM.YYYY")}
                 />
