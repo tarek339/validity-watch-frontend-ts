@@ -9,7 +9,7 @@ import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import axios from "axios";
 import TrucksProfile from "./TrucksProfile";
 import EditTruck from "./EditTruck";
-import { addTruck, removeTruck } from "../../redux/slices/truckSlice";
+import { removeTruck } from "../../redux/slices/truckSlice";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import GridContainer from "../GridContainer";
@@ -81,9 +81,6 @@ function TruckDrawer(props: { leftDays: number; leftDaysSecond: number }) {
             page === 0
               ? () => setPage(page + 1)
               : () => {
-                  axios.get(`/truck/truck/${truck?._id}`).then((res) => {
-                    dispatch(addTruck(res.data));
-                  });
                   setPage(page - 1);
                 }
           }

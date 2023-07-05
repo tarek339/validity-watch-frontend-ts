@@ -28,7 +28,6 @@ const iconStyle = {
 };
 
 function Notification() {
-  // Popover
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -38,7 +37,6 @@ function Notification() {
   };
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
-  // Popver
 
   const dispatch = useDispatch();
   const drivers = useSelector((state: RootState) => state.property.drivers);
@@ -102,7 +100,13 @@ function Notification() {
     );
     if (leftDays <= 90 || leftDaysSecond <= 90 || leftDaysThird <= 90) {
       isDriverExpired = true;
-      expiredDriverNames.push(" " + driver.firstName + " " + driver.lastName);
+      if (expiredDriverNames.length > 0) {
+        expiredDriverNames.push(
+          ", " + driver.firstName + " " + driver.lastName
+        );
+      } else {
+        expiredDriverNames.push(driver.firstName + " " + driver.lastName);
+      }
     }
   });
 
@@ -111,7 +115,11 @@ function Notification() {
     const leftDaysSecond = differenceInDays(new Date(truck.nextSP), new Date());
     if (leftDays <= 60 || leftDaysSecond <= 60) {
       isTruckExpired = true;
-      expiredTruckIndicators.push(" " + truck.indicator);
+      if (expiredTruckIndicators.length > 0) {
+        expiredTruckIndicators.push(", " + truck.indicator);
+      } else {
+        expiredTruckIndicators.push(truck.indicator);
+      }
     }
   });
 
@@ -123,36 +131,60 @@ function Notification() {
     );
     if (leftDays <= 60 || leftDaysSecond <= 60) {
       isTrailerExpired = true;
-      expiredTrailerIndicators.push(" " + trailer.indicator);
+      if (expiredTrailerIndicators.length > 0) {
+        expiredTrailerIndicators.push(", " + trailer.indicator);
+      } else {
+        expiredTrailerIndicators.push(trailer.indicator);
+      }
     }
   });
 
+  const notiContStyle = {
+    borderBottom: "1px dashed #000",
+    marginBottom: "10px",
+  };
+
   const NotDriver =
-    isDriverExpired && expiredDriverNames.length > 1
-      ? `Check drivers ${expiredDriverNames} `
-      : isDriverExpired && expiredDriverNames.length <= 1
-      ? `Check driver ${expiredDriverNames} `
-      : isDriverExpired && expiredDriverNames.length === 0
-      ? null
-      : null;
+    isDriverExpired && expiredDriverNames.length > 1 ? (
+      <div style={notiContStyle}>
+        <Typography sx={{ fontWeight: "bold" }}>Check drivers</Typography>
+        <Typography>{expiredDriverNames}</Typography>
+      </div>
+    ) : isDriverExpired && expiredDriverNames.length <= 1 ? (
+      <div style={notiContStyle}>
+        <Typography sx={{ fontWeight: "bold" }}>
+          Check driver {expiredDriverNames}
+        </Typography>
+      </div>
+    ) : isDriverExpired && expiredDriverNames.length === 0 ? null : null;
 
   const NotTrucks =
-    isTruckExpired && expiredTruckIndicators.length > 1
-      ? `Check trucks ${expiredTruckIndicators} `
-      : isTruckExpired && expiredTruckIndicators.length <= 1
-      ? `Check truck ${expiredTruckIndicators} `
-      : isTruckExpired && expiredTruckIndicators.length === 0
-      ? null
-      : null;
+    isTruckExpired && expiredTruckIndicators.length > 1 ? (
+      <div style={notiContStyle}>
+        <Typography sx={{ fontWeight: "bold" }}>Check trucks</Typography>
+        <Typography>{expiredTruckIndicators}</Typography>
+      </div>
+    ) : isTruckExpired && expiredTruckIndicators.length <= 1 ? (
+      <div style={notiContStyle}>
+        <Typography sx={{ fontWeight: "bold" }}>
+          Check truck {expiredTruckIndicators}
+        </Typography>
+      </div>
+    ) : isTruckExpired && expiredTruckIndicators.length === 0 ? null : null;
 
   const NotTrailers =
-    isTrailerExpired && expiredTrailerIndicators.length > 1
-      ? `Check trailers ${expiredTrailerIndicators} `
-      : isTrailerExpired && expiredTrailerIndicators.length <= 1
-      ? `Check trailer ${expiredTrailerIndicators} `
-      : isTrailerExpired && expiredTrailerIndicators.length === 0
-      ? null
-      : null;
+    isTrailerExpired && expiredTrailerIndicators.length > 1 ? (
+      <div>
+        <Typography sx={{ fontWeight: "bold" }}>Check trailers</Typography>
+        <Typography>{expiredTrailerIndicators}</Typography>
+      </div>
+    ) : isTrailerExpired && expiredTrailerIndicators.length <= 1 ? (
+      <div>
+        <Typography sx={{ fontWeight: "bold" }}>
+          Check trailer {expiredTrailerIndicators}
+        </Typography>
+      </div>
+    ) : isTrailerExpired && expiredTrailerIndicators.length === 0 ? null : null;
 
   return (
     <div>
@@ -201,7 +233,7 @@ function Notification() {
           },
         }}
       >
-        <Box sx={{ p: 1 }}>
+        <Box sx={{ p: 1, maxWidth: "400px" }}>
           <Typography>{NotDriver}</Typography>
           <Typography>{NotTrucks}</Typography>
           <Typography>{NotTrailers}</Typography>
