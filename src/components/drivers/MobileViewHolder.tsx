@@ -6,7 +6,7 @@ import PersonRemoveRoundedIcon from "@mui/icons-material/PersonRemoveRounded";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { addDriver, removeDriver } from "../../redux/slices/driverSlice";
+import { removeDriver } from "../../redux/slices/driverSlice";
 import { RootState } from "../../redux/store";
 import DriversProfile from "./DriversProfile";
 import EditDriversProfile from "./EditDriversProfile";
@@ -14,7 +14,6 @@ import GridContainer from "../GridContainer";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 function MobileViewHolder(props: {
-  getDrivers: () => Promise<void>;
   leftDays: number;
   leftDaysSecond: number;
   leftDaysThird: number;
@@ -55,7 +54,7 @@ function MobileViewHolder(props: {
             leftDaysThird={props.leftDaysThird}
           />
         ) : (
-          <EditDriversProfile getDrivers={props.getDrivers} />
+          <EditDriversProfile />
         )}
         <Grid container direction="row" justifyContent="flex-end">
           <BottomNavigation style={style} showLabels>
@@ -73,9 +72,6 @@ function MobileViewHolder(props: {
                 page === 0
                   ? () => setPage(page + 1)
                   : () => {
-                      axios.get(`/driver/driver/${driver?._id}`).then((res) => {
-                        dispatch(addDriver(res.data));
-                      });
                       setPage(page - 1);
                     }
               }

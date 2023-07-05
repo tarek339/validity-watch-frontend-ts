@@ -13,28 +13,18 @@ import { addDriver } from "../../redux/slices/driverSlice";
 import StyledTableParts from "../StyledTableParts";
 import ModalView from "../ModalView";
 import MobileViewHolder from "./MobileViewHolder";
+import { GetCompanyProperty } from "../../api/getCompProp";
 
 function DriverListing() {
   const driver = useSelector((state: RootState) => state.driver.driver);
+  const drivers = useSelector((state: RootState) => state.property.drivers);
   const dispatch = useDispatch();
-  const [drivers, setDrivers] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const getDrivers = async () => {
-    await axios
-      .get(`/driver/drivers`)
-      .then((res) => {
-        setDrivers(res.data);
-      })
-      .catch((err) => {
-        console.log("Err", err);
-      });
-  };
-
   useEffect(() => {
-    getDrivers();
-  }, []);
+    GetCompanyProperty(dispatch);
+  }, [dispatch]);
 
   const leftDays = differenceInDays(
     driver?.licenceTypExpire ? new Date(driver.licenceTypExpire) : new Date(),
@@ -57,7 +47,6 @@ function DriverListing() {
         leftDays={leftDays}
         leftDaysSecond={leftDaysSecond}
         leftDaysThird={leftDaysThird}
-        getDrivers={getDrivers}
       />
 
       <div className="section-child">
@@ -103,7 +92,6 @@ function DriverListing() {
                 <ModalView
                   children={
                     <MobileViewHolder
-                      getDrivers={getDrivers}
                       leftDays={leftDays}
                       leftDaysSecond={leftDaysSecond}
                       leftDaysThird={leftDaysThird}

@@ -13,11 +13,7 @@ import EditTrailer from "./EditTrailer";
 import GridContainer from "../GridContainer";
 import RvHookupIcon from "@mui/icons-material/RvHookup";
 
-function MobileViewHolder(props: {
-  getTrailers: () => Promise<void>;
-  leftDays: number;
-  leftDaysSecond: number;
-}) {
+function MobileViewHolder(props: { leftDays: number; leftDaysSecond: number }) {
   const [page, setPage] = useState(0);
   const trailer = useSelector((state: RootState) => state.trailer.trailer);
   const dispatch = useDispatch();
@@ -47,7 +43,7 @@ function MobileViewHolder(props: {
             leftDaysSecond={props.leftDaysSecond}
           />
         ) : (
-          <EditTrailer getTrailers={props.getTrailers} />
+          <EditTrailer />
         )}
 
         <Grid container direction="row" justifyContent="flex-end">

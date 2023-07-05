@@ -27,11 +27,7 @@ interface BottomNavBtns {
   component: JSX.Element;
 }
 
-function TrailerDrawer(props: {
-  getTrailers: () => Promise<void>;
-  leftDays: number;
-  leftDaysSecond: number;
-}) {
+function TrailerDrawer(props: { leftDays: number; leftDaysSecond: number }) {
   const [open, setOpen] = useState(false);
   const [page, setPage] = useState(0);
   const trailer = useSelector((state: RootState) => state.trailer.trailer);
@@ -147,7 +143,7 @@ function TrailerDrawer(props: {
                 leftDaysSecond={props.leftDaysSecond}
               />
             ) : (
-              <EditTrailer getTrailers={props.getTrailers} />
+              <EditTrailer />
             )}
 
             <Grid container direction="row" justifyContent="space-between">

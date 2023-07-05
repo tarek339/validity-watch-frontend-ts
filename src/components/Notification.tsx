@@ -1,11 +1,18 @@
 import { Badge, Grid, IconButton, Popover, Typography } from "@mui/material";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { differenceInDays } from "date-fns";
 import { useCallback, useEffect, useState } from "react";
 import { Truck } from "../types/truckTypes";
 import { Trailer } from "../types/trailerTypes";
 import { Driver } from "../types/driverTypes";
 import FeedbackSharpIcon from "@mui/icons-material/FeedbackSharp";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setDrivers,
+  setTrailers,
+  setTrucks,
+} from "../redux/slices/propertySlice";
+import { RootState } from "../redux/store";
 import { io } from "socket.io-client";
 
 const iconStyle = {
@@ -26,37 +33,46 @@ function Notification() {
   const id = open ? "simple-popover" : undefined;
   // Popver
 
-  const [allDrivers, setAllDrivers] = useState([]);
-  const [allTrucks, setAllTrucks] = useState([]);
-  const [allTrailers, setAllTrailers] = useState([]);
+  const dispatch = useDispatch();
+  const drivers = useSelector((state: RootState) => state.property.drivers);
+  const trucks = useSelector((state: RootState) => state.property.trucks);
+  const trailers = useSelector((state: RootState) => state.property.trailers);
+  const user = useSelector((state: RootState) => state.user.user);
 
   const getCompanyProperties = useCallback(async () => {
-    await axios.get("/company/properties").then((res) => {
-      setAllDrivers(res.data.drivers);
-      setAllTrucks(res.data.trucks);
-      setAllTrailers(res.data.trailers);
-    });
-  }, []);
-
-  useEffect(() => {
-    let socket = io("http://localhost:4500");
-    socket.on("DRIVERS", (drivers) => {
-      setAllDrivers(drivers);
-      console.log("real time drivers", drivers);
-    });
-    socket.on("TRUCKS", (trucks) => {
-      setAllTrucks(trucks);
-      console.log("real time trucks", trucks);
-    });
-    socket.on("TRAILERS", (trailers) => {
-      setAllTrailers(trailers);
-      console.log("real time trailers", trailers);
-    });
-  }, []);
+    try {
+      const res: AxiosResponse<any, any> = await axios.get(
+        `/company/properties`
+      );
+      dispatch(setDrivers(res.data.drivers));
+      dispatch(setTrucks(res.data.trucks));
+      dispatch(setTrailers(res.data.trailers));
+    } catch (err) {
+      console.log("Err", err);
+    }
+  }, [dispatch]);
 
   useEffect(() => {
     getCompanyProperties();
   }, [getCompanyProperties]);
+
+  useEffect(() => {
+    let socket = io("http://localhost:4500", {
+      auth: {
+        companyId: user?._id,
+      },
+    });
+    socket.on("DRIVERS", (drivers) => {
+      console.log(drivers);
+      dispatch(setDrivers(drivers));
+    });
+    socket.on("TRCUKS", (trucks) => {
+      dispatch(setTrucks(trucks));
+    });
+    socket.on("TRAILERS", (trailers) => {
+      dispatch(setTrailers(trailers));
+    });
+  }, [dispatch, user?._id]);
 
   let isDriverExpired = false;
   let isTruckExpired = false;
@@ -65,7 +81,7 @@ function Notification() {
   let expiredTruckIndicators: string[] = [];
   let expiredTrailerIndicators: string[] = [];
 
-  allDrivers.forEach((driver: Driver) => {
+  drivers.forEach((driver: Driver) => {
     const leftDays = differenceInDays(
       new Date(driver.licenceTypExpire),
       new Date()
@@ -84,7 +100,7 @@ function Notification() {
     }
   });
 
-  allTrucks.forEach((truck: Truck) => {
+  trucks.forEach((truck: Truck) => {
     const leftDays = differenceInDays(new Date(truck.nextHU), new Date());
     const leftDaysSecond = differenceInDays(new Date(truck.nextSP), new Date());
     if (leftDays <= 60 || leftDaysSecond <= 60) {
@@ -93,7 +109,7 @@ function Notification() {
     }
   });
 
-  allTrailers.forEach((trailer: Trailer) => {
+  trailers.forEach((trailer: Trailer) => {
     const leftDays = differenceInDays(new Date(trailer.nextHU), new Date());
     const leftDaysSecond = differenceInDays(
       new Date(trailer.nextSP),

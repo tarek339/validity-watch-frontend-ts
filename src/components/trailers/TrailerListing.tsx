@@ -13,28 +13,18 @@ import MobileViewHolder from "./MobileViewHolder";
 import ModalView from "../ModalView";
 import { differenceInDays } from "date-fns";
 import { RootState } from "../../redux/store";
+import { GetCompanyProperty } from "../../api/getCompProp";
 
 function DriverListing() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [trailers, setTrailers] = useState([]);
   const dispatch = useDispatch();
   const trailer = useSelector((state: RootState) => state.trailer.trailer);
-
-  const getTrailers = async () => {
-    await axios
-      .get(`/trailer/trailers`)
-      .then((res) => {
-        setTrailers(res.data);
-      })
-      .catch((err) => {
-        console.log("Err", err);
-      });
-  };
+  const trailers = useSelector((state: RootState) => state.property.trailers);
 
   useEffect(() => {
-    getTrailers();
-  }, []);
+    GetCompanyProperty(dispatch);
+  }, [dispatch]);
 
   const leftDays = differenceInDays(
     trailer?.nextHU ? new Date(trailer.nextHU) : new Date(),
@@ -47,11 +37,7 @@ function DriverListing() {
 
   return (
     <div className="section">
-      <TrailerDrawer
-        getTrailers={getTrailers}
-        leftDays={leftDays}
-        leftDaysSecond={leftDaysSecond}
-      />
+      <TrailerDrawer leftDays={leftDays} leftDaysSecond={leftDaysSecond} />
       <div className="section-child">
         <div className="section-table-content">
           <GridContainer
@@ -94,7 +80,6 @@ function DriverListing() {
                 <ModalView
                   children={
                     <MobileViewHolder
-                      getTrailers={getTrailers}
                       leftDays={leftDays}
                       leftDaysSecond={leftDaysSecond}
                     />
