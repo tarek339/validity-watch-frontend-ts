@@ -12,7 +12,6 @@ import TrucksProfile from "./TrucksProfile";
 import EditTruck from "./EditTruck";
 import GridContainer from "../GridContainer";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
-import { addTruck } from "../../redux/slices/truckSlice";
 
 function MobileViewHolder(props: { leftDays: number; leftDaysSecond: number }) {
   const [page, setPage] = useState(0);
@@ -65,9 +64,6 @@ function MobileViewHolder(props: { leftDays: number; leftDaysSecond: number }) {
                 page === 0
                   ? () => setPage(page + 1)
                   : () => {
-                      axios.get(`/truck/truck/${truck?._id}`).then((res) => {
-                        dispatch(addTruck(res.data));
-                      });
                       setPage(page - 1);
                     }
               }

@@ -4,8 +4,10 @@ import {
   setTrailers,
   setTrucks,
 } from "../redux/slices/propertySlice";
+import { Dispatch } from "react";
+import { AnyAction } from "@reduxjs/toolkit";
 
-export const GetCompanyProperty = async (dispatch: any) => {
+export const GetCompanyProperty = async (dispatch: Dispatch<AnyAction>) => {
   try {
     const res: AxiosResponse<any, any> = await axios.get(`/company/properties`);
     dispatch(setDrivers(res.data.drivers));

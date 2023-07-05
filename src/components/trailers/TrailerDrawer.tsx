@@ -8,7 +8,7 @@ import ModeEditOutlineRoundedIcon from "@mui/icons-material/ModeEditOutlineRound
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import axios from "axios";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
-import { addTrailer, removeTrailer } from "../../redux/slices/trailerSlice";
+import { removeTrailer } from "../../redux/slices/trailerSlice";
 import TrailersProfile from "./TrailersProfile";
 import EditTrailer from "./EditTrailer";
 import GridContainer from "../GridContainer";
@@ -81,9 +81,6 @@ function TrailerDrawer(props: { leftDays: number; leftDaysSecond: number }) {
             page === 0
               ? () => setPage(page + 1)
               : () => {
-                  axios.get(`/trailer/trailer/${trailer?._id}`).then((res) => {
-                    dispatch(addTrailer(res.data));
-                  });
                   setPage(page - 1);
                 }
           }
