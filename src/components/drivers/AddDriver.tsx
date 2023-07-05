@@ -91,16 +91,16 @@ const AddDriver = () => {
       firstName: "",
       lastName: "",
       phoneNumber: "",
-      street: "",
-      houseNumber: "",
-      zipCode: "",
-      city: "",
+      street: "street",
+      houseNumber: "12",
+      zipCode: "1212",
+      city: "city",
       birthday: "",
-      birthPlace: "",
+      birthPlace: "hamburg",
       licenceNumber: "",
-      licenceTyp: "",
+      licenceTyp: "CE",
       licenceTypExpire: "",
-      codeNumber: "",
+      codeNumber: "Ja",
       codeNumberExpire: "",
       driverCardNumber: "",
       driverCardNumberExpire: "",
@@ -126,7 +126,6 @@ const AddDriver = () => {
             4000
           );
         })
-
         .catch((err) => {
           console.log(err?.response?.data?.message);
           dispatch(

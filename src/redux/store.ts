@@ -4,6 +4,7 @@ import { snackbarReducer } from "./slices/snackbarSlice";
 import { driverReducer } from "./slices/driverSlice";
 import { truckReducer } from "./slices/truckSlice";
 import { trailerReducer } from "./slices/trailerSlice";
+import { propertyReducer } from "./slices/propertySlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     driver: driverReducer,
     truck: truckReducer,
     trailer: trailerReducer,
+    property: propertyReducer,
   },
 });
 

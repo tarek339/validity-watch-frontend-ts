@@ -57,7 +57,7 @@ const validationSchema = Yup.object({
   driverCardNumberExpire: Yup.string().required("required"),
 });
 
-function EditDriversProfile(props: { getDrivers: () => Promise<void> }) {
+function EditDriversProfile() {
   const driver = useSelector((state: RootState) => state.driver.driver);
   const snackbar = useSelector((state: RootState) => state.snackbar);
   const dispatch = useDispatch();
@@ -90,7 +90,6 @@ function EditDriversProfile(props: { getDrivers: () => Promise<void> }) {
       }
       if (page === 1) {
         await axios.put(`/driver/edit/${driver?._id}`, values).then((res) => {
-          props.getDrivers();
           dispatch(
             setSnackbar({
               open: true,

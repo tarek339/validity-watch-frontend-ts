@@ -1,5 +1,5 @@
 {
-  "name": "all-management",
+  "name": "validity-watch",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -65,5 +65,7 @@
     ]
   },
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": "https://github.com/tarek339/fleet-management-ts.git",
+  "author": "Tarek Jassine <tarekjassine@gmail.com>"
 }

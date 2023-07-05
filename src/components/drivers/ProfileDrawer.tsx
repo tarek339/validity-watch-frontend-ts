@@ -10,7 +10,7 @@ import PersonRemoveRoundedIcon from "@mui/icons-material/PersonRemoveRounded";
 import EditDriversProfile from "./EditDriversProfile";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import axios from "axios";
-import { addDriver, removeDriver } from "../../redux/slices/driverSlice";
+import { removeDriver } from "../../redux/slices/driverSlice";
 import GridContainer from "../GridContainer";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
@@ -28,7 +28,6 @@ interface BottomNavBtns {
 }
 
 function ProfileDrawer(props: {
-  getDrivers: () => Promise<void>;
   leftDays: number;
   leftDaysSecond: number;
   leftDaysThird: number;
@@ -86,9 +85,6 @@ function ProfileDrawer(props: {
             page === 0
               ? () => setPage(page + 1)
               : () => {
-                  axios.get(`/driver/driver/${driver?._id}`).then((res) => {
-                    dispatch(addDriver(res.data));
-                  });
                   setPage(page - 1);
                 }
           }
@@ -153,7 +149,7 @@ function ProfileDrawer(props: {
                 leftDaysThird={props.leftDaysThird}
               />
             ) : (
-              <EditDriversProfile getDrivers={props.getDrivers} />
+              <EditDriversProfile />
             )}
             <Grid container direction="row" justifyContent="space-between">
               {bottomNavigation.map((btn: BottomNavBtns) => {

@@ -27,11 +27,7 @@ interface BottomNavBtns {
   component: JSX.Element;
 }
 
-function TruckDrawer(props: {
-  getTrucks: () => Promise<void>;
-  leftDays: number;
-  leftDaysSecond: number;
-}) {
+function TruckDrawer(props: { leftDays: number; leftDaysSecond: number }) {
   const [open, setOpen] = useState(false);
   const [page, setPage] = useState(0);
   const truck = useSelector((state: RootState) => state.truck.truck);
@@ -151,7 +147,7 @@ function TruckDrawer(props: {
                 leftDaysSecond={props.leftDaysSecond}
               />
             ) : (
-              <EditTruck getTrucks={props.getTrucks} />
+              <EditTruck />
             )}
 
             <Grid container direction="row" justifyContent="space-between">
