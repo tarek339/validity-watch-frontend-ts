@@ -1,4 +1,11 @@
-import { Badge, Grid, IconButton, Popover, Typography } from "@mui/material";
+import {
+  Badge,
+  Grid,
+  IconButton,
+  Popover,
+  Typography,
+  Box,
+} from "@mui/material";
 import axios, { AxiosResponse } from "axios";
 import { differenceInDays } from "date-fns";
 import { useCallback, useEffect, useState } from "react";
@@ -63,10 +70,9 @@ function Notification() {
       },
     });
     socket.on("DRIVERS", (drivers) => {
-      console.log(drivers);
       dispatch(setDrivers(drivers));
     });
-    socket.on("TRCUKS", (trucks) => {
+    socket.on("TRUCKS", (trucks) => {
       dispatch(setTrucks(trucks));
     });
     socket.on("TRAILERS", (trailers) => {
@@ -141,9 +147,9 @@ function Notification() {
 
   const NotTrailers =
     isTrailerExpired && expiredTrailerIndicators.length > 1
-      ? `Check trucks ${expiredTrailerIndicators} `
+      ? `Check trailers ${expiredTrailerIndicators} `
       : isTrailerExpired && expiredTrailerIndicators.length <= 1
-      ? `Check truck ${expiredTrailerIndicators} `
+      ? `Check trailer ${expiredTrailerIndicators} `
       : isTrailerExpired && expiredTrailerIndicators.length === 0
       ? null
       : null;
@@ -195,11 +201,11 @@ function Notification() {
           },
         }}
       >
-        <Typography sx={{ p: 1 }}>
-          {NotDriver}
-          {NotTrucks}
-          {NotTrailers}
-        </Typography>
+        <Box sx={{ p: 1 }}>
+          <Typography>{NotDriver}</Typography>
+          <Typography>{NotTrucks}</Typography>
+          <Typography>{NotTrailers}</Typography>
+        </Box>
       </Popover>
     </div>
   );
