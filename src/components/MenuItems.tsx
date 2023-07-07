@@ -26,6 +26,7 @@ function MenuItems(props: {
   icon: JSX.Element;
   content: string;
   route: string;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const navigate = useNavigate();
   return (
@@ -39,6 +40,9 @@ function MenuItems(props: {
             startIcon={props.icon}
             onClick={() => {
               navigate(props.route);
+              window.innerWidth < 900
+                ? props.setOpen(false)
+                : props.setOpen(true);
             }}
           >
             <div style={{ width: "1000px" }}>
