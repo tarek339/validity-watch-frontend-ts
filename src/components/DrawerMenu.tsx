@@ -62,17 +62,24 @@ function DrawerMenu() {
             columnGap={2}
             direction="column"
           >
-            <Grid
-              sx={{ paddingLeft: "15px" }}
-              container
-              justifyContent="flex-start"
-              alignItems="center"
-            >
-              <IconButton sx={{ color: "#fff" }} onClick={() => setOpen(false)}>
-                <CloseIcon />
-              </IconButton>
+            {window.innerWidth < 900 ? (
+              <Grid
+                sx={{ paddingLeft: "15px" }}
+                container
+                justifyContent="flex-start"
+                alignItems="center"
+              >
+                <IconButton
+                  sx={{ color: "#fff" }}
+                  onClick={() => setOpen(false)}
+                >
+                  <CloseIcon />
+                </IconButton>
+                <Typography sx={boxHeader}> {user?.companyName}</Typography>
+              </Grid>
+            ) : (
               <Typography sx={boxHeader}> {user?.companyName}</Typography>
-            </Grid>
+            )}
             <Typography sx={boxHeader}>
               {user?.firstName} {user?.lastName}
             </Typography>
