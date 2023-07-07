@@ -141,7 +141,6 @@ function Notification() {
 
   const notiContStyle = {
     borderBottom: "1px dashed #000",
-    marginBottom: "10px",
   };
 
   const NotDriver =
@@ -174,12 +173,12 @@ function Notification() {
 
   const NotTrailers =
     isTrailerExpired && expiredTrailerIndicators.length > 1 ? (
-      <div>
+      <div style={notiContStyle}>
         <Typography sx={{ fontWeight: "bold" }}>Check trailers</Typography>
         <Typography>{expiredTrailerIndicators}</Typography>
       </div>
     ) : isTrailerExpired && expiredTrailerIndicators.length <= 1 ? (
-      <div>
+      <div style={notiContStyle}>
         <Typography sx={{ fontWeight: "bold" }}>
           Check trailer {expiredTrailerIndicators}
         </Typography>
@@ -234,9 +233,9 @@ function Notification() {
         }}
       >
         <Box sx={{ p: 1, maxWidth: "400px" }}>
-          <Typography>{NotDriver}</Typography>
-          <Typography>{NotTrucks}</Typography>
-          <Typography>{NotTrailers}</Typography>
+          {NotDriver}
+          {NotTrucks}
+          {NotTrailers}
         </Box>
       </Popover>
     </div>

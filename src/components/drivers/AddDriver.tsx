@@ -331,7 +331,7 @@ const AddDriver = () => {
               </Grid>
               <Grid item xs={12} sm={6} md={3}>
                 <PickDate
-                  views={["year", "month", "day"]}
+                  views={["day", "month", "year"]}
                   format={"DD.MM.YYYY"}
                   value={moment(formik.values.birthday)}
                   onChange={(value, context) => {
@@ -413,7 +413,7 @@ const AddDriver = () => {
               </Grid>
               <Grid item xs={12} sm={6} md={6}>
                 <PickDate
-                  views={["year", "month", "day"]}
+                  views={["day", "month", "year"]}
                   format={"DD.MM.YYYY"}
                   value={moment(formik.values.licenceTypExpire)}
                   onChange={(value, context) => {
@@ -457,7 +457,7 @@ const AddDriver = () => {
               </Grid>
               <Grid item xs={12} sm={6} md={6}>
                 <PickDate
-                  views={["year", "month", "day"]}
+                  views={["day", "month", "year"]}
                   format={"DD.MM.YYYY"}
                   value={moment(formik.values.codeNumberExpire)}
                   onChange={(value, context) => {
@@ -498,7 +498,7 @@ const AddDriver = () => {
 
               <Grid item xs={12} sm={6} md={6}>
                 <PickDate
-                  views={["year", "month", "day"]}
+                  views={["day", "month", "year"]}
                   format={"DD.MM.YYYY"}
                   value={moment(formik.values.driverCardNumberExpire)}
                   onChange={(value, context) => {

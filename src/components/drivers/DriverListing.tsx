@@ -21,6 +21,7 @@ function DriverListing() {
   const dispatch = useDispatch();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [totalRows, setTotalRows] = useState(0);
 
   useEffect(() => {
     GetCompanyProperty(dispatch);
@@ -67,6 +68,8 @@ function DriverListing() {
               tableHeadTwo={"Type"}
               tableHeadThree={"Activity"}
               childrenCount={drivers.length}
+              totalRows={totalRows}
+              setTotalRows={setTotalRows}
               mappedChildren={(rowsPerPage > 0
                 ? drivers.slice(
                     page * rowsPerPage,

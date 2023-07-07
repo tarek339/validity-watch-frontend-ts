@@ -18,6 +18,7 @@ import {
   tableCellClasses,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { useEffect } from "react";
 
 const theme = createTheme({
   breakpoints: {
@@ -122,10 +123,12 @@ export default function TableComponent(props: {
   tableHeadOne: string;
   tableHeadTwo: string;
   tableHeadThree: string;
-  page: number;
+  page: any;
   setPage: React.Dispatch<React.SetStateAction<number>>;
   rowsPerPage: number;
   setRowsPerPage: React.Dispatch<React.SetStateAction<number>>;
+  totalRows: number;
+  setTotalRows: React.Dispatch<React.SetStateAction<number>>;
 }) {
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -146,6 +149,16 @@ export default function TableComponent(props: {
     props.setRowsPerPage(parseInt(event.target.value, 10));
     props.setPage(0);
   };
+
+  const totalRows =
+    props.rowsPerPage -
+    Math.max(0, (1 + props.page) * props.rowsPerPage - props.childrenRows);
+
+  useEffect(() => {
+    if (props.page > 0 && totalRows === 0) {
+      props.setPage(props.page - 1);
+    }
+  }, [props, totalRows]);
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
