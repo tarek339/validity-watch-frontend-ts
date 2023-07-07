@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Box, Drawer, Grid, Typography } from "@mui/material";
+import { Box, Drawer, Grid, IconButton, Typography } from "@mui/material";
 import MenuItemsHolder from "./MenuItemsHolder";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-
+import MenuIcon from "@mui/icons-material/Menu";
+import CloseIcon from "@mui/icons-material/Close";
 const boxStyle = {
   margin: "10px",
   height: "100%",
@@ -25,17 +26,23 @@ const divider = {
 };
 
 function DrawerMenu() {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(window.innerWidth > 899 ? true : false);
   const user = useSelector((state: RootState) => state.user.user);
 
   return (
     <div>
+      <IconButton onClick={() => setOpen(true)}>
+        <MenuIcon />
+      </IconButton>
       <Drawer
         anchor="left"
         open={open}
         onClose={() => setOpen(false)}
         sx={{
-          display: { xs: "none", md: "block" },
+          display:
+            window.innerWidth > 899
+              ? { xs: "none", md: "block" }
+              : { xs: "block", md: "none" },
           "& .MuiDrawer-paper": {
             boxSizing: "border-box",
             width: 300,
@@ -43,7 +50,7 @@ function DrawerMenu() {
             bgcolor: "#ededed",
           },
         }}
-        variant="persistent"
+        variant={"persistent"}
         elevation={0}
       >
         <Box sx={boxStyle}>
@@ -55,7 +62,17 @@ function DrawerMenu() {
             columnGap={2}
             direction="column"
           >
-            <Typography sx={boxHeader}>{user?.companyName}</Typography>
+            <Grid
+              sx={{ paddingLeft: "15px" }}
+              container
+              justifyContent="flex-start"
+              alignItems="center"
+            >
+              <IconButton sx={{ color: "#fff" }} onClick={() => setOpen(false)}>
+                <CloseIcon />
+              </IconButton>
+              <Typography sx={boxHeader}> {user?.companyName}</Typography>
+            </Grid>
             <Typography sx={boxHeader}>
               {user?.firstName} {user?.lastName}
             </Typography>
@@ -63,7 +80,7 @@ function DrawerMenu() {
           <Grid container direction="row">
             <div style={divider}></div>
           </Grid>
-          <MenuItemsHolder />
+          <MenuItemsHolder setOpen={setOpen} />
         </Box>
       </Drawer>
     </div>

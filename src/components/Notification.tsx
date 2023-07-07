@@ -141,6 +141,7 @@ function Notification() {
 
   const notiContStyle = {
     borderBottom: "1px dashed #000",
+    marginBottom: "10px",
   };
 
   const NotDriver =
@@ -151,9 +152,8 @@ function Notification() {
       </div>
     ) : isDriverExpired && expiredDriverNames.length <= 1 ? (
       <div style={notiContStyle}>
-        <Typography sx={{ fontWeight: "bold" }}>
-          Check driver {expiredDriverNames}
-        </Typography>
+        <Typography sx={{ fontWeight: "bold" }}>Check driver</Typography>
+        <Typography>{expiredDriverNames}</Typography>
       </div>
     ) : isDriverExpired && expiredDriverNames.length === 0 ? null : null;
 
@@ -165,9 +165,8 @@ function Notification() {
       </div>
     ) : isTruckExpired && expiredTruckIndicators.length <= 1 ? (
       <div style={notiContStyle}>
-        <Typography sx={{ fontWeight: "bold" }}>
-          Check truck {expiredTruckIndicators}
-        </Typography>
+        <Typography sx={{ fontWeight: "bold" }}>Check truck</Typography>
+        <Typography>{expiredTruckIndicators}</Typography>
       </div>
     ) : isTruckExpired && expiredTruckIndicators.length === 0 ? null : null;
 
@@ -179,9 +178,8 @@ function Notification() {
       </div>
     ) : isTrailerExpired && expiredTrailerIndicators.length <= 1 ? (
       <div style={notiContStyle}>
-        <Typography sx={{ fontWeight: "bold" }}>
-          Check trailer {expiredTrailerIndicators}
-        </Typography>
+        <Typography sx={{ fontWeight: "bold" }}>Check trailer</Typography>
+        <Typography>{expiredTrailerIndicators}</Typography>
       </div>
     ) : isTrailerExpired && expiredTrailerIndicators.length === 0 ? null : null;
 

@@ -12,39 +12,46 @@ const menuIcon = {
   paddingRight: "15px",
 };
 
-function MenuItemsHolder() {
+function MenuItemsHolder(props: {
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   return (
     <div>
-      {" "}
       <MenuItems
         route={"/"}
         icon={<DashboardIcon style={menuIcon} />}
         content={"Dashboard"}
+        setOpen={props.setOpen}
       />
       <MenuItems
         route={"/add-data"}
         icon={<AddIcon style={menuIcon} />}
         content={"Data"}
+        setOpen={props.setOpen}
       />
       <MenuItems
         route={"/user-profile"}
         icon={<AccountCircleIcon style={menuIcon} />}
         content={"Profile"}
+        setOpen={props.setOpen}
       />
       <MenuItems
         route={"/drivers"}
         icon={<Person2Icon style={menuIcon} />}
         content={"Drivers"}
+        setOpen={props.setOpen}
       />
       <MenuItems
         route={"/trucks"}
         icon={<LocalShippingIcon style={menuIcon} />}
         content={"Trucks"}
+        setOpen={props.setOpen}
       />
       <MenuItems
         route={"/trailers"}
         icon={<RvHookupIcon style={menuIcon} />}
         content={"Trailers"}
+        setOpen={props.setOpen}
       />
     </div>
   );
