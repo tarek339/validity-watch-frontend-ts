@@ -10,7 +10,6 @@ import { removeDriver } from "../redux/slices/driverSlice";
 import { removeTruck } from "../redux/slices/truckSlice";
 import { removeTrailer } from "../redux/slices/trailerSlice";
 import Notification from "./Notification";
-// import MobileDrawer from "./MobileDrawer";
 
 const iconStyle = {
   color: "grey",
@@ -27,10 +26,9 @@ function NavBar() {
       <AppBar
         position="fixed"
         elevation={0}
-        sx={{ zIndex: 0, backgroundColor: "transparent" }}
+        sx={{ zIndex: 2, backgroundColor: "transparent" }}
       >
         <Toolbar>
-          {/* <MobileDrawer /> */}
           <Grid container justifyContent="flex-end">
             {user && (
               <IconButton style={iconStyle}>

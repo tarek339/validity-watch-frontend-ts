@@ -31,7 +31,7 @@ function DrawerMenu() {
 
   return (
     <div>
-      <IconButton onClick={() => setOpen(true)}>
+      <IconButton sx={{ zIndex: 3 }} onClick={() => setOpen(true)}>
         <MenuIcon />
       </IconButton>
       <Drawer
