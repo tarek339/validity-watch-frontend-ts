@@ -123,7 +123,7 @@ export default function TableComponent(props: {
   tableHeadOne: string;
   tableHeadTwo: string;
   tableHeadThree: string;
-  page: any;
+  page: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
   rowsPerPage: number;
   setRowsPerPage: React.Dispatch<React.SetStateAction<number>>;
