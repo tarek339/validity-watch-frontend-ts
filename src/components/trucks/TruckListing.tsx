@@ -18,6 +18,7 @@ import { GetCompanyProperty } from "../../api/getCompProp";
 function DriverListing() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [totalRows, setTotalRows] = useState(0);
   const dispatch = useDispatch();
   const truck = useSelector((state: RootState) => state.truck.truck);
   const trucks = useSelector((state: RootState) => state.property.trucks);
@@ -76,6 +77,8 @@ function DriverListing() {
               setPage={setPage}
               rowsPerPage={rowsPerPage}
               setRowsPerPage={setRowsPerPage}
+              totalRows={totalRows}
+              setTotalRows={setTotalRows}
               modalView={
                 <ModalView
                   children={

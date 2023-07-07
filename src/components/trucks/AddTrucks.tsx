@@ -53,9 +53,9 @@ const AddTrucks = () => {
     initialValues: {
       id: user?._id,
       indicator: "",
-      name: "",
-      type: "",
-      weight: "",
+      name: "MAN",
+      type: "Sattelzugamschine",
+      weight: "19000",
       nextHU: "",
       nextSP: "",
     },
@@ -191,7 +191,7 @@ const AddTrucks = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <PickDate
-                  views={["year", "month"]}
+                  views={["month", "year"]}
                   format={"MM.YYYY"}
                   value={moment(formik.values.nextHU)}
                   onChange={(value, context) => {
@@ -212,7 +212,7 @@ const AddTrucks = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <PickDate
-                  views={["year", "month"]}
+                  views={["month", "year"]}
                   format={"MM.YYYY"}
                   value={moment(formik.values.nextSP)}
                   onChange={(value, context) => {

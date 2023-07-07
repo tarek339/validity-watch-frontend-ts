@@ -44,10 +44,10 @@ function NavBar() {
               <IconButton
                 onClick={() => {
                   localStorage.removeItem("token");
+                  dispatch(removeUser());
                   dispatch(removeDriver());
                   dispatch(removeTruck());
                   dispatch(removeTrailer());
-                  dispatch(removeUser());
                 }}
                 style={iconStyle}
               >

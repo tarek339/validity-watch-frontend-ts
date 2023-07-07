@@ -180,7 +180,7 @@ function EditTrailer() {
           </Grid>
           <Grid item xs={7}>
             <PickDate
-              views={["year", "month"]}
+              views={["month", "year"]}
               format={"MM.YYYY"}
               value={moment(formik.values.nextHU)}
               onChange={(value, context) => {
@@ -203,7 +203,7 @@ function EditTrailer() {
           </Grid>
           <Grid item xs={7}>
             <PickDate
-              views={["year", "month"]}
+              views={["month", "year"]}
               format={"MM.YYYY"}
               value={moment(formik.values.nextSP)}
               onChange={(value, context) => {
