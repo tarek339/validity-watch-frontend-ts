@@ -16,7 +16,7 @@ function AddData() {
         exit={{ opacity: 0 }}
         transition={{ duration: 0.3 }}
       >
-        <div style={{ minHeight: "calc(90vh - 50px)" }}>
+        <div style={{ minHeight: "calc(85vh - 50px)" }}>
           {page === 0 ? (
             <AddDriver />
           ) : page === 1 ? (
