@@ -55,7 +55,7 @@ function App() {
       });
   }, [dispatch]);
 
-  // Log out user after 5 mininutes of beeing inactive for security reasons
+  // Log out user after 5 mininutes of beeing inactive
   useEffect(() => {
     const tokenTimer = setTimeout(() => {
       localStorage.removeItem("token");
