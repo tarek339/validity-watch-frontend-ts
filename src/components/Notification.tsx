@@ -6,9 +6,9 @@ import {
   Typography,
   Box,
 } from "@mui/material";
-import axios, { AxiosResponse } from "axios";
+
 import { differenceInDays } from "date-fns";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Truck } from "../types/truckTypes";
 import { Trailer } from "../types/trailerTypes";
 import { Driver } from "../types/driverTypes";
@@ -21,6 +21,7 @@ import {
 } from "../redux/slices/propertySlice";
 import { RootState } from "../redux/store";
 import { io } from "socket.io-client";
+import { GetCompanyProperty } from "../api/getCompProp";
 
 const iconStyle = {
   color: "grey",
@@ -44,22 +45,9 @@ function Notification() {
   const trailers = useSelector((state: RootState) => state.property.trailers);
   const user = useSelector((state: RootState) => state.user.user);
 
-  const getCompanyProperties = useCallback(async () => {
-    try {
-      const res: AxiosResponse<any, any> = await axios.get(
-        `/company/properties`
-      );
-      dispatch(setDrivers(res.data.drivers));
-      dispatch(setTrucks(res.data.trucks));
-      dispatch(setTrailers(res.data.trailers));
-    } catch (err) {
-      console.log("Err", err);
-    }
-  }, [dispatch]);
-
   useEffect(() => {
-    getCompanyProperties();
-  }, [getCompanyProperties]);
+    GetCompanyProperty(dispatch);
+  }, [dispatch]);
 
   useEffect(() => {
     let socket = io("http://localhost:4500", {

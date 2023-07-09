@@ -4,7 +4,7 @@ import SignInCompany from "./pages/SignInCompany";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { addUser } from "./redux/slices/userSlice";
+import { addUser, removeUser } from "./redux/slices/userSlice";
 import {
   CircularProgress,
   Grid,
@@ -14,9 +14,8 @@ import {
 import { RootState } from "./redux/store";
 import VerifyAccount from "./pages/VerifyAccount";
 import NavBar from "./components/NavBar";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import NotFound from "./components/NotFound";
-import DrawerMenu from "./components/DrawerMenu";
 import { AnimatePresence } from "framer-motion";
 import SignUpCompany from "./pages/SignUpCompany";
 import UserProfile from "./pages/UserProfile";
@@ -36,6 +35,7 @@ const theme = createTheme({
 function App() {
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const emailVerified = useSelector(
     (state: RootState) => state.user.user?.emailVerified
   );
@@ -54,6 +54,18 @@ function App() {
         setLoading(false);
       });
   }, [dispatch]);
+
+  // Log out user after 5 mininutes of beeing inactive for security reasons
+  useEffect(() => {
+    const tokenTimer = setTimeout(() => {
+      localStorage.removeItem("token");
+      dispatch(removeUser());
+      navigate("/sign-in");
+    }, 5 * 60 * 1000);
+    return () => {
+      clearTimeout(tokenTimer);
+    };
+  }, [navigate, dispatch]);
 
   if (!user && loading) {
     return (
@@ -74,9 +86,6 @@ function App() {
     <div className="App">
       <ThemeProvider theme={theme}>
         <NavBar />
-        <Grid sx={{ width: "350px" }} container justifyContent="flex-start">
-          {user && emailVerified ? <DrawerMenu /> : null}
-        </Grid>
         <div style={{ marginLeft: "300px" }}>
           <AnimatePresence mode="wait">
             {(user && emailVerified) || !user ? (

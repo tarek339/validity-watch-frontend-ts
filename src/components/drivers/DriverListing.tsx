@@ -2,7 +2,7 @@ import GridContainer from "../GridContainer";
 import FormatListNumberedRoundedIcon from "@mui/icons-material/FormatListNumberedRounded";
 import ProfileDrawer from "./ProfileDrawer";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { differenceInDays } from "date-fns";
@@ -13,7 +13,6 @@ import { addDriver } from "../../redux/slices/driverSlice";
 import StyledTableParts from "../StyledTableParts";
 import ModalView from "../ModalView";
 import MobileViewHolder from "./MobileViewHolder";
-import { GetCompanyProperty } from "../../api/getCompProp";
 
 function DriverListing() {
   const driver = useSelector((state: RootState) => state.driver.driver);
@@ -22,10 +21,6 @@ function DriverListing() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [totalRows, setTotalRows] = useState(0);
-
-  useEffect(() => {
-    GetCompanyProperty(dispatch);
-  }, [dispatch]);
 
   const leftDays = differenceInDays(
     driver?.licenceTypExpire ? new Date(driver.licenceTypExpire) : new Date(),

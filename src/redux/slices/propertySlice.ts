@@ -20,8 +20,14 @@ const propertySlice = createSlice({
     setTrailers: (state, action) => {
       state.trailers = action.payload;
     },
+    removeProperty: (state) => {
+      state.drivers = [];
+      state.trucks = [];
+      state.trailers = [];
+    },
   },
 });
 
 export const propertyReducer = propertySlice.reducer;
-export const { setDrivers, setTrucks, setTrailers } = propertySlice.actions;
+export const { setDrivers, setTrucks, setTrailers, removeProperty } =
+  propertySlice.actions;

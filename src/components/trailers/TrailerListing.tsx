@@ -2,7 +2,7 @@ import GridContainer from "../GridContainer";
 import FormatListNumberedRoundedIcon from "@mui/icons-material/FormatListNumberedRounded";
 import TrailerDrawer from "./TrailerDrawer";
 import TableComponent from "../TableComponent";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { Trailer } from "../../types/trailerTypes";
@@ -13,7 +13,6 @@ import MobileViewHolder from "./MobileViewHolder";
 import ModalView from "../ModalView";
 import { differenceInDays } from "date-fns";
 import { RootState } from "../../redux/store";
-import { GetCompanyProperty } from "../../api/getCompProp";
 
 function DriverListing() {
   const [page, setPage] = useState(0);
@@ -22,10 +21,6 @@ function DriverListing() {
   const dispatch = useDispatch();
   const trailer = useSelector((state: RootState) => state.trailer.trailer);
   const trailers = useSelector((state: RootState) => state.property.trailers);
-
-  useEffect(() => {
-    GetCompanyProperty(dispatch);
-  }, [dispatch]);
 
   const leftDays = differenceInDays(
     trailer?.nextHU ? new Date(trailer.nextHU) : new Date(),

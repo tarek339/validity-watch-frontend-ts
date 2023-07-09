@@ -4,7 +4,7 @@ import MenuItemsHolder from "./MenuItemsHolder";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import MenuIcon from "@mui/icons-material/Menu";
-import CloseIcon from "@mui/icons-material/Close";
+
 const boxStyle = {
   margin: "10px",
   height: "100%",
@@ -22,7 +22,6 @@ const divider = {
   margin: "0px 20px 0px 20px",
   borderImage: "linear-gradient(to left, #323232, #7d7d7d 50%, #323232) 1",
   borderBottom: "1px solid",
-  marginBottom: "1em",
 };
 
 function DrawerMenu() {
@@ -31,7 +30,7 @@ function DrawerMenu() {
 
   return (
     <div>
-      <IconButton sx={{ zIndex: 3 }} onClick={() => setOpen(true)}>
+      <IconButton onClick={() => setOpen(true)}>
         <MenuIcon />
       </IconButton>
       <Drawer
@@ -46,8 +45,8 @@ function DrawerMenu() {
           "& .MuiDrawer-paper": {
             boxSizing: "border-box",
             width: 300,
-            border: "1px solid #ededed",
-            bgcolor: "#ededed",
+            border: "1px solid transparent",
+            bgcolor: "transparent",
           },
         }}
         variant={"persistent"}
@@ -62,27 +61,11 @@ function DrawerMenu() {
             columnGap={2}
             direction="column"
           >
-            {window.innerWidth < 900 ? (
-              <Grid
-                sx={{ paddingLeft: "15px" }}
-                container
-                justifyContent="flex-start"
-                alignItems="center"
-              >
-                <IconButton
-                  sx={{ color: "#fff" }}
-                  onClick={() => setOpen(false)}
-                >
-                  <CloseIcon />
-                </IconButton>
-                <Typography sx={boxHeader}> {user?.companyName}</Typography>
-              </Grid>
-            ) : (
-              <Typography sx={boxHeader}> {user?.companyName}</Typography>
-            )}
-            <Typography sx={boxHeader}>
-              {user?.firstName} {user?.lastName}
-            </Typography>
+            <Grid container justifyContent="center" alignItems="center">
+              <Typography sx={boxHeader}>
+                {user?.firstName} {user?.lastName}
+              </Typography>
+            </Grid>
           </Grid>
           <Grid container direction="row">
             <div style={divider}></div>
