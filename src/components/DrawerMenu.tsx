@@ -34,14 +34,13 @@ function DrawerMenu() {
         <MenuIcon />
       </IconButton>
       <Drawer
+        BackdropProps={{
+          style: { backgroundColor: "transparent" },
+        }}
         anchor="left"
         open={open}
         onClose={() => setOpen(false)}
         sx={{
-          display:
-            window.innerWidth > 899
-              ? { xs: "none", md: "block" }
-              : { xs: "block", md: "none" },
           "& .MuiDrawer-paper": {
             boxSizing: "border-box",
             width: 300,
@@ -49,7 +48,7 @@ function DrawerMenu() {
             bgcolor: "transparent",
           },
         }}
-        variant={"persistent"}
+        variant={window.innerWidth < 899 ? "temporary" : "permanent"}
         elevation={0}
       >
         <Box sx={boxStyle}>

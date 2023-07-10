@@ -34,10 +34,7 @@ function NavBar() {
         elevation={0}
         sx={{ zIndex: 2, backgroundColor: "transparent" }}
       >
-        <Grid container justifyContent="space-between" alignItems="center">
-          {/* <IconButton style={iconStyle}>
-            <MenuIcon />
-          </IconButton> */}
+        <Grid container justifyContent={"space-between"} alignItems="center">
           {user && emailVerified ? <DrawerMenu /> : null}
           <Stack direction="row" justifyContent="flex-end">
             {user && (
@@ -63,18 +60,19 @@ function NavBar() {
                 <LogoutSharpIcon />
               </IconButton>
             )}
-
-            {!user && (
-              <IconButton
-                onClick={() => {
-                  navigate("/sign-in");
-                }}
-                style={iconStyle}
-              >
-                <LoginSharpIcon />
-              </IconButton>
-            )}
           </Stack>
+        </Grid>
+        <Grid container justifyContent="flex-end">
+          {!user && (
+            <IconButton
+              onClick={() => {
+                navigate("/sign-in");
+              }}
+              style={iconStyle}
+            >
+              <LoginSharpIcon />
+            </IconButton>
+          )}
         </Grid>
       </AppBar>
     </div>
